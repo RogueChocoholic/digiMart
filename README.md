@@ -59,7 +59,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/digimart.git
+   git clone https://github.com/RogueChocoholic/digimart.git
    
 2. Set up your local server environment.
 
@@ -78,11 +78,7 @@
 
 ---
 
-## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
-
----
 
 ## 👨‍💻 Author
 
