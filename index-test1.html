@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiMart - Marketplace for Digital Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .category-chip:hover {
+            background-color: #6e8efb;
+            color: white;
+        }
+        .hero-image {
+            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Top Announcement Bar -->
+    <div class="bg-indigo-900 text-white text-center py-2 px-4">
+        <p class="text-sm">🎉 New vendors get 90% commission for first month! <a href="#" class="font-semibold underline ml-1">Join Now</a></p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-store text-indigo-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-indigo-600">DigiMart</span>
+                    </div>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="#" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Categories</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Vendors</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Deals</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center">
+                    <div class="relative mx-4">
+                        <input type="text" class="w-64 rounded-full border-gray-300 pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Search products...">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <button class="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                    </button>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                    Discover & Sell Digital Products
+                </h1>
+                <p class="mt-6 max-w-lg mx-auto text-xl">
+                    The marketplace for e-books, software, templates and more. Join thousands of vendors selling their digital creations.
+                </p>
+                <div class="mt-10 flex justify-center gap-4">
+                    <a href="#" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10">
+                        Browse Products
+                    </a>
+                    <a href="#" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 bg-opacity-60 hover:bg-opacity-80 md:py-4 md:text-lg md:px-10">
+                        Become a Vendor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Popular Categories</h2>
+            <div class="flex overflow-x-auto scroll-hide pb-4 -mx-2">
+                <div class="flex space-x-4 px-2">
+                    <a href="#" class="category-chip flex flex-col items-center bg-gray-100 rounded-lg p-4 w-32 hover:shadow-md transition-all">
+                        <i class="fas fa-book text-3xl text-indigo-600 mb-2"></i>
+                        <span class="font-medium">E-books</span>
+                        <span class="text-xs text-gray-500 mt-1">1,240 products</span>
+                    </a>
+                    <a href="#" class="category-chip flex flex-col items-center bg-gray-100 rounded-lg p-4 w-32 hover:shadow-md transition-all">
+                        <i class="fas fa-laptop-code text-3xl text-indigo-600 mb-2"></i>
+                        <span class="font-medium">Software</span>
+                        <span class="text-xs text-gray-500 mt-1">890 products</span>
+                    </a>
+                    <a href="#" class="category-chip flex flex-col items-center bg-gray-100 rounded-lg p-4 w-32 hover:shadow-md transition-all">
+                        <i class="fas fa-image text-3xl text-indigo-600 mb-2"></i>
+                        <span class="font-medium">Templates</span>
+                        <span class="text-xs text-gray-500 mt-1">2,150 products</span>
+                    </a>
+                    <a href="#" class="category-chip flex flex-col items-center bg-gray-100 rounded-lg p-4 w-32 hover:shadow-md transition-all">
+                        <i class="fas fa-headphones text-3xl text-indigo-600 mb-2"></i>
+                        <span class="font-medium">Music</span>
+                        <span class="text-xs text-gray-500 mt-1">540 products</span>
+                    </a>
+                    <a href="#" class="category-chip flex flex-col items-center bg-gray-100 rounded-lg p-4 w-32 hover:shadow-md transition-all">
+                        <i class="fas fa-video text-3xl text-indigo-600 mb-2"></i>
+                        <span class="font-medium">Courses</span>
+                        <span class="text-xs text-gray-500 mt-1">1,780 products</span>
+                    </a>
+                    <a href="#" class="category-chip flex flex-col items-center bg-gray-100 rounded-lg p-4 w-32 hover:shadow-md transition-all">
+                        <i class="fas fa-paint-brush text-3xl text-indigo-600 mb-2"></i>
+                        <span class="font-medium">Art</span>
+                        <span class="text-xs text-gray-500 mt-1">320 products</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <div class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">Featured Products</h2>
+                <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">View all</a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Product Card 1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative pb-2/3 h-48 bg-gray-200">
+                        <img class="absolute h-full w-full object-cover" src="https://images.unsplash.com/photo-1544947950-2a7e5d7f06e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Product image">
+                        <div class="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Bestseller</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                                <span class="text-gray-500 text-xs ml-1">(128)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Complete Web Development Guide</h3>
+                        <p class="text-gray-500 text-sm mb-2">By <a href="#" class="text-indigo-600">CodeMaster</a></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gray-900">$29.99</span>
+                            <button class="bg-indigo-600 text-white px-3 py-1 rounded-md text-sm hover:bg-indigo-700">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative pb-2/3 h-48 bg-gray-200">
+                        <img class="absolute h-full w-full object-cover" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Product image">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="far fa-star text-yellow-400 text-xs"></i>
+                                <span class="text-gray-500 text-xs ml-1">(64)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Premium Photoshop Actions Bundle</h3>
+                        <p class="text-gray-500 text-sm mb-2">By <a href="#" class="text-indigo-600">DesignPro</a></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gray-900">$19.99</span>
+                            <button class="bg-indigo-600 text-white px-3 py-1 rounded-md text-sm hover:bg-indigo-700">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative pb-2/3 h-48 bg-gray-200">
+                        <img class="absolute h-full w-full object-cover" src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Product image">
+                        <div class="absolute top-2 right-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">New</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <span class="text-gray-500 text-xs ml-1">(42)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">AI Content Generator Pro</h3>
+                        <p class="text-gray-500 text-sm mb-2">By <a href="#" class="text-indigo-600">TechSolutions</a></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gray-900">$49.99</span>
+                            <button class="bg-indigo-600 text-white px-3 py-1 rounded-md text-sm hover:bg-indigo-700">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 4 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative pb-2/3 h-48 bg-gray-200">
+                        <img class="absolute h-full w-full object-cover" src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Product image">
+                        <div class="absolute top-2 right-2 bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded-full">Sale</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="far fa-star text-yellow-400 text-xs"></i>
+                                <span class="text-gray-500 text-xs ml-1">(87)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Digital Marketing Masterclass</h3>
+                        <p class="text-gray-500 text-sm mb-2">By <a href="#" class="text-indigo-600">GrowthHacker</a></p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-lg font-bold text-gray-900">$24.99</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">$39.99</span>
+                            </div>
+                            <button class="bg-indigo-600 text-white px-3 py-1 rounded-md text-sm hover:bg-indigo-700">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-center text-gray-900 mb-12">Why Choose DigiMart?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600 mb-4">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Secure Transactions</h3>
+                    <p class="text-gray-500">All transactions are encrypted and secure. Your payment information is never stored on our servers.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600 mb-4">
+                        <i class="fas fa-money-bill-wave text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">High Vendor Payouts</h3>
+                    <p class="text-gray-500">We offer industry-leading commission rates, with vendors keeping up to 85% of each sale.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600 mb-4">
+                        <i class="fas fa-headset text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">24/7 Support</h3>
+                    <p class="text-gray-500">Our dedicated support team is available around the clock to assist with any questions or issues.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="bg-indigo-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-center text-gray-900 mb-12">What Our Customers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/42.jpg" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <div class="font-medium text-gray-900">Sarah Johnson</div>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"I've purchased several e-books from DigiMart and the quality has been outstanding. The instant download feature makes it so convenient!"</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <div class="font-medium text-gray-900">Michael Chen</div>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"As a software developer, I've found amazing tools here that have saved me hundreds of hours of work. Highly recommended!"</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/65.jpg" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <div class="font-medium text-gray-900">Emma Rodriguez</div>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Selling my digital art on DigiMart has been a game-changer. The platform is easy to use and I get paid promptly every month."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor CTA -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Start Selling Your Digital Products?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of creators who are earning money from their skills and knowledge. Our platform makes it easy to upload, sell, and get paid.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10">
+                    Learn About Selling
+                </a>
+                <a href="#" class="px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                    Sign Up as Vendor
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">DigiMart</h3>
+                    <p class="text-gray-400">The premier marketplace for digital products. Buy and sell e-books, software, templates, and more.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">All Products</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Featured</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">New Arrivals</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Deals & Discounts</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Sell</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Become a Vendor</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Vendor Dashboard</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Commission Rates</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Resources</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Vendor Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Refund Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2023 DigiMart. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="hidden md:hidden" id="mobile-menu">
+        <div class="pt-2 pb-3 space-y-1">
+            <a href="#" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
+            <a href="#" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Categories</a>
+            <a href="#" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Vendors</a>
+            <a href="#" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Deals</a>
+        </div>
+        <div class="pt-4 pb-3 border-t border-gray-200">
+            <div class="flex items-center px-4">
+                <input type="text" class="w-full rounded-md border-gray-300 pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Search products...">
+                <i class="fas fa-search absolute left-6 text-gray-400"></i>
+            </div>
+            <div class="mt-3 space-y-1">
+                <a href="#" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !expanded);
+                mobileMenu.classList.toggle('hidden');
+                
+                // Change icon
+                const icon = this.querySelector('i');
+                if (expanded) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+            
+            // Product card hover effect
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+            });
+            
+            // Category chips hover effect
+            const categoryChips = document.querySelectorAll('.category-chip');
+            categoryChips.forEach(chip => {
+                chip.style.transition = 'background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiMart - Digital Marketplace for eBooks, Software & Templates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .vendor-card:hover {
+            transform: scale(1.02);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-button.active {
+            color: #6366f1;
+            border-bottom: 2px solid #6366f1;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-store text-indigo-600 text-2xl"></i>
+                <h1 class="text-xl font-bold text-indigo-600">DigiMart</h1>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Categories</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Vendors</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Sell</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Support</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-heart"></i>
+                    <span
+                        class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span
+                        class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+                </button>
+                <div class="hidden md:block relative group">
+                    <button class="flex items-center space-x-1">
+                        <div
+                            class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="text-gray-700">John</span>
+                        <i class="fas fa-chevron-down text-gray-500 text-xs"></i>
+                    </button>
+                    <div
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Wishlist</a>
+                        <div class="border-t border-gray-200"></div>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</a>
+                    </div>
+                </div>
+                <button class="md:hidden p-2 text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Discover & Download Digital Products</h1>
+                    <p class="text-lg md:text-xl mb-8 opacity-90">The marketplace for premium eBooks, software,
+                        templates and more. Instant delivery after purchase.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="relative flex-grow">
+                            <input type="text" placeholder="Search for products..."
+                                class="w-full px-5 py-3 rounded-lg text-gray-800 focus:outline-none">
+                            <button class="absolute right-2 top-2 text-gray-500">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <button
+                            class="bg-white text-indigo-600 font-medium px-6 py-3 rounded-lg hover:bg-gray-100 transition">
+                            Browse Categories
+                        </button>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <span class="text-sm opacity-80">Trending searches:</span>
+                        <a href="#"
+                            class="text-sm bg-white bg-opacity-10 px-3 py-1 rounded-full hover:bg-opacity-20">WordPress</a>
+                        <a href="#"
+                            class="text-sm bg-white bg-opacity-10 px-3 py-1 rounded-full hover:bg-opacity-20">eBooks</a>
+                        <a href="#" class="text-sm bg-white bg-opacity-10 px-3 py-1 rounded-full hover:bg-opacity-20">UI
+                            Kits</a>
+                        <a href="#"
+                            class="text-sm bg-white bg-opacity-10 px-3 py-1 rounded-full hover:bg-opacity-20">Courses</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div
+                            class="w-64 h-64 md:w-80 md:h-80 bg-white bg-opacity-20 rounded-full absolute -top-5 -left-5">
+                        </div>
+                        <div
+                            class="w-64 h-64 md:w-80 md:h-80 bg-white bg-opacity-10 rounded-full absolute -bottom-5 -right-5">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Digital Products" class="relative z-10 rounded-xl shadow-xl w-full max-w-md">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold">Popular Categories</h2>
+                <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">View All</a>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <a href="#" class="category-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-book text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium">eBooks</h3>
+                    <p class="text-gray-500 text-sm">1,240 Products</p>
+                </a>
+
+                <a href="#" class="category-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-laptop-code text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium">Software</h3>
+                    <p class="text-gray-500 text-sm">890 Products</p>
+                </a>
+
+                <a href="#" class="category-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fab fa-wordpress text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium">WordPress</h3>
+                    <p class="text-gray-500 text-sm">1,520 Products</p>
+                </a>
+
+                <a href="#" class="category-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-photo-film text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium">Templates</h3>
+                    <p class="text-gray-500 text-sm">2,150 Products</p>
+                </a>
+
+                <a href="#" class="category-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-graduation-cap text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium">Courses</h3>
+                    <p class="text-gray-500 text-sm">760 Products</p>
+                </a>
+
+                <a href="#" class="category-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-palette text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium">Graphics</h3>
+                    <p class="text-gray-500 text-sm">1,890 Products</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold">Featured Products</h2>
+                <div class="flex space-x-2">
+                    <button class="tab-button active px-4 py-2 font-medium">New Arrivals</button>
+                    <button class="tab-button px-4 py-2 font-medium">Top Selling</button>
+                    <button class="tab-button px-4 py-2 font-medium">On Sale</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm transition duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                            alt="Product" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-2 py-1 rounded">NEW</div>
+                        <button
+                            class="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md text-gray-700 hover:text-indigo-600">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-500 text-xs ml-1">(128)</span>
+                        </div>
+                        <h3 class="font-medium mb-1">Complete WordPress Theme Development Guide</h3>
+                        <p class="text-gray-500 text-sm mb-3">By DigitalPress</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-lg">$29.99</span>
+                                <span class="text-gray-500 text-sm line-through ml-1">$49.99</span>
+                            </div>
+                            <button class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm transition duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Product" class="w-full h-48 object-cover">
+                        <button
+                            class="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md text-gray-700 hover:text-indigo-600">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-xs ml-1">(89)</span>
+                        </div>
+                        <h3 class="font-medium mb-1">Premium UI Kit for Figma & Adobe XD</h3>
+                        <p class="text-gray-500 text-sm mb-3">By DesignMasters</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-lg">$39.99</span>
+                            </div>
+                            <button class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm transition duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Product" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded">-40%</div>
+                        <button
+                            class="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md text-gray-700 hover:text-indigo-600">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-xs ml-1">(256)</span>
+                        </div>
+                        <h3 class="font-medium mb-1">JavaScript Mastery eBook Bundle</h3>
+                        <p class="text-gray-500 text-sm mb-3">By CodeExperts</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-lg">$24.99</span>
+                                <span class="text-gray-500 text-sm line-through ml-1">$41.99</span>
+                            </div>
+                            <button class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm transition duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Product" class="w-full h-48 object-cover">
+                        <button
+                            class="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md text-gray-700 hover:text-indigo-600">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-1">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-xs ml-1">(312)</span>
+                        </div>
+                        <h3 class="font-medium mb-1">Complete Digital Marketing Video Course</h3>
+                        <p class="text-gray-500 text-sm mb-3">By MarketingPro</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-lg">$59.99</span>
+                            </div>
+                            <button class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 text-center">
+                <button
+                    class="bg-white border border-indigo-600 text-indigo-600 font-medium px-6 py-3 rounded-lg hover:bg-indigo-50 transition">
+                    View All Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Vendors -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold">Top Vendors</h2>
+                <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">View All Vendors</a>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div class="vendor-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div
+                        class="h-20 w-20 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mx-auto mb-3">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="font-medium">DigitalPress</h3>
+                    <p class="text-gray-500 text-sm">WordPress Specialist</p>
+                    <div class="mt-3 flex justify-center space-x-1">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                    </div>
+                    <a href="#" class="mt-3 inline-block text-indigo-600 text-sm hover:underline">View Products</a>
+                </div>
+
+                <div class="vendor-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div
+                        class="h-20 w-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl mx-auto mb-3">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="font-medium">DesignMasters</h3>
+                    <p class="text-gray-500 text-sm">UI/UX Templates</p>
+                    <div class="mt-3 flex justify-center space-x-1">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                    </div>
+                    <a href="#" class="mt-3 inline-block text-indigo-600 text-sm hover:underline">View Products</a>
+                </div>
+
+                <div class="vendor-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div
+                        class="h-20 w-20 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-2xl mx-auto mb-3">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="font-medium">CodeExperts</h3>
+                    <p class="text-gray-500 text-sm">Programming Resources</p>
+                    <div class="mt-3 flex justify-center space-x-1">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="far fa-star text-yellow-400 text-xs"></i>
+                    </div>
+                    <a href="#" class="mt-3 inline-block text-indigo-600 text-sm hover:underline">View Products</a>
+                </div>
+
+                <div class="vendor-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div
+                        class="h-20 w-20 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mx-auto mb-3">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-medium">MarketingPro</h3>
+                    <p class="text-gray-500 text-sm">Marketing Courses</p>
+                    <div class="mt-3 flex justify-center space-x-1">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                    </div>
+                    <a href="#" class="mt-3 inline-block text-indigo-600 text-sm hover:underline">View Products</a>
+                </div>
+
+                <div class="vendor-card bg-gray-50 rounded-lg p-4 text-center transition duration-300">
+                    <div
+                        class="h-20 w-20 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-2xl mx-auto mb-3">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="font-medium">PhotoArt</h3>
+                    <p class="text-gray-500 text-sm">Stock Photos & Graphics</p>
+                    <div class="mt-3 flex justify-center space-x-1">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                    </div>
+                    <a href="#" class="mt-3 inline-block text-indigo-600 text-sm hover:underline">View Products</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-12 bg-indigo-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl font-bold mb-3">Why Choose DigiMart?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We provide the best digital products marketplace with instant
+                    delivery, quality assurance and excellent support.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg p-6 text-center shadow-sm">
+                    <div class="bg-indigo-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-medium mb-2">Instant Delivery</h3>
+                    <p class="text-gray-500 text-sm">Get immediate access to your purchases after payment.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 text-center shadow-sm">
+                    <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-medium mb-2">Quality Guarantee</h3>
+                    <p class="text-gray-500 text-sm">All products are reviewed before being listed.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 text-center shadow-sm">
+                    <div class="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-medium mb-2">24/7 Support</h3>
+                    <p class="text-gray-500 text-sm">Our team is always ready to help with any issues.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 text-center shadow-sm">
+                    <div class="bg-green-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-undo text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-medium mb-2">Money Back</h3>
+                    <p class="text-gray-500 text-sm">30-day refund policy if you're not satisfied.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl font-bold mb-3">What Our Customers Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Trusted by thousands of digital product buyers worldwide.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="testimonial-card bg-gray-50 rounded-lg p-6 transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Sarah Johnson</h4>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">"The WordPress theme I purchased was exactly as described and
+                        worked perfectly. Instant delivery made my project move forward without delay!"</p>
+                    <div class="text-xs text-gray-500">Purchased: Complete WordPress Theme</div>
+                </div>
+
+                <div class="testimonial-card bg-gray-50 rounded-lg p-6 transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Michael Chen</h4>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">"The JavaScript eBook bundle helped me level up my skills
+                        quickly. The quality of content exceeded my expectations. Will definitely buy again!"</p>
+                    <div class="text-xs text-gray-500">Purchased: JavaScript Mastery Bundle</div>
+                </div>
+
+                <div class="testimonial-card bg-gray-50 rounded-lg p-6 transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Emma Rodriguez</h4>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">"The UI kit saved me dozens of hours of work. The files were
+                        well organized and easy to customize. Support was responsive when I had questions."</p>
+                    <div class="text-xs text-gray-500">Purchased: Premium UI Kit</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-indigo-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Start Selling?</h2>
+            <p class="text-lg mb-8 max-w-2xl mx-auto opacity-90">Join thousands of vendors selling their digital
+                products on our marketplace.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-white text-indigo-600 font-medium px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+                    Become a Vendor
+                </button>
+                <button
+                    class="bg-transparent border border-white text-white font-medium px-8 py-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-store mr-2"></i> DigiMart
+                    </h3>
+                    <p class="text-gray-400">
+                        The best marketplace for digital products. Download instantly after purchase.
+                    </p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">WordPress</a></li>
+                        <li><a href="#" class="hover:text-white">Plugins</a></li>
+                        <li><a href="#" class="hover:text-white">eBooks</a></li>
+                        <li><a href="#" class="hover:text-white">Courses</a></li>
+                        <li><a href="#" class="hover:text-white">Templates</a></li>
+                        <li><a href="#" class="hover:text-white">Graphics</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Home</a></li>
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">Become a Seller</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to get updates on new products and discounts.
+                    </p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <i class="fas fa-shield-alt text-gray-400 mr-2"></i>
+                        <span class="text-sm text-gray-400">Secure payment processing</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2023 DigiMart. All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Here you would typically load different content based on the tab
+                // For this demo, we're just changing the button state
+            });
+        });
+
+        // Product card hover effects
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = '';
+            });
+        });
+
+        // Category card hover effects
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Vendor card hover effects
+        document.querySelectorAll('.vendor-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = '';
+            });
+        });
+
+        // Testimonial card hover effects
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.05)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+
+</html>

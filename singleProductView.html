@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium WordPress Theme - DigiMart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .product-gallery img {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .product-gallery img:hover {
+            opacity: 0.8;
+        }
+        .main-image {
+            height: 400px;
+            object-fit: contain;
+        }
+        .progress-bar {
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            background-color: #4CAF50;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .sticky-add-to-cart {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        .sticky-add-to-cart.visible {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-store text-blue-600 text-2xl"></i>
+                <h1 class="text-xl font-bold text-blue-600">DigiMart</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-blue-600">Categories</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Vendors</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Sell</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Support</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-blue-600 relative">
+                    <i class="fas fa-heart"></i>
+                    <span class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-blue-600 relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+                </button>
+                <button class="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                    Sign In
+                </button>
+                <button class="md:hidden p-2 text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="container mx-auto px-4 py-3 text-sm text-gray-600">
+        <a href="#" class="hover:text-blue-600">Home</a> > 
+        <a href="#" class="hover:text-blue-600">WordPress</a> > 
+        <a href="#" class="hover:text-blue-600">Themes</a> > 
+        <span class="text-gray-800">Premium Multipurpose Theme</span>
+    </div>
+
+    <!-- Main Product Section -->
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Product Images -->
+            <div class="lg:w-1/2">
+                <div class="bg-white rounded-lg shadow-sm p-4">
+                    <img id="mainImage" src="https://via.placeholder.com/800x600?text=Premium+WordPress+Theme" alt="Premium WordPress Theme" class="main-image w-full rounded-lg">
+                    
+                    <div class="product-gallery">
+                        <img src="https://via.placeholder.com/200x150?text=Preview+1" alt="Preview 1" class="rounded border border-gray-200" onclick="changeMainImage(this)">
+                        <img src="https://via.placeholder.com/200x150?text=Preview+2" alt="Preview 2" class="rounded border border-gray-200" onclick="changeMainImage(this)">
+                        <img src="https://via.placeholder.com/200x150?text=Preview+3" alt="Preview 3" class="rounded border border-gray-200" onclick="changeMainImage(this)">
+                        <img src="https://via.placeholder.com/200x150?text=Preview+4" alt="Preview 4" class="rounded border border-gray-200" onclick="changeMainImage(this)">
+                    </div>
+                    
+                    <div class="mt-4 flex justify-between items-center">
+                        <button class="flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-play-circle mr-2"></i> Watch Demo
+                        </button>
+                        <button class="flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-file-pdf mr-2"></i> Documentation
+                        </button>
+                        <button class="flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-headset mr-2"></i> Support
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 mt-4">
+                    <h3 class="font-semibold text-lg mb-3">File Information</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">File Size:</span>
+                            <span class="font-medium">12.5 MB</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Format:</span>
+                            <span class="font-medium">ZIP</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Last Updated:</span>
+                            <span class="font-medium">June 15, 2023</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Version:</span>
+                            <span class="font-medium">3.2.1</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Compatibility:</span>
+                            <span class="font-medium">WordPress 6.0+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Details -->
+            <div class="lg:w-1/2">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Premium Multipurpose WordPress Theme</h1>
+                            <div class="flex items-center mt-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-gray-600 ml-2">4.7 (1,243 reviews)</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-red-500">
+                            <i class="far fa-heart text-2xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <span class="text-3xl font-bold text-gray-800">$49</span>
+                        <span class="text-gray-500 line-through ml-2">$89</span>
+                        <span class="ml-2 bg-red-100 text-red-600 px-2 py-1 rounded text-sm">45% OFF</span>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <span class="text-green-600 font-medium">
+                            <i class="fas fa-check-circle"></i> Instant download
+                        </span>
+                        <span class="ml-3 text-blue-600 font-medium">
+                            <i class="fas fa-shield-alt"></i> Lifetime updates
+                        </span>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-lg mb-2">Description</h3>
+                        <p class="text-gray-600">
+                            Premium Multipurpose WordPress Theme is a powerful and flexible theme perfect for any website. With 50+ pre-built demos, drag & drop page builder, and premium plugins included, you can create stunning websites in minutes. Fully responsive and optimized for speed.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-lg mb-2">Key Features</h3>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> 50+ Pre-built Websites
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> Drag & Drop Builder
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> WooCommerce Ready
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> SEO Optimized
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> Lifetime Updates
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> 6 Months Support
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> RTL Support
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i> Translation Ready
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-lg mb-2">License Options</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <label class="border rounded-lg p-3 cursor-pointer hover:border-blue-500">
+                                <input type="radio" name="license" class="hidden" checked>
+                                <div class="font-medium">Regular License</div>
+                                <div class="text-gray-600 text-sm mt-1">Use for a single end product</div>
+                                <div class="mt-2 font-bold">$49</div>
+                            </label>
+                            <label class="border rounded-lg p-3 cursor-pointer hover:border-blue-500">
+                                <input type="radio" name="license" class="hidden">
+                                <div class="font-medium">Extended License</div>
+                                <div class="text-gray-600 text-sm mt-1">Use for multiple end products</div>
+                                <div class="mt-2 font-bold">$149</div>
+                            </label>
+                            <label class="border rounded-lg p-3 cursor-pointer hover:border-blue-500">
+                                <input type="radio" name="license" class="hidden">
+                                <div class="font-medium">Developer License</div>
+                                <div class="text-gray-600 text-sm mt-1">Unlimited use for clients</div>
+                                <div class="mt-2 font-bold">$299</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-lg mb-2">Support Options</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="border rounded-lg p-3 cursor-pointer hover:border-blue-500">
+                                <input type="radio" name="support" class="hidden" checked>
+                                <div class="font-medium">6 Months Support</div>
+                                <div class="text-gray-600 text-sm mt-1">Included with purchase</div>
+                            </label>
+                            <label class="border rounded-lg p-3 cursor-pointer hover:border-blue-500">
+                                <input type="radio" name="support" class="hidden">
+                                <div class="font-medium">Extended Support</div>
+                                <div class="text-gray-600 text-sm mt-1">+12 months for $19</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                        <div class="flex items-center border rounded-lg overflow-hidden">
+                            <button class="px-3 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200" onclick="decreaseQuantity()">-</button>
+                            <input type="number" id="quantity" value="1" min="1" class="w-12 text-center border-0 focus:ring-0">
+                            <button class="px-3 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200" onclick="increaseQuantity()">+</button>
+                        </div>
+                        <button class="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium flex items-center justify-center">
+                            <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                        </button>
+                        <button class="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-medium flex items-center justify-center">
+                            <i class="fas fa-bolt mr-2"></i> Buy Now
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-sm text-gray-500">
+                        <p><i class="fas fa-lock mr-2"></i> Secure checkout. Guaranteed safe & secure payment.</p>
+                        <p class="mt-1"><i class="fas fa-sync-alt mr-2"></i> 30-day money back guarantee</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-6 mt-4">
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/50?text=DT" alt="DigitalTech" class="w-12 h-12 rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-medium">DigitalTech</h4>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.9</span>
+                                <span class="mx-1">•</span>
+                                <span>1,843 sales</span>
+                                <span class="mx-1">•</span>
+                                <span class="text-blue-600">View Store</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+                        <div class="p-2">
+                            <div class="text-gray-500 text-sm">Response Time</div>
+                            <div class="font-medium">2 hours</div>
+                        </div>
+                        <div class="p-2">
+                            <div class="text-gray-500 text-sm">Last Delivery</div>
+                            <div class="font-medium">1 day</div>
+                        </div>
+                        <div class="p-2">
+                            <div class="text-gray-500 text-sm">Member Since</div>
+                            <div class="font-medium">2018</div>
+                        </div>
+                        <div class="p-2">
+                            <button class="text-blue-600 font-medium hover:text-blue-800">
+                                <i class="fas fa-comment-dots mr-1"></i> Contact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Tabs -->
+        <div class="mt-8 bg-white rounded-lg shadow-sm">
+            <div class="border-b border-gray-200">
+                <nav class="flex flex-wrap -mb-px">
+                    <button class="tab-button active py-4 px-6 font-medium text-blue-600 border-b-2 border-blue-600" onclick="openTab(event, 'description')">
+                        Description
+                    </button>
+                    <button class="tab-button py-4 px-6 font-medium text-gray-500 hover:text-blue-600" onclick="openTab(event, 'features')">
+                        Features
+                    </button>
+                    <button class="tab-button py-4 px-6 font-medium text-gray-500 hover:text-blue-600" onclick="openTab(event, 'reviews')">
+                        Reviews (1,243)
+                    </button>
+                    <button class="tab-button py-4 px-6 font-medium text-gray-500 hover:text-blue-600" onclick="openTab(event, 'support')">
+                        Support
+                    </button>
+                    <button class="tab-button py-4 px-6 font-medium text-gray-500 hover:text-blue-600" onclick="openTab(event, 'changelog')">
+                        Changelog
+                    </button>
+                </nav>
+            </div>
+            
+            <div class="p-6">
+                <div id="description" class="tab-content active">
+                    <h2 class="text-xl font-bold mb-4">Premium Multipurpose WordPress Theme</h2>
+                    <p class="text-gray-600 mb-4">
+                        The most powerful and flexible WordPress theme on the market. Perfect for any type of website - business, portfolio, blog, eCommerce, and more. With 50+ pre-built websites, you can have your site ready in minutes.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">What's Included</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Premium WordPress Theme Files</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Drag & Drop Page Builder (Elementor Pro included)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>50+ Pre-built Website Demos</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Premium Slider Plugin (Revolution Slider included)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Detailed Documentation</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>6 Months Premium Support</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">Perfect For</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Business</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Portfolio</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Blog</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">eCommerce</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Agency</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Startup</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Corporate</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Creative</span>
+                            </div>
+                            
+                            <h3 class="font-semibold text-lg mt-6 mb-3">Requirements</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-server text-blue-500 mt-1 mr-2"></i>
+                                    <span>WordPress 6.0 or higher</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-database text-blue-500 mt-1 mr-2"></i>
+                                    <span>PHP 7.4 or higher</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-memory text-blue-500 mt-1 mr-2"></i>
+                                    <span>MySQL 5.6 or higher</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="font-semibold text-lg mb-4">Screenshots</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <img src="https://via.placeholder.com/300x200?text=Demo+1" alt="Demo 1" class="rounded-lg border border-gray-200 hover:border-blue-400 cursor-pointer">
+                            <img src="https://via.placeholder.com/300x200?text=Demo+2" alt="Demo 2" class="rounded-lg border border-gray-200 hover:border-blue-400 cursor-pointer">
+                            <img src="https://via.placeholder.com/300x200?text=Demo+3" alt="Demo 3" class="rounded-lg border border-gray-200 hover:border-blue-400 cursor-pointer">
+                            <img src="https://via.placeholder.com/300x200?text=Demo+4" alt="Demo 4" class="rounded-lg border border-gray-200 hover:border-blue-400 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="features" class="tab-content">
+                    <h2 class="text-xl font-bold mb-4">Detailed Features</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">Core Features</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>Elementor Pro Included</strong> - Drag & drop page builder with 100+ elements</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>Revolution Slider Included</strong> - Create stunning sliders with animations</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>50+ Pre-built Websites</strong> - One-click import for any niche</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>Header & Footer Builder</strong> - Customize every part of your site</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>WooCommerce Ready</strong> - Build your online store with ease</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">Advanced Features</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>Performance Optimized</strong> - 95+ Google PageSpeed score</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>SEO Ready</strong> - Schema markup and SEO optimized code</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>Translation Ready</strong> - WPML compatible with .po files included</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>RTL Support</strong> - Fully compatible with right-to-left languages</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>Lifetime Updates</strong> - Free updates for life</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="font-semibold text-lg mb-4">Included Premium Plugins (Value $249)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="border rounded-lg p-4 flex items-start">
+                                <img src="https://via.placeholder.com/50?text=EP" alt="Elementor Pro" class="w-10 h-10 rounded mr-3">
+                                <div>
+                                    <h4 class="font-medium">Elementor Pro</h4>
+                                    <p class="text-sm text-gray-500">Drag & drop page builder</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-lg p-4 flex items-start">
+                                <img src="https://via.placeholder.com/50?text=RS" alt="Revolution Slider" class="w-10 h-10 rounded mr-3">
+                                <div>
+                                    <h4 class="font-medium">Revolution Slider</h4>
+                                    <p class="text-sm text-gray-500">Premium slider plugin</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-lg p-4 flex items-start">
+                                <img src="https://via.placeholder.com/50?text=ACF" alt="ACF Pro" class="w-10 h-10 rounded mr-3">
+                                <div>
+                                    <h4 class="font-medium">Advanced Custom Fields Pro</h4>
+                                    <p class="text-sm text-gray-500">Custom fields manager</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="reviews" class="tab-content">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold">Customer Reviews</h2>
+                            <div class="flex items-center mt-1">
+                                <div class="flex text-yellow-400 text-xl">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ml-2 text-gray-600">4.7 out of 5 (1,243 reviews)</span>
+                            </div>
+                        </div>
+                        <button class="mt-3 md:mt-0 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                            Write a Review
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <div class="col-span-1">
+                            <div class="flex items-center mb-1">
+                                <span class="w-16 text-gray-600">5 stars</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div class="progress-fill" style="width: 75%"></div>
+                                </div>
+                                <span class="text-gray-600">75%</span>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-16 text-gray-600">4 stars</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div class="progress-fill" style="width: 15%"></div>
+                                </div>
+                                <span class="text-gray-600">15%</span>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-16 text-gray-600">3 stars</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div class="progress-fill" style="width: 6%"></div>
+                                </div>
+                                <span class="text-gray-600">6%</span>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-16 text-gray-600">2 stars</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div class="progress-fill" style="width: 3%"></div>
+                                </div>
+                                <span class="text-gray-600">3%</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-16 text-gray-600">1 star</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div class="progress-fill" style="width: 1%"></div>
+                                </div>
+                                <span class="text-gray-600">1%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-span-3">
+                            <div class="border-b pb-4 mb-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-medium">Perfect theme for my business</h4>
+                                        <div class="flex items-center mt-1">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <span class="ml-2 text-sm text-gray-500">by John D. • June 12, 2023</span>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                        <i class="fas fa-flag"></i> Report
+                                    </button>
+                                </div>
+                                <p class="mt-2 text-gray-600">
+                                    This theme has everything I needed for my business website. The demos are professionally designed and easy to import. The support team was very helpful when I had questions. Highly recommended!
+                                </p>
+                            </div>
+                            
+                            <div class="border-b pb-4 mb-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-medium">Great value for money</h4>
+                                        <div class="flex items-center mt-1">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <span class="ml-2 text-sm text-gray-500">by Sarah M. • May 28, 2023</span>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                        <i class="fas fa-flag"></i> Report
+                                    </button>
+                                </div>
+                                <p class="mt-2 text-gray-600">
+                                    The included plugins alone are worth more than the theme price. The theme is very flexible and well coded. I was able to create exactly what I wanted without any coding knowledge.
+                                </p>
+                            </div>
+                            
+                            <div class="border-b pb-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-medium">Good but had some issues</h4>
+                                        <div class="flex items-center mt-1">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                            <span class="ml-2 text-sm text-gray-500">by Michael T. • May 15, 2023</span>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                        <i class="fas fa-flag"></i> Report
+                                    </button>
+                                </div>
+                                <p class="mt-2 text-gray-600">
+                                    Overall a good theme with lots of features. I had some issues with the demo import but the support team helped me resolve them. Would be perfect with better documentation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+                        Load More Reviews
+                    </button>
+                </div>
+                
+                <div id="support" class="tab-content">
+                    <h2 class="text-xl font-bold mb-4">Support Policy</h2>
+                    
+                    <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-blue-500 mt-1 mr-3 text-xl"></i>
+                            <div>
+                                <h3 class="font-medium text-blue-800">Premium Support Included</h3>
+                                <p class="text-blue-600 mt-1">
+                                    Your purchase includes 6 months of premium support from our team of experts. Support can be extended for an additional fee.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">What's Covered</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Installation and setup assistance</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Bug fixes and troubleshooting</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Guidance on theme features</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Compatibility issues</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">What's Not Covered</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                                    <span>Custom development work</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                                    <span>Third-party plugin support</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                                    <span>Website customization requests</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                                    <span>Support for modified theme files</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="font-semibold text-lg mb-3">How to Get Support</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="border rounded-lg p-4 text-center hover:bg-gray-50 cursor-pointer">
+                                <i class="fas fa-comments text-blue-500 text-3xl mb-2"></i>
+                                <h4 class="font-medium">Support Forum</h4>
+                                <p class="text-sm text-gray-500 mt-1">Get help from our community</p>
+                            </div>
+                            <div class="border rounded-lg p-4 text-center hover:bg-gray-50 cursor-pointer">
+                                <i class="fas fa-ticket-alt text-blue-500 text-3xl mb-2"></i>
+                                <h4 class="font-medium">Submit Ticket</h4>
+                                <p class="text-sm text-gray-500 mt-1">Direct support from our team</p>
+                            </div>
+                            <div class="border rounded-lg p-4 text-center hover:bg-gray-50 cursor-pointer">
+                                <i class="fas fa-book text-blue-500 text-3xl mb-2"></i>
+                                <h4 class="font-medium">Documentation</h4>
+                                <p class="text-sm text-gray-500 mt-1">Detailed guides and tutorials</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="changelog" class="tab-content">
+                    <h2 class="text-xl font-bold mb-4">Version History</h2>
+                    
+                    <div class="border-l-2 border-gray-200 pl-6 space-y-8">
+                        <div>
+                            <h3 class="font-semibold text-lg">Version 3.2.1 - June 15, 2023</h3>
+                            <ul class="mt-2 space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-plus text-green-500 mt-1 mr-2"></i>
+                                    <span>Added 3 new pre-built website demos</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-bug text-red-500 mt-1 mr-2"></i>
+                                    <span>Fixed mobile menu issue on iOS devices</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-sync-alt text-blue-500 mt-1 mr-2"></i>
+                                    <span>Updated bundled plugins to latest versions</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-semibold text-lg">Version 3.1.0 - April 5, 2023</h3>
+                            <ul class="mt-2 space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-plus text-green-500 mt-1 mr-2"></i>
+                                    <span>Added new header style options</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-bolt text-yellow-500 mt-1 mr-2"></i>
+                                    <span>Improved page loading speed by 20%</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-bug text-red-500 mt-1 mr-2"></i>
+                                    <span>Fixed WooCommerce cart widget issue</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-semibold text-lg">Version 3.0.0 - January 20, 2023</h3>
+                            <ul class="mt-2 space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-star text-purple-500 mt-1 mr-2"></i>
+                                    <span>Complete theme redesign with new features</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-plus text-green-500 mt-1 mr-2"></i>
+                                    <span>Added 15 new pre-built website demos</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-sync-alt text-blue-500 mt-1 mr-2"></i>
+                                    <span>Updated to be compatible with WordPress 6.0</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Products -->
+        <div class="mt-12">
+            <h2 class="text-xl font-bold mb-6">You May Also Like</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=SEO+Plugin" alt="SEO Plugin" class="w-full h-40 object-cover">
+                        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">SALE</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">Premium SEO Plugin</h3>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-1">(428)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$29</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$59</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=eBook" alt="eBook" class="w-full h-40 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">Digital Marketing eBook</h3>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-1">(312)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$12</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=UI+Kit" alt="UI Kit" class="w-full h-40 object-cover">
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">NEW</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">Figma UI Kit</h3>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-500 ml-1">(587)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$24</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$39</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=Course" alt="Course" class="w-full h-40 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">JavaScript Masterclass</h3>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-1">(276)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$49</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sticky Add to Cart (Mobile) -->
+    <div id="stickyAddToCart" class="sticky-add-to-cart p-4 md:hidden">
+        <div class="container mx-auto flex items-center justify-between">
+            <div>
+                <div class="font-bold">$49</div>
+                <div class="text-sm text-gray-500">Premium WordPress Theme</div>
+            </div>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-store mr-2"></i> DigiMart
+                    </h3>
+                    <p class="text-gray-400">
+                        The best marketplace for digital products. Download instantly after purchase.
+                    </p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">WordPress</a></li>
+                        <li><a href="#" class="hover:text-white">Plugins</a></li>
+                        <li><a href="#" class="hover:text-white">eBooks</a></li>
+                        <li><a href="#" class="hover:text-white">Courses</a></li>
+                        <li><a href="#" class="hover:text-white">Templates</a></li>
+                        <li><a href="#" class="hover:text-white">Graphics</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Home</a></li>
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">Become a Seller</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to get updates on new products and discounts.
+                    </p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <button class="bg-blue-600 px-4 py-2 rounded-r-md hover:bg-blue-700">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <i class="fas fa-shield-alt text-gray-400 mr-2"></i>
+                        <span class="text-sm text-gray-400">Secure payment processing</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2023 DigiMart. All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Change main product image when thumbnail is clicked
+        function changeMainImage(element) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = element.src;
+            mainImage.alt = element.alt;
+        }
+        
+        // Product quantity controls
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+        
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+        
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('text-blue-600', 'border-blue-600');
+                tabButtons[i].classList.add('text-gray-500');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.remove('text-gray-500');
+            evt.currentTarget.classList.add('text-blue-600', 'border-blue-600');
+        }
+        
+        // Sticky add to cart for mobile
+        window.addEventListener('scroll', function() {
+            const stickyAddToCart = document.getElementById('stickyAddToCart');
+            if (window.scrollY > 300) {
+                stickyAddToCart.classList.add('visible');
+            } else {
+                stickyAddToCart.classList.remove('visible');
+            }
+        });
+        
+        // License selection
+        const licenseOptions = document.querySelectorAll('input[name="license"]');
+        licenseOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                const parent = this.parentElement;
+                document.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('border-blue-500', 'bg-blue-50');
+                });
+                parent.classList.add('border-blue-500', 'bg-blue-50');
+            });
+        });
+        
+        // Support selection
+        const supportOptions = document.querySelectorAll('input[name="support"]');
+        supportOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                const parent = this.parentElement;
+                document.querySelectorAll('label').forEach(label => {
+                    if (label.getAttribute('for') !== 'support') return;
+                    label.classList.remove('border-blue-500', 'bg-blue-50');
+                });
+                parent.classList.add('border-blue-500', 'bg-blue-50');
+            });
+        });
+    </script>
+</body>
+</html>

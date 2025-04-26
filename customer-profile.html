@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | DigiMart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        .tab-button.active {
+            color: #6366f1;
+            border-bottom: 2px solid #6366f1;
+        }
+        .order-status {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .order-status:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-processing:before {
+            background-color: #f59e0b;
+        }
+        .status-shipped:before {
+            background-color: #3b82f6;
+        }
+        .status-delivered:before {
+            background-color: #10b981;
+        }
+        .status-cancelled:before {
+            background-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-store text-indigo-600 text-2xl"></i>
+                <h1 class="text-xl font-bold text-indigo-600">DigiMart</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Categories</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Vendors</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Sell</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Support</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-heart"></i>
+                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+                </button>
+                <div class="hidden md:block relative group">
+                    <button class="flex items-center space-x-1">
+                        <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="text-gray-700">John</span>
+                        <i class="fas fa-chevron-down text-gray-500 text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Wishlist</a>
+                        <div class="border-t border-gray-200"></div>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</a>
+                    </div>
+                </div>
+                <button class="md:hidden p-2 text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar -->
+            <div class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="flex flex-col items-center text-center mb-6">
+                        <div class="h-20 w-20 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h2 class="text-lg font-bold">John Doe</h2>
+                        <p class="text-gray-500 text-sm">Premium Member</p>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center space-x-2 px-3 py-2 bg-indigo-50 text-indigo-600 rounded-md">
+                            <i class="fas fa-user-circle w-5"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-shopping-bag w-5"></i>
+                            <span>Orders</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-heart w-5"></i>
+                            <span>Wishlist</span>
+                            <span class="ml-auto bg-indigo-100 text-indigo-600 text-xs px-2 py-1 rounded-full">3</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-map-marker-alt w-5"></i>
+                            <span>Addresses</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-credit-card w-5"></i>
+                            <span>Payment Methods</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                            <i class="fas fa-cog w-5"></i>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="font-bold mb-3">Account Balance</h3>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-500">Wallet</span>
+                        <span class="font-medium">$125.50</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-gray-500">Reward Points</span>
+                        <span class="font-medium">1,250 pts</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">
+                        Add Funds
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Profile Content -->
+            <div class="flex-1">
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">My Profile</h2>
+                        <button class="text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-pencil-alt mr-1"></i> Edit Profile
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-medium text-gray-700 mb-3">Personal Information</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Full Name</label>
+                                    <p class="font-medium">John Doe</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Email</label>
+                                    <p class="font-medium">john.doe@example.com</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Phone</label>
+                                    <p class="font-medium">+1 (555) 123-4567</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Date of Birth</label>
+                                    <p class="font-medium">January 15, 1990</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-medium text-gray-700 mb-3">Account Security</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Password</label>
+                                    <div class="flex items-center">
+                                        <p class="font-medium">••••••••</p>
+                                        <button class="ml-3 text-indigo-600 text-sm hover:text-indigo-800">
+                                            Change
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Two-Factor Authentication</label>
+                                    <div class="flex items-center">
+                                        <span class="inline-block h-2 w-2 rounded-full bg-green-500 mr-2"></span>
+                                        <p class="font-medium">Enabled</p>
+                                        <button class="ml-3 text-indigo-600 text-sm hover:text-indigo-800">
+                                            Manage
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-500 text-sm mb-1">Connected Devices</label>
+                                    <div class="flex items-center">
+                                        <p class="font-medium">3 devices</p>
+                                        <button class="ml-3 text-indigo-600 text-sm hover:text-indigo-800">
+                                            View
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Orders -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Recent Orders</h2>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800">View All</a>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">#ORD-2023-4567</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Oct 12, 2023</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$149.97</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="order-status status-delivered">Delivered</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">#ORD-2023-4566</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Oct 5, 2023</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$89.98</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="order-status status-shipped">Shipped</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Track</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">#ORD-2023-4565</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sep 28, 2023</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$59.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="order-status status-processing">Processing</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Saved Addresses -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Saved Addresses</h2>
+                        <button class="text-indigo-600 hover:text-indigo-800">
+                            <i class="fas fa-plus mr-1"></i> Add New
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="profile-card border border-gray-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between mb-2">
+                                <h3 class="font-medium">Home Address</h3>
+                                <div class="flex space-x-2">
+                                    <button class="text-gray-400 hover:text-indigo-600">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-indigo-600">
+                                        <i class="fas fa-trash-alt text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-1">123 Main Street</p>
+                            <p class="text-gray-600 text-sm mb-1">Apartment 4B</p>
+                            <p class="text-gray-600 text-sm mb-1">New York, NY 10001</p>
+                            <p class="text-gray-600 text-sm">United States</p>
+                            <div class="mt-3 pt-3 border-t border-gray-100">
+                                <span class="inline-block bg-indigo-50 text-indigo-600 text-xs px-2 py-1 rounded">Default</span>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card border border-gray-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between mb-2">
+                                <h3 class="font-medium">Work Address</h3>
+                                <div class="flex space-x-2">
+                                    <button class="text-gray-400 hover:text-indigo-600">
+                                        <i class="fas fa-pencil-alt text-sm"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-indigo-600">
+                                        <i class="fas fa-trash-alt text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-1">456 Business Ave</p>
+                            <p class="text-gray-600 text-sm mb-1">Floor 12</p>
+                            <p class="text-gray-600 text-sm mb-1">New York, NY 10005</p>
+                            <p class="text-gray-600 text-sm">United States</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-store mr-2"></i> DigiMart
+                    </h3>
+                    <p class="text-gray-400">
+                        The best marketplace for digital products. Download instantly after purchase.
+                    </p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">WordPress</a></li>
+                        <li><a href="#" class="hover:text-white">Plugins</a></li>
+                        <li><a href="#" class="hover:text-white">eBooks</a></li>
+                        <li><a href="#" class="hover:text-white">Courses</a></li>
+                        <li><a href="#" class="hover:text-white">Templates</a></li>
+                        <li><a href="#" class="hover:text-white">Graphics</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Home</a></li>
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">Become a Seller</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to get updates on new products and discounts.
+                    </p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <i class="fas fa-shield-alt text-gray-400 mr-2"></i>
+                        <span class="text-sm text-gray-400">Secure payment processing</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2023 DigiMart. All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Profile card hover effect
+        document.querySelectorAll('.profile-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Mobile menu toggle (would need actual implementation)
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            // Implementation for mobile menu would go here
+        });
+    </script>
+</body>
+</html>

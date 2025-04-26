@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Favourites - DigiMart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .favourite-item:hover .remove-favourite {
+            opacity: 1;
+        }
+        .discount-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(30%, -30%);
+        }
+        .empty-state {
+            background-image: linear-gradient(135deg, #e0e7ff 0%, #eef2ff 100%);
+        }
+    </style>
+</head>
+<body class="bg-indigo-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-store text-indigo-600 text-2xl"></i>
+                <h1 class="text-xl font-bold text-indigo-600">DigiMart</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Categories</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Vendors</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Sell</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Support</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="p-2 text-indigo-600 relative">
+                    <i class="fas fa-heart"></i>
+                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+                </button>
+                <button class="hidden md:block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                    Sign In
+                </button>
+                <button class="md:hidden p-2 text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="container mx-auto px-4 py-3 text-sm text-gray-600">
+        <a href="#" class="hover:text-indigo-600">Home</a> > 
+        <span class="text-gray-800">Your Favourites</span>
+    </div>
+
+    <!-- Main Favourites Section -->
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Favourites Items -->
+            <div class="w-full">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Your Favourites (3 items)</h2>
+                        <div class="flex space-x-3">
+                            <button class="text-indigo-600 hover:text-indigo-800 font-medium">
+                                <i class="fas fa-sync-alt mr-2"></i> Refresh
+                            </button>
+                            <button class="text-red-500 hover:text-red-700 font-medium">
+                                <i class="fas fa-trash-alt mr-2"></i> Clear All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Favourites Items List -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Item 1 -->
+                        <div class="favourite-item bg-white rounded-lg border border-gray-200 hover:border-indigo-200 hover:shadow-md transition-all relative">
+                            <div class="relative">
+                                <img src="https://via.placeholder.com/300x200?text=Premium+WordPress+Theme" alt="Premium WordPress Theme" class="w-full h-48 object-cover rounded-t-lg">
+                                <div class="discount-badge bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                    -45%
+                                </div>
+                                <button class="remove-favourite absolute top-2 left-2 bg-white p-2 rounded-full shadow-md text-gray-500 hover:text-red-500 opacity-0 transition-opacity">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-gray-800 mb-1">Premium Multipurpose WordPress Theme</h3>
+                                <p class="text-sm text-gray-500 mb-2">By DigitalTech</p>
+                                
+                                <div class="flex items-center text-yellow-400 text-sm mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-gray-500 ml-1">(1,243)</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-lg font-bold text-gray-800">$49.00</span>
+                                        <span class="block text-sm text-gray-500 line-through">$89.00</span>
+                                    </div>
+                                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 2 -->
+                        <div class="favourite-item bg-white rounded-lg border border-gray-200 hover:border-indigo-200 hover:shadow-md transition-all relative">
+                            <div class="relative">
+                                <img src="https://via.placeholder.com/300x200?text=SEO+Plugin" alt="SEO Plugin" class="w-full h-48 object-cover rounded-t-lg">
+                                <button class="remove-favourite absolute top-2 left-2 bg-white p-2 rounded-full shadow-md text-gray-500 hover:text-red-500 opacity-0 transition-opacity">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-gray-800 mb-1">Premium SEO Plugin</h3>
+                                <p class="text-sm text-gray-500 mb-2">By WebMaster Tools</p>
+                                
+                                <div class="flex items-center text-yellow-400 text-sm mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-500 ml-1">(428)</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-lg font-bold text-gray-800">$29.00</span>
+                                        <span class="block text-sm text-gray-500 line-through">$59.00</span>
+                                    </div>
+                                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 3 -->
+                        <div class="favourite-item bg-white rounded-lg border border-gray-200 hover:border-indigo-200 hover:shadow-md transition-all relative">
+                            <div class="relative">
+                                <img src="https://via.placeholder.com/300x200?text=UI+Kit" alt="UI Kit" class="w-full h-48 object-cover rounded-t-lg">
+                                <div class="discount-badge bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                    NEW
+                                </div>
+                                <button class="remove-favourite absolute top-2 left-2 bg-white p-2 rounded-full shadow-md text-gray-500 hover:text-red-500 opacity-0 transition-opacity">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-gray-800 mb-1">Figma UI Kit</h3>
+                                <p class="text-sm text-gray-500 mb-2">By DesignHub</p>
+                                
+                                <div class="flex items-center text-yellow-400 text-sm mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-gray-500 ml-1">(587)</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-lg font-bold text-gray-800">$24.00</span>
+                                        <span class="block text-sm text-gray-500 line-through">$39.00</span>
+                                    </div>
+                                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Empty State (Hidden) -->
+                    <div class="empty-state hidden rounded-lg p-12 text-center my-8">
+                        <div class="max-w-md mx-auto">
+                            <i class="fas fa-heart text-indigo-200 text-5xl mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-700 mb-2">Your favourites list is empty</h3>
+                            <p class="text-gray-500 mb-6">Start adding items to your favourites by clicking the heart icon on any product.</p>
+                            <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-medium">
+                                Browse Products
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommended For You -->
+        <div class="mt-12">
+            <h2 class="text-xl font-bold mb-6">Recommended For You</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=JavaScript+Course" alt="JavaScript Course" class="w-full h-40 object-cover">
+                        <div class="absolute top-2 right-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">BESTSELLER</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">JavaScript Masterclass</h3>
+                        <p class="text-sm text-gray-500 mb-2">By CodeMasters</p>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-1">(276)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$49</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=Resume+Templates" alt="Resume Templates" class="w-full h-40 object-cover">
+                        <div class="absolute top-2 right-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">SALE</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">Resume Template Pack</h3>
+                        <p class="text-sm text-gray-500 mb-2">By CareerBoost</p>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-1">(189)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$12</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$25</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=Email+Plugin" alt="Email Plugin" class="w-full h-40 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">Email Marketing Plugin</h3>
+                        <p class="text-sm text-gray-500 mb-2">By MailExperts</p>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-500 ml-1">(342)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$35</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/300x200?text=Illustration+Pack" alt="Illustration Pack" class="w-full h-40 object-cover">
+                        <div class="absolute top-2 right-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">NEW</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-800 mb-1">Modern Illustration Pack</h3>
+                        <p class="text-sm text-gray-500 mb-2">By ArtVectors</p>
+                        <div class="flex items-center text-yellow-400 text-sm mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-500 ml-1">(94)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-800">$18</span>
+                                <span class="text-sm text-gray-500 line-through ml-1">$29</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-store mr-2"></i> DigiMart
+                    </h3>
+                    <p class="text-gray-400">
+                        The best marketplace for digital products. Download instantly after purchase.
+                    </p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">WordPress</a></li>
+                        <li><a href="#" class="hover:text-white">Plugins</a></li>
+                        <li><a href="#" class="hover:text-white">eBooks</a></li>
+                        <li><a href="#" class="hover:text-white">Courses</a></li>
+                        <li><a href="#" class="hover:text-white">Templates</a></li>
+                        <li><a href="#" class="hover:text-white">Graphics</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Home</a></li>
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">Become a Seller</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to get updates on new products and discounts.
+                    </p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <i class="fas fa-shield-alt text-gray-400 mr-2"></i>
+                        <span class="text-sm text-gray-400">Secure payment processing</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2023 DigiMart. All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Remove favourite item
+        document.querySelectorAll('.remove-favourite').forEach(button => {
+            button.addEventListener('click', function() {
+                const favouriteItem = this.closest('.favourite-item');
+                favouriteItem.style.opacity = '0';
+                setTimeout(() => {
+                    favouriteItem.remove();
+                    // Check if all items are removed to show empty state
+                    if(document.querySelectorAll('.favourite-item').length === 0) {
+                        document.querySelector('.empty-state').classList.remove('hidden');
+                    }
+                }, 300);
+            });
+        });
+        
+        // Clear all favourites
+        document.querySelector('button:contains("Clear All")').addEventListener('click', function() {
+            document.querySelectorAll('.favourite-item').forEach(item => {
+                item.style.opacity = '0';
+                setTimeout(() => {
+                    item.remove();
+                }, 300);
+            });
+            setTimeout(() => {
+                document.querySelector('.empty-state').classList.remove('hidden');
+            }, 350);
+        });
+        
+        // Add to favourites (example for recommended products)
+        document.querySelectorAll('button:contains("far fa-heart")').forEach(button => {
+            button.addEventListener('click', function() {
+                if(this.classList.contains('far')) {
+                    this.classList.remove('far');
+                    this.classList.add('fas', 'text-red-500');
+                    // In a real app, you would add this item to favourites
+                } else {
+                    this.classList.remove('fas', 'text-red-500');
+                    this.classList.add('far');
+                    // In a real app, you would remove this item from favourites
+                }
+            });
+        });
+    </script>
+</body>
+</html>
