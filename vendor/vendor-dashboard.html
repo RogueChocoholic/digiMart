@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendor Dashboard - Multi-Vendor E-commerce</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .dropdown-content {
+      display: none;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .sidebar-item.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+
+    .sidebar-item.active i {
+      color: white;
+    }
+
+    @media (max-width: 1023px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gray-50" onload="essentialLoading();">
+  <!-- Mobile Sidebar Toggle -->
+  <button id="sidebarToggle"
+    class="fixed top-4 left-4 z-50 rounded-md bg-indigo-600 p-2 text-white shadow-md lg:hidden">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+  </aside>
+
+  <!-- Main Content -->
+  <div class="lg:pl-64">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6" id="navbar">
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6 lg:p-8">
+      <!-- Welcome Banner -->
+      <div
+        class="relative mb-8 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 p-8 text-white">
+        <div class="absolute inset-0 bg-[url('https://placehold.co/1200x400')] bg-cover bg-center opacity-10"></div>
+        <div class="relative z-10">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 class="text-2xl font-bold md:text-3xl">Welcome back, Artisan Crafts!</h1>
+              <p class="mt-1 text-indigo-100">Here's what's happening with your store today.</p>
+            </div>
+            <div class="mt-4 flex gap-3 md:mt-0">
+              <button class="rounded-md bg-white px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50">
+                <i class="fa-solid fa-plus mr-1"></i> Add Product
+              </button>
+              <button class="rounded-md bg-indigo-700 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-800">
+                <i class="fa-solid fa-chart-line mr-1"></i> View Reports
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">Today's Sales</div>
+            <div class="rounded-full bg-green-100 p-1.5 text-green-600">
+              <i class="fa-solid fa-arrow-trend-up text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">$1,245.80</div>
+          <div class="mt-1 flex items-center text-xs">
+            <span class="text-green-600 font-medium">+18.3%</span>
+            <span class="ml-1 text-gray-500">vs yesterday</span>
+          </div>
+        </div>
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">New Orders</div>
+            <div class="rounded-full bg-indigo-100 p-1.5 text-indigo-600">
+              <i class="fa-solid fa-bag-shopping text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">8</div>
+          <div class="mt-1 flex items-center text-xs">
+            <span class="text-green-600 font-medium">+2</span>
+            <span class="ml-1 text-gray-500">vs yesterday</span>
+          </div>
+        </div>
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">Conversion Rate</div>
+            <div class="rounded-full bg-blue-100 p-1.5 text-blue-600">
+              <i class="fa-solid fa-percent text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">3.6%</div>
+          <div class="mt-1 flex items-center text-xs">
+            <span class="text-green-600 font-medium">+0.4%</span>
+            <span class="ml-1 text-gray-500">vs last week</span>
+          </div>
+        </div>
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">Store Visitors</div>
+            <div class="rounded-full bg-amber-100 p-1.5 text-amber-600">
+              <i class="fa-solid fa-users text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">245</div>
+          <div class="mt-1 flex items-center text-xs">
+            <span class="text-red-600 font-medium">-5.2%</span>
+            <span class="ml-1 text-gray-500">vs yesterday</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Sections -->
+      <div class="mb-8 grid gap-6 lg:grid-cols-2">
+        <!-- Financial Overview Widget -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Financial Overview</h3>
+            <a href="./vendor-dashboard-financial-overview.html"
+              class="text-sm text-indigo-600 hover:text-indigo-800">View All</a>
+          </div>
+          <div class="p-4">
+            <div class="mb-4 flex items-center justify-between">
+              <div>
+                <div class="text-sm text-gray-500">Monthly Revenue</div>
+                <div class="text-xl font-bold">$24,780.45</div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Pending Payout</div>
+                <div class="text-xl font-bold">$3,450.00</div>
+              </div>
+            </div>
+            <div class="h-40">
+              <canvas id="miniRevenueChart"></canvas>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-4">
+              <a href="financial-dashboard.html"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-chart-line mb-1 text-lg"></i>
+                <div>Revenue Details</div>
+              </a>
+              <a href="financial-dashboard.html#payment-history"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-credit-card mb-1 text-lg"></i>
+                <div>Payment History</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders Widget -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Recent Orders</h3>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">View All</a>
+          </div>
+          <div class="p-4">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between border-b pb-3">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-indigo-100 p-2 text-indigo-600">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium">Order #10238</div>
+                    <div class="text-sm text-gray-500">May 12, 2023 • 10:45 AM</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-medium">$128.50</div>
+                  <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">Completed</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between border-b pb-3">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-indigo-100 p-2 text-indigo-600">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium">Order #10237</div>
+                    <div class="text-sm text-gray-500">May 12, 2023 • 09:32 AM</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-medium">$85.25</div>
+                  <span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-medium text-amber-800">Processing</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between border-b pb-3">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-indigo-100 p-2 text-indigo-600">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium">Order #10236</div>
+                    <div class="text-sm text-gray-500">May 11, 2023 • 04:15 PM</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-medium">$245.00</div>
+                  <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">Completed</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-4">
+              <a href="#"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-list-check mb-1 text-lg"></i>
+                <div>Manage Orders</div>
+              </a>
+              <a href="#"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-truck mb-1 text-lg"></i>
+                <div>Shipments</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Sections Row 2 -->
+      <div class="mb-8 grid gap-6 lg:grid-cols-3">
+        <!-- Inventory Status -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Inventory Status</h3>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">Manage</a>
+          </div>
+          <div class="p-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                  <span class="text-sm">Low Stock (3)</span>
+                </div>
+                <span class="text-sm font-medium">3 products</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 rounded-full bg-amber-500"></div>
+                  <span class="text-sm">Medium Stock</span>
+                </div>
+                <span class="text-sm font-medium">12 products</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                  <span class="text-sm">Well Stocked</span>
+                </div>
+                <span class="text-sm font-medium">85 products</span>
+              </div>
+            </div>
+            <div class="mt-4">
+              <div class="mb-2 flex items-center justify-between text-sm">
+                <span>Low Stock Items</span>
+                <span class="text-red-600 font-medium">Needs Attention</span>
+              </div>
+              <div class="space-y-2">
+                <div class="rounded-md border p-2">
+                  <div class="font-medium">Handcrafted Necklace</div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-500">SKU: CRAFT-1001</span>
+                    <span class="text-red-600 font-medium">2 left</span>
+                  </div>
+                </div>
+                <div class="rounded-md border p-2">
+                  <div class="font-medium">Ceramic Vase</div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-500">SKU: CRAFT-1042</span>
+                    <span class="text-red-600 font-medium">3 left</span>
+                  </div>
+                </div>
+                <div class="rounded-md border p-2">
+                  <div class="font-medium">Woven Basket</div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-500">SKU: CRAFT-1078</span>
+                    <span class="text-red-600 font-medium">1 left</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Reviews -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Recent Reviews</h3>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">View All</a>
+          </div>
+          <div class="p-4">
+            <div class="space-y-4">
+              <div class="border-b pb-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1">
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                  </div>
+                  <span class="text-xs text-gray-500">May 10, 2023</span>
+                </div>
+                <div class="mt-2">
+                  <div class="font-medium">Beautiful craftsmanship!</div>
+                  <p class="text-sm text-gray-600">The attention to detail is amazing. I'm very happy with my purchase
+                    and will definitely buy again.</p>
+                </div>
+                <div class="mt-2 flex items-center justify-between">
+                  <span class="text-xs text-gray-500">by Sarah J.</span>
+                  <span class="text-xs text-gray-500">Handcrafted Necklace</span>
+                </div>
+              </div>
+              <div class="border-b pb-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1">
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-regular fa-star text-yellow-400"></i>
+                  </div>
+                  <span class="text-xs text-gray-500">May 8, 2023</span>
+                </div>
+                <div class="mt-2">
+                  <div class="font-medium">Great quality</div>
+                  <p class="text-sm text-gray-600">The ceramic vase is even more beautiful in person. Shipping was fast
+                    too!</p>
+                </div>
+                <div class="mt-2 flex items-center justify-between">
+                  <span class="text-xs text-gray-500">by Michael T.</span>
+                  <span class="text-xs text-gray-500">Ceramic Vase</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-center">
+              <a href="#"
+                class="rounded-md bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                Manage Reviews
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Messages -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Customer Messages</h3>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">View All</a>
+          </div>
+          <div class="p-4">
+            <div class="space-y-4">
+              <div class="flex items-center gap-3 border-b pb-3">
+                <img src="https://placehold.co/40x40" alt="Customer" class="h-10 w-10 rounded-full">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium">Emily Wilson</div>
+                    <span class="text-xs text-gray-500">2h ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 line-clamp-1">Hi, I was wondering if the necklace comes in silver as
+                    well?</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 border-b pb-3">
+                <img src="https://placehold.co/40x40" alt="Customer" class="h-10 w-10 rounded-full">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium">Robert Chen</div>
+                    <span class="text-xs text-gray-500">5h ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 line-clamp-1">When will my order be shipped? I need it by next week.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40" alt="Customer" class="h-10 w-10 rounded-full">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium">Jessica Martinez</div>
+                    <span class="text-xs text-gray-500">1d ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 line-clamp-1">Thank you for the quick response! I'll place my order
+                    today.</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-center">
+              <a href="#"
+                class="rounded-md bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                Open Inbox
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Sections Row 3 -->
+      <div class="mb-8 grid gap-6 lg:grid-cols-2">
+        <!-- Marketing & Promotions -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Marketing & Promotions</h3>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">Create New</a>
+          </div>
+          <div class="p-4">
+            <div class="mb-4 rounded-lg bg-indigo-50 p-4">
+              <div class="flex items-center justify-between">
+                <h4 class="font-medium text-indigo-800">Active Promotions</h4>
+                <span class="rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">2 Active</span>
+              </div>
+              <div class="mt-3 space-y-3">
+                <div class="rounded-md border border-indigo-200 bg-white p-3">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium">Summer Sale</div>
+                    <span class="text-xs text-gray-500">Ends in 5 days</span>
+                  </div>
+                  <div class="mt-1 text-sm text-gray-600">20% off all handcrafted items</div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Code: SUMMER20</span>
+                    <span class="text-xs font-medium text-green-600">45 uses</span>
+                  </div>
+                </div>
+                <div class="rounded-md border border-indigo-200 bg-white p-3">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium">Free Shipping</div>
+                    <span class="text-xs text-gray-500">Ongoing</span>
+                  </div>
+                  <div class="mt-1 text-sm text-gray-600">Free shipping on orders over $50</div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Automatic</span>
+                    <span class="text-xs font-medium text-green-600">128 uses</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <a href="#"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-tag mb-1 text-lg"></i>
+                <div>Create Discount</div>
+              </a>
+              <a href="#"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-bullhorn mb-1 text-lg"></i>
+                <div>Email Campaign</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications & Settings -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b p-4">
+            <h3 class="text-lg font-semibold">Notifications & Settings</h3>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">Configure</a>
+          </div>
+          <div class="p-4">
+            <div class="mb-4 space-y-3">
+              <div class="flex items-center justify-between rounded-md border p-3">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-full bg-indigo-100 p-2 text-indigo-600">
+                    <i class="fa-solid fa-bell"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium">New Order Alerts</div>
+                    <div class="text-sm text-gray-500">Get notified when you receive a new order</div>
+                  </div>
+                </div>
+                <label class="relative inline-flex cursor-pointer items-center">
+                  <input type="checkbox" checked class="peer sr-only">
+                  <div
+                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none">
+                  </div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between rounded-md border p-3">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-full bg-indigo-100 p-2 text-indigo-600">
+                    <i class="fa-solid fa-envelope"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium">Email Notifications</div>
+                    <div class="text-sm text-gray-500">Receive daily summary of your store activity</div>
+                  </div>
+                </div>
+                <label class="relative inline-flex cursor-pointer items-center">
+                  <input type="checkbox" checked class="peer sr-only">
+                  <div
+                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none">
+                  </div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between rounded-md border p-3">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-full bg-indigo-100 p-2 text-indigo-600">
+                    <i class="fa-solid fa-box"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium">Low Stock Alerts</div>
+                    <div class="text-sm text-gray-500">Get notified when products are running low</div>
+                  </div>
+                </div>
+                <label class="relative inline-flex cursor-pointer items-center">
+                  <input type="checkbox" checked class="peer sr-only">
+                  <div
+                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none">
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <a href="#"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-bell-slash mb-1 text-lg"></i>
+                <div>Notification Settings</div>
+              </a>
+              <a href="#"
+                class="rounded-md bg-indigo-50 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                <i class="fa-solid fa-gear mb-1 text-lg"></i>
+                <div>Account Settings</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Mini Revenue Chart
+    const miniRevenueCtx = document.getElementById('miniRevenueChart').getContext('2d');
+    const miniRevenueChart = new Chart(miniRevenueCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Revenue',
+          data: [9800, 11200, 10500, 12800, 14500, 24780],
+          borderColor: '#4f46e5',
+          backgroundColor: 'rgba(79, 70, 229, 0.1)',
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                  label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                }
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          },
+          y: {
+            display: false,
+            beginAtZero: true
+          }
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        }
+      }
+    });
+
+    // Sidebar active state
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', () => {
+        sidebarItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  </script>
+  <script src="./js/script.js"></script>
+</body>
+
+</html>

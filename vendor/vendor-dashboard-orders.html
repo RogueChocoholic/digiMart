@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Management - Multi-Vendor E-commerce</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .dropdown-content {
+      display: none;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .sidebar-item.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+
+    .sidebar-item.active i {
+      color: white;
+    }
+
+    @media (max-width: 1023px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gray-50" onload="fetchSidebar();fetchNavBar();">
+  <!-- Mobile Sidebar Toggle -->
+  <button id="sidebarToggle"
+    class="fixed top-4 left-4 z-50 rounded-md bg-indigo-600 p-2 text-white shadow-md lg:hidden">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+
+  </aside>
+
+  <!-- Main Content -->
+  <div class="lg:pl-64">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6" id="navbar">
+
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6 lg:p-8">
+      <!-- Breadcrumb Navigation -->
+      <div class="mb-6">
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="index.html"
+                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                <i class="fa-solid fa-home mr-2"></i>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <i class="fa-solid fa-chevron-right text-gray-400 mx-1 text-xs"></i>
+                <a href="#" class="ml-1 text-sm font-medium text-indigo-600">Orders</a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Orders Header -->
+      <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 class="text-2xl font-bold">Orders</h1>
+          <p class="text-gray-500">Manage and process customer orders</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+            <i class="fa-solid fa-print mr-1"></i> Print Shipping Labels
+          </button>
+          <button class="rounded-md border bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="fa-solid fa-file-export mr-1"></i> Export Orders
+          </button>
+        </div>
+      </div>
+
+      <!-- Order Stats -->
+      <div class="mb-6 grid gap-4 md:grid-cols-4">
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">New Orders</div>
+            <div class="rounded-full bg-indigo-100 p-1.5 text-indigo-600">
+              <i class="fa-solid fa-inbox text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">8</div>
+          <div class="mt-1 text-xs text-gray-500">Awaiting processing</div>
+        </div>
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">Processing</div>
+            <div class="rounded-full bg-amber-100 p-1.5 text-amber-600">
+              <i class="fa-solid fa-spinner text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">5</div>
+          <div class="mt-1 text-xs text-gray-500">Being prepared</div>
+        </div>
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">Shipped</div>
+            <div class="rounded-full bg-blue-100 p-1.5 text-blue-600">
+              <i class="fa-solid fa-truck text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">12</div>
+          <div class="mt-1 text-xs text-gray-500">In transit</div>
+        </div>
+        <div class="rounded-lg border bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-medium text-gray-500">Completed</div>
+            <div class="rounded-full bg-green-100 p-1.5 text-green-600">
+              <i class="fa-solid fa-check text-xs"></i>
+            </div>
+          </div>
+          <div class="mt-2 text-2xl font-bold">324</div>
+          <div class="mt-1 text-xs text-gray-500">Successfully delivered</div>
+        </div>
+      </div>
+
+      <!-- Filters and Search -->
+      <div class="mb-6 rounded-lg border bg-white p-4">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div class="flex flex-wrap gap-3">
+            <select class="rounded-md border border-gray-300 px-3 py-2 text-sm">
+              <option value="all">All Orders</option>
+              <option value="new">New</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="refunded">Refunded</option>
+            </select>
+            <select class="rounded-md border border-gray-300 px-3 py-2 text-sm">
+              <option value="all">All Time</option>
+              <option value="today">Today</option>
+              <option value="yesterday">Yesterday</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="custom">Custom Range</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="relative">
+              <input type="text" placeholder="Search by order ID or customer..."
+                class="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+              <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <button class="rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700">
+              <i class="fa-solid fa-filter mr-1"></i> Filter
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="overflow-hidden rounded-lg border bg-white shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-gray-50 text-xs uppercase text-gray-700">
+              <tr>
+                <th class="px-6 py-3">Order ID</th>
+                <th class="px-6 py-3">Date</th>
+                <th class="px-6 py-3">Customer</th>
+                <th class="px-6 py-3">Items</th>
+                <th class="px-6 py-3">Total</th>
+                <th class="px-6 py-3">Status</th>
+                <th class="px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable">
+              <!-- Orders will be inserted here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        <div class="flex items-center justify-between border-t px-4 py-3">
+          <div class="text-sm text-gray-700">
+            Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span
+              class="font-medium">349</span> orders
+          </div>
+          <div class="flex items-center space-x-2">
+            <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50 disabled:opacity-50"
+              disabled>Previous</button>
+            <button class="rounded-md bg-indigo-50 px-3 py-1 text-sm text-indigo-600 hover:bg-indigo-100">1</button>
+            <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">2</button>
+            <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">3</button>
+            <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">4</button>
+            <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">5</button>
+            <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">Next</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Sample orders data
+    const orders = [
+      { id: 'ORD-10238', date: 'May 12, 2023', customer: 'Sarah Johnson', items: 3, total: '$128.50', status: 'New' },
+      { id: 'ORD-10237', date: 'May 12, 2023', customer: 'Michael Chen', items: 1, total: '$85.25', status: 'Processing' },
+      { id: 'ORD-10236', date: 'May 11, 2023', customer: 'Emily Wilson', items: 2, total: '$245.00', status: 'Shipped' },
+      { id: 'ORD-10235', date: 'May 10, 2023', customer: 'David Martinez', items: 4, total: '$178.75', status: 'New' },
+      { id: 'ORD-10234', date: 'May 10, 2023', customer: 'Jessica Lee', items: 1, total: '$59.99', status: 'Processing' },
+      { id: 'ORD-10233', date: 'May 09, 2023', customer: 'Robert Taylor', items: 2, total: '$112.50', status: 'Shipped' },
+      { id: 'ORD-10232', date: 'May 08, 2023', customer: 'Amanda Brown', items: 3, total: '$195.25', status: 'Completed' },
+      { id: 'ORD-10231', date: 'May 07, 2023', customer: 'John Smith', items: 1, total: '$45.00', status: 'Completed' },
+      { id: 'ORD-10230', date: 'May 06, 2023', customer: 'Lisa Garcia', items: 2, total: '$87.50', status: 'Completed' },
+      { id: 'ORD-10229', date: 'May 05, 2023', customer: 'Kevin Wilson', items: 5, total: '$320.75', status: 'Completed' }
+    ];
+
+    // Populate orders table
+    const ordersTable = document.getElementById('ordersTable');
+    orders.forEach(order => {
+      const row = document.createElement('tr');
+      row.className = 'border-b hover:bg-gray-50';
+
+      const statusClass = order.status === 'New'
+        ? 'bg-indigo-100 text-indigo-800'
+        : order.status === 'Processing'
+          ? 'bg-amber-100 text-amber-800'
+          : order.status === 'Shipped'
+            ? 'bg-blue-100 text-blue-800'
+            : 'bg-green-100 text-green-800';
+
+      row.innerHTML = `
+        <td class="px-6 py-4 font-medium">${order.id}</td>
+        <td class="px-6 py-4">${order.date}</td>
+        <td class="px-6 py-4">${order.customer}</td>
+        <td class="px-6 py-4">${order.items} item${order.items > 1 ? 's' : ''}</td>
+        <td class="px-6 py-4 font-medium">${order.total}</td>
+        <td class="px-6 py-4">
+          <span class="rounded-full ${statusClass} px-2 py-1 text-xs font-medium">${order.status}</span>
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex items-center gap-2">
+            <button class="text-indigo-600 hover:text-indigo-800" title="View Details">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button class="text-indigo-600 hover:text-indigo-800" title="Process Order">
+              <i class="fa-solid fa-box"></i>
+            </button>
+            <button class="text-indigo-600 hover:text-indigo-800" title="Print Invoice">
+              <i class="fa-solid fa-print"></i>
+            </button>
+          </div>
+        </td>
+      `;
+      ordersTable.appendChild(row);
+    });
+  </script>
+  <script src="./js/script.js"></script>
+
+</body>
+
+</html>

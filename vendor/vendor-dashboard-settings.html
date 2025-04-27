@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Multi-Vendor E-commerce</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .dropdown-content {
+      display: none;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .sidebar-item.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+
+    .sidebar-item.active i {
+      color: white;
+    }
+
+    @media (max-width: 1023px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+    }
+
+    .settings-tab.active {
+      color: #4f46e5;
+      border-bottom-color: #4f46e5;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gray-50" onload="essentialLoading();">
+  <!-- Mobile Sidebar Toggle -->
+  <button id="sidebarToggle"
+    class="fixed top-4 left-4 z-50 rounded-md bg-indigo-600 p-2 text-white shadow-md lg:hidden">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+
+  </aside>
+
+  <!-- Main Content -->
+  <div class="lg:pl-64">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6" id="navbar">
+      
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6 lg:p-8">
+      <!-- Breadcrumb Navigation -->
+      <div class="mb-6">
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="index.html"
+                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                <i class="fa-solid fa-home mr-2"></i>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <i class="fa-solid fa-chevron-right text-gray-400 mx-1 text-xs"></i>
+                <a href="#" class="ml-1 text-sm font-medium text-indigo-600">Settings</a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Settings Header -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold">Settings</h1>
+        <p class="text-gray-500">Manage your account and store settings</p>
+      </div>
+
+      <!-- Settings Tabs -->
+      <div class="mb-6 border-b">
+        <div class="flex flex-wrap -mb-px">
+          <button id="tab-account"
+            class="settings-tab active mr-2 inline-block p-4 text-sm font-medium border-b-2 border-indigo-600">
+            Account
+          </button>
+          <button id="tab-store"
+            class="settings-tab mr-2 inline-block p-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+            Store Profile
+          </button>
+          <button id="tab-payment"
+            class="settings-tab mr-2 inline-block p-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+            Payment Methods
+          </button>
+          <button id="tab-shipping"
+            class="settings-tab mr-2 inline-block p-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+            Shipping
+          </button>
+          <button id="tab-notifications"
+            class="settings-tab mr-2 inline-block p-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+            Notifications
+          </button>
+          <button id="tab-security"
+            class="settings-tab mr-2 inline-block p-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+            Security
+          </button>
+        </div>
+      </div>
+
+      <!-- Account Settings Tab Content -->
+      <div id="content-account" class="tab-content active">
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Account Information</h3>
+          <form>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <label for="first-name" class="block mb-2 text-sm font-medium text-gray-700">First Name</label>
+                <input type="text" id="first-name"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="John">
+              </div>
+              <div>
+                <label for="last-name" class="block mb-2 text-sm font-medium text-gray-700">Last Name</label>
+                <input type="text" id="last-name"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="Doe">
+              </div>
+              <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="john.doe@example.com">
+              </div>
+              <div>
+                <label for="phone" class="block mb-2 text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="tel" id="phone"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="(555) 123-4567">
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label for="profile-photo" class="block mb-2 text-sm font-medium text-gray-700">Profile Photo</label>
+              <div class="flex items-center gap-4">
+                <img src="https://placehold.co/80x80" alt="Profile" class="h-20 w-20 rounded-full">
+                <div>
+                  <button type="button"
+                    class="rounded-md bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                    Change Photo
+                  </button>
+                  <p class="mt-1 text-xs text-gray-500">JPG, GIF or PNG. Max size of 800K</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit"
+                class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="mt-6 rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Change Password</h3>
+          <form>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <label for="current-password" class="block mb-2 text-sm font-medium text-gray-700">Current
+                  Password</label>
+                <input type="password" id="current-password"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  placeholder="••••••••">
+              </div>
+              <div class="md:col-span-2"></div>
+              <div>
+                <label for="new-password" class="block mb-2 text-sm font-medium text-gray-700">New Password</label>
+                <input type="password" id="new-password"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  placeholder="••••••••">
+              </div>
+              <div>
+                <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-700">Confirm New
+                  Password</label>
+                <input type="password" id="confirm-password"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  placeholder="••••••••">
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit"
+                class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                Update Password
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Store Profile Tab Content -->
+      <div id="content-store" class="tab-content">
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Store Information</h3>
+          <form>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <label for="store-name" class="block mb-2 text-sm font-medium text-gray-700">Store Name</label>
+                <input type="text" id="store-name"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="Artisan Crafts">
+              </div>
+              <div>
+                <label for="store-url" class="block mb-2 text-sm font-medium text-gray-700">Store URL</label>
+                <div class="flex">
+                  <span
+                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md">
+                    https://vendorhub.com/
+                  </span>
+                  <input type="text" id="store-url"
+                    class="rounded-none rounded-r-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="artisan-crafts">
+                </div>
+              </div>
+              <div class="md:col-span-2">
+                <label for="store-description" class="block mb-2 text-sm font-medium text-gray-700">Store
+                  Description</label>
+                <textarea id="store-description" rows="4"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">Handmade crafts and artisanal products created with care and attention to detail. We specialize in unique jewelry, home decor, and pottery items.</textarea>
+              </div>
+              <div>
+                <label for="store-email" class="block mb-2 text-sm font-medium text-gray-700">Contact Email</label>
+                <input type="email" id="store-email"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="contact@artisancrafts.com">
+              </div>
+              <div>
+                <label for="store-phone" class="block mb-2 text-sm font-medium text-gray-700">Contact Phone</label>
+                <input type="tel" id="store-phone"
+                  class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value="(555) 987-6543">
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label for="store-logo" class="block mb-2 text-sm font-medium text-gray-700">Store Logo</label>
+              <div class="flex items-center gap-4">
+                <img src="https://placehold.co/120x120" alt="Store Logo" class="h-24 w-24 rounded-md">
+                <div>
+                  <button type="button"
+                    class="rounded-md bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                    Change Logo
+                  </button>
+                  <p class="mt-1 text-xs text-gray-500">JPG, GIF or PNG. Max size of 1MB</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label for="store-banner" class="block mb-2 text-sm font-medium text-gray-700">Store Banner</label>
+              <div class="flex items-center gap-4">
+                <img src="https://placehold.co/600x150" alt="Store Banner"
+                  class="h-32 w-full max-w-xl rounded-md object-cover">
+                <div>
+                  <button type="button"
+                    class="rounded-md bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                    Change Banner
+                  </button>
+                  <p class="mt-1 text-xs text-gray-500">Recommended size: 1200x300 pixels</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="submit"
+                class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Payment Methods Tab Content -->
+      <div id="content-payment" class="tab-content">
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Payment Methods</h3>
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Connected Payment Accounts</h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-blue-100 p-2">
+                    <i class="fa-brands fa-paypal text-blue-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">PayPal</h5>
+                    <p class="text-sm text-gray-500">john.doe@example.com</p>
+                  </div>
+                </div>
+                <div>
+                  <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">Connected</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-indigo-100 p-2">
+                    <i class="fa-brands fa-stripe-s text-indigo-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">Stripe</h5>
+                    <p class="text-sm text-gray-500">Not connected</p>
+                  </div>
+                </div>
+                <div>
+                  <button
+                    class="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-700">
+                    Connect
+                  </button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-green-100 p-2">
+                    <i class="fa-solid fa-building-columns text-green-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">Bank Account</h5>
+                    <p class="text-sm text-gray-500">****4567</p>
+                  </div>
+                </div>
+                <div>
+                  <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">Connected</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Payout Settings</h4>
+            <form>
+              <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                  <label for="payout-method" class="block mb-2 text-sm font-medium text-gray-700">Default Payout
+                    Method</label>
+                  <select id="payout-method"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    <option value="bank">Bank Account (****4567)</option>
+                    <option value="paypal">PayPal (john.doe@example.com)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="payout-schedule" class="block mb-2 text-sm font-medium text-gray-700">Payout
+                    Schedule</label>
+                  <select id="payout-schedule"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Bi-weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button type="submit"
+                  class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Tab Content -->
+      <div id="content-shipping" class="tab-content">
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Shipping Settings</h3>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Shipping Origin</h4>
+            <form>
+              <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                  <label for="address-line1" class="block mb-2 text-sm font-medium text-gray-700">Address Line 1</label>
+                  <input type="text" id="address-line1"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="123 Craft Street">
+                </div>
+                <div>
+                  <label for="address-line2" class="block mb-2 text-sm font-medium text-gray-700">Address Line 2</label>
+                  <input type="text" id="address-line2"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="Suite 101">
+                </div>
+                <div>
+                  <label for="city" class="block mb-2 text-sm font-medium text-gray-700">City</label>
+                  <input type="text" id="city"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="Artville">
+                </div>
+                <div>
+                  <label for="state" class="block mb-2 text-sm font-medium text-gray-700">State/Province</label>
+                  <input type="text" id="state"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="CA">
+                </div>
+                <div>
+                  <label for="postal-code" class="block mb-2 text-sm font-medium text-gray-700">Postal/ZIP Code</label>
+                  <input type="text" id="postal-code"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="90210">
+                </div>
+                <div>
+                  <label for="country" class="block mb-2 text-sm font-medium text-gray-700">Country</label>
+                  <select id="country"
+                    class="rounded-md border border-gray-300 px-3 py-2 w-full focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    <option value="US" selected>United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="AU">Australia</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Shipping Methods</h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <input id="standard-shipping" type="checkbox"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" checked>
+                  <div>
+                    <label for="standard-shipping" class="font-medium">Standard Shipping</label>
+                    <p class="text-sm text-gray-500">3-5 business days</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">$</span>
+                  <input type="number"
+                    class="w-20 rounded-md border border-gray-300 px-3 py-1 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="5.99">
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <input id="express-shipping" type="checkbox"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" checked>
+                  <div>
+                    <label for="express-shipping" class="font-medium">Express Shipping</label>
+                    <p class="text-sm text-gray-500">1-2 business days</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">$</span>
+                  <input type="number"
+                    class="w-20 rounded-md border border-gray-300 px-3 py-1 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="12.99">
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <input id="free-shipping" type="checkbox"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" checked>
+                  <div>
+                    <label for="free-shipping" class="font-medium">Free Shipping</label>
+                    <p class="text-sm text-gray-500">For orders over:</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">$</span>
+                  <input type="number"
+                    class="w-20 rounded-md border border-gray-300 px-3 py-1 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="50.00">
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <input id="international-shipping" type="checkbox"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  <div>
+                    <label for="international-shipping" class="font-medium">International Shipping</label>
+                    <p class="text-sm text-gray-500">7-14 business days</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">$</span>
+                  <input type="number"
+                    class="w-20 rounded-md border border-gray-300 px-3 py-1 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    value="25.99">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <button type="submit"
+              class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Tab Content -->
+      <div id="content-notifications" class="tab-content">
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Notification Preferences</h3>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Email Notifications</h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">New Orders</h5>
+                  <p class="text-sm text-gray-500">Receive an email when a new order is placed</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">Order Status Updates</h5>
+                  <p class="text-sm text-gray-500">Receive emails when order statuses change</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">Customer Messages</h5>
+                  <p class="text-sm text-gray-500">Receive emails when customers send you messages</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">Product Reviews</h5>
+                  <p class="text-sm text-gray-500">Receive emails when customers leave reviews</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">Marketing Updates</h5>
+                  <p class="text-sm text-gray-500">Receive emails about platform updates and promotions</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only">
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Push Notifications</h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">New Orders</h5>
+                  <p class="text-sm text-gray-500">Receive push notifications for new orders</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">Customer Messages</h5>
+                  <p class="text-sm text-gray-500">Receive push notifications for customer messages</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">Low Inventory Alerts</h5>
+                  <p class="text-sm text-gray-500">Receive push notifications when product inventory is low</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <button type="submit"
+              class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Tab Content -->
+      <div id="content-security" class="tab-content">
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Security Settings</h3>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Two-Factor Authentication</h4>
+            <div class="flex items-center justify-between rounded-lg border p-4">
+              <div>
+                <h5 class="font-medium">Enable Two-Factor Authentication</h5>
+                <p class="text-sm text-gray-500">Add an extra layer of security to your account</p>
+              </div>
+              <div class="flex items-center">
+                <label class="relative inline-flex cursor-pointer items-center">
+                  <input type="checkbox" class="peer sr-only">
+                  <div
+                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="mt-4">
+              <button type="button"
+                class="rounded-md bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                Set Up Two-Factor Authentication
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Login Sessions</h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-green-100 p-2">
+                    <i class="fa-solid fa-laptop text-green-600"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">MacBook Pro - Chrome</h5>
+                    <p class="text-sm text-gray-500">Los Angeles, CA - Current Session</p>
+                  </div>
+                </div>
+                <div>
+                  <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">Active Now</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-gray-100 p-2">
+                    <i class="fa-solid fa-mobile-screen text-gray-600"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">iPhone 13 - Safari</h5>
+                    <p class="text-sm text-gray-500">Los Angeles, CA - Last active 2 hours ago</p>
+                  </div>
+                </div>
+                <div>
+                  <button class="text-sm text-red-600 hover:text-red-800">
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-md bg-gray-100 p-2">
+                    <i class="fa-solid fa-desktop text-gray-600"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">Windows PC - Firefox</h5>
+                    <p class="text-sm text-gray-500">New York, NY - Last active 5 days ago</p>
+                  </div>
+                </div>
+                <div>
+                  <button class="text-sm text-red-600 hover:text-red-800">
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <button type="button" class="text-sm text-red-600 hover:text-red-800 font-medium">
+                Sign Out All Other Sessions
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">API Access</h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <h5 class="font-medium">API Access</h5>
+                  <p class="text-sm text-gray-500">Allow third-party applications to access your store data</p>
+                </div>
+                <div class="flex items-center">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input type="checkbox" class="peer sr-only" checked>
+                    <div
+                      class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-indigo-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300">
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <button type="button"
+                class="rounded-md bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+                Manage API Keys
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-medium mb-2">Account Deletion</h4>
+            <div class="rounded-lg border border-red-200 bg-red-50 p-4">
+              <p class="text-sm text-red-800">Deleting your account will permanently remove all your data, including
+                products, orders, and customer information. This action cannot be undone.</p>
+              <div class="mt-4">
+                <button type="button"
+                  class="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700">
+                  Delete Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+
+
+    // Settings Tabs
+    const tabs = ['account', 'store', 'payment', 'shipping', 'notifications', 'security'];
+
+    tabs.forEach(tab => {
+      document.getElementById(`tab-${tab}`).addEventListener('click', function () {
+        // Hide all tab contents
+        tabs.forEach(t => {
+          document.getElementById(`content-${t}`).classList.remove('active');
+          document.getElementById(`tab-${t}`).classList.remove('active');
+        });
+
+        // Show selected tab content
+        document.getElementById(`content-${tab}`).classList.add('active');
+        document.getElementById(`tab-${tab}`).classList.add('active');
+      });
+    });
+  </script>
+  <script src="./js/script.js"></script>
+</body>
+
+</html>

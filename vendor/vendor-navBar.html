@@ -1,0 +1,39 @@
+<div class="flex-1 lg:hidden"></div>
+<div class="relative flex-1">
+    <div class="relative">
+        <input type="text" placeholder="Search orders..."
+            class="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+    </div>
+</div>
+<div class="flex items-center gap-4">
+    <div class="relative">
+        <button id="notificationBtn" class="rounded-full border p-2 relative">
+            <i class="fa-solid fa-bell text-sm"></i>
+            <span
+                class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+        </button>
+    </div>
+    <div class="relative">
+        <button id="profileDropdownBtn" class="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-gray-100">
+            <img src="https://placehold.co/32x32" width="32" height="32" alt="Avatar" class="rounded-full">
+            <span class="hidden md:inline">Artisan Crafts</span>
+            <i class="fa-solid fa-chevron-down text-xs text-gray-500"></i>
+        </button>
+        <div id="profileDropdown"
+            class="dropdown-content absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fa-solid fa-user mr-2"></i>
+                <span>My Profile</span>
+            </a>
+            <a href="./vendor-dashboard-settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fa-solid fa-gear mr-2"></i>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiMart | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(10px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            margin: 0 5px;
+            border-radius: 8px;
+            border: 2px solid #818cf8;
+            transition: all 0.2s;
+        }
+        
+        .otp-input:focus {
+            border-color: #4f46e5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+        }
+        
+        .form-container {
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+        }
+        
+        .active-form {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+            position: relative;
+        }
+        
+        .bg-gradient-indigo {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+        }
+        
+        .tab-indicator {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-gradient-indigo opacity-20"></div>
+    
+    <div class="relative w-full max-w-md">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center">
+                <i class="fas fa-cubes text-indigo-600 text-4xl mr-3"></i>
+                <span class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">DigiMart</span>
+            </div>
+            <p class="text-gray-600 mt-2">Marketplace for digital products</p>
+        </div>
+        
+        <!-- Main Container -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden relative">
+            <!-- Form Tabs -->
+            <div class="flex border-b">
+                <button id="login-tab" class="flex-1 py-4 px-6 text-center font-medium text-indigo-600 relative">
+                    Login
+                    <div class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600"></div>
+                </button>
+                <button id="signup-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-indigo-600 transition relative">
+                    Sign Up
+                    <div class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-transparent"></div>
+                </button>
+            </div>
+            
+            <!-- Forms Container -->
+            <div class="relative p-8 overflow-hidden" style="min-height: 420px;">
+                <!-- Login Form -->
+                <div id="login-form" class="form-container active-form">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome back</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="login-email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="your@email.com">
+                        </div>
+                        
+                        <div>
+                            <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="login-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="••••••••">
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input id="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                            </div>
+                            <button id="forgot-password-btn" class="text-sm text-indigo-600 hover:text-indigo-500 font-medium">Forgot password?</button>
+                        </div>
+                        
+                        <button id="login-submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.01]">
+                            Sign In
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-300"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 grid grid-cols-3 gap-3">
+                            <button class="flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                <i class="fab fa-google text-red-500 text-xl"></i>
+                            </button>
+                            <button class="flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                <i class="fab fa-apple text-gray-800 text-xl"></i>
+                            </button>
+                            <button class="flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                <i class="fab fa-github text-gray-800 text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Signup Form -->
+                <div id="signup-form" class="form-container">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Create your account</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="signup-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="John Doe">
+                        </div>
+                        
+                        <div>
+                            <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="signup-email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="your@email.com">
+                        </div>
+                        
+                        <div>
+                            <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="signup-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="••••••••">
+                        </div>
+                        
+                        <div>
+                            <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                            <input type="password" id="signup-confirm-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="••••••••">
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input id="terms" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="terms" class="ml-2 block text-sm text-gray-700">
+                                I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms</a> and <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <button id="signup-submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.01]">
+                            Create Account
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-gray-600">
+                            Already have an account? <button id="show-login" class="text-indigo-600 hover:text-indigo-500 font-medium">Sign in</button>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 2FA Form -->
+                <div id="twofa-form" class="form-container">
+                    <div class="text-center">
+                        <i class="fas fa-lock text-indigo-500 text-5xl mb-4"></i>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Two-Factor Authentication</h2>
+                        <p class="text-gray-600 mb-6">Enter the 6-digit code from your authenticator app</p>
+                        
+                        <div class="flex justify-center mb-8">
+                            <input type="text" maxlength="1" class="otp-input" data-index="1">
+                            <input type="text" maxlength="1" class="otp-input" data-index="2">
+                            <input type="text" maxlength="1" class="otp-input" data-index="3">
+                            <input type="text" maxlength="1" class="otp-input" data-index="4">
+                            <input type="text" maxlength="1" class="otp-input" data-index="5">
+                            <input type="text" maxlength="1" class="otp-input" data-index="6">
+                        </div>
+                        
+                        <button id="verify-2fa" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.01]">
+                            Verify & Continue
+                        </button>
+                        
+                        <div class="mt-4 text-center">
+                            <button id="back-to-login" class="text-sm text-indigo-600 hover:text-indigo-500 font-medium">
+                                <i class="fas fa-arrow-left mr-1"></i> Back to Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Forgot Password Form -->
+                <div id="forgot-password-form" class="form-container">
+                    <div class="text-center">
+                        <i class="fas fa-key text-indigo-500 text-5xl mb-4"></i>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Reset Password</h2>
+                        <p class="text-gray-600 mb-6">Enter your email to receive a reset code</p>
+                        
+                        <div class="mb-6">
+                            <label for="reset-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="reset-email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="your@email.com">
+                        </div>
+                        
+                        <button id="send-reset-code" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.01]">
+                            Send Reset Code
+                        </button>
+                        
+                        <div class="mt-4 text-center">
+                            <button id="back-to-login-2" class="text-sm text-indigo-600 hover:text-indigo-500 font-medium">
+                                <i class="fas fa-arrow-left mr-1"></i> Back to Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reset Code Verification -->
+                <div id="reset-code-form" class="form-container">
+                    <div class="text-center">
+                        <i class="fas fa-envelope text-indigo-500 text-5xl mb-4"></i>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Enter Reset Code</h2>
+                        <p class="text-gray-600 mb-6">We sent a 6-digit code to your email</p>
+                        
+                        <div class="flex justify-center mb-8">
+                            <input type="text" maxlength="1" class="otp-input" data-index="1">
+                            <input type="text" maxlength="1" class="otp-input" data-index="2">
+                            <input type="text" maxlength="1" class="otp-input" data-index="3">
+                            <input type="text" maxlength="1" class="otp-input" data-index="4">
+                            <input type="text" maxlength="1" class="otp-input" data-index="5">
+                            <input type="text" maxlength="1" class="otp-input" data-index="6">
+                        </div>
+                        
+                        <button id="verify-reset-code" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.01]">
+                            Verify Code
+                        </button>
+                        
+                        <div class="mt-4 text-center">
+                            <button id="resend-code" class="text-sm text-indigo-600 hover:text-indigo-500 font-medium">
+                                Didn't receive code? <span class="font-bold">Resend</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New Password Form -->
+                <div id="new-password-form" class="form-container">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Create New Password</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                            <input type="password" id="new-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="••••••••">
+                        </div>
+                        
+                        <div>
+                            <label for="confirm-new-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                            <input type="password" id="confirm-new-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition" placeholder="••••••••">
+                        </div>
+                        
+                        <button id="submit-new-password" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.01]">
+                            Update Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center text-sm text-gray-500">
+            © 2023 DigiMart. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form elements
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const twofaForm = document.getElementById('twofa-form');
+            const forgotPasswordForm = document.getElementById('forgot-password-form');
+            const resetCodeForm = document.getElementById('reset-code-form');
+            const newPasswordForm = document.getElementById('new-password-form');
+            const showLoginBtn = document.getElementById('show-login');
+            const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+            const backToLoginBtn = document.getElementById('back-to-login');
+            const backToLoginBtn2 = document.getElementById('back-to-login-2');
+            const sendResetCodeBtn = document.getElementById('send-reset-code');
+            const resendCodeBtn = document.getElementById('resend-code');
+            
+            // Tab indicators
+            const loginTabIndicator = loginTab.querySelector('.tab-indicator');
+            const signupTabIndicator = signupTab.querySelector('.tab-indicator');
+            
+            // All forms
+            const allForms = [loginForm, signupForm, twofaForm, forgotPasswordForm, resetCodeForm, newPasswordForm];
+            
+            // Tab switching
+            loginTab.addEventListener('click', () => switchForms('login'));
+            signupTab.addEventListener('click', () => switchForms('signup'));
+            showLoginBtn.addEventListener('click', () => switchForms('login'));
+            forgotPasswordBtn.addEventListener('click', () => switchForms('forgot-password'));
+            backToLoginBtn.addEventListener('click', () => switchForms('login'));
+            backToLoginBtn2.addEventListener('click', () => switchForms('login'));
+            
+            // Login submit (simulate 2FA)
+            document.getElementById('login-submit').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchForms('twofa');
+            });
+            
+            // Signup submit
+            document.getElementById('signup-submit').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Here you would normally submit the form
+                // For demo, we'll just show a success message
+                alert('Account created successfully! Please check your email to verify your account.');
+                switchForms('login');
+            });
+            
+            // Forgot password flow
+            sendResetCodeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                switchForms('reset-code');
+            });
+            
+            resendCodeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Here you would resend the code
+                alert('New reset code sent to your email!');
+            });
+            
+            document.getElementById('verify-reset-code').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchForms('new-password');
+            });
+            
+            document.getElementById('submit-new-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Here you would submit the new password
+                alert('Password updated successfully!');
+                switchForms('login');
+            });
+            
+            // OTP input handling
+            const otpInputs = document.querySelectorAll('.otp-input');
+            otpInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const currentIndex = parseInt(this.dataset.index);
+                    if (this.value.length === 1 && currentIndex < 6) {
+                        document.querySelector(`.otp-input[data-index="${currentIndex + 1}"]`).focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    const currentIndex = parseInt(this.dataset.index);
+                    if (e.key === 'Backspace' && this.value.length === 0 && currentIndex > 1) {
+                        document.querySelector(`.otp-input[data-index="${currentIndex - 1}"]`).focus();
+                    }
+                });
+            });
+            
+            // Form switching function with proper animations
+            function switchForms(formToShow) {
+                // Find current active form
+                const currentActiveForm = allForms.find(form => form.classList.contains('active-form'));
+                
+                // If we're already on the requested form, do nothing
+                if ((formToShow === 'login' && currentActiveForm === loginForm) ||
+                    (formToShow === 'signup' && currentActiveForm === signupForm) ||
+                    (formToShow === 'twofa' && currentActiveForm === twofaForm) ||
+                    (formToShow === 'forgot-password' && currentActiveForm === forgotPasswordForm) ||
+                    (formToShow === 'reset-code' && currentActiveForm === resetCodeForm) ||
+                    (formToShow === 'new-password' && currentActiveForm === newPasswordForm)) {
+                    return;
+                }
+                
+                // First fade out the current active form
+                if (currentActiveForm) {
+                    currentActiveForm.classList.remove('active-form');
+                    currentActiveForm.classList.add('fade-out');
+                    
+                    // Wait for fade out to complete before proceeding
+                    setTimeout(() => {
+                        currentActiveForm.classList.remove('fade-out');
+                        
+                        // Update tabs if switching between login/signup
+                        if (formToShow === 'login' || formToShow === 'signup') {
+                            if (formToShow === 'login') {
+                                loginTab.classList.add('text-indigo-600');
+                                loginTab.classList.remove('text-gray-500');
+                                signupTab.classList.add('text-gray-500');
+                                signupTab.classList.remove('text-indigo-600');
+                                
+                                // Animate tab indicator
+                                loginTabIndicator.classList.add('bg-indigo-600');
+                                signupTabIndicator.classList.remove('bg-indigo-600');
+                            } else {
+                                signupTab.classList.add('text-indigo-600');
+                                signupTab.classList.remove('text-gray-500');
+                                loginTab.classList.add('text-gray-500');
+                                loginTab.classList.remove('text-indigo-600');
+                                
+                                // Animate tab indicator
+                                signupTabIndicator.classList.add('bg-indigo-600');
+                                loginTabIndicator.classList.remove('bg-indigo-600');
+                            }
+                        }
+                        
+                        // Show the selected form with animation
+                        let form;
+                        switch(formToShow) {
+                            case 'login':
+                                form = loginForm;
+                                break;
+                            case 'signup':
+                                form = signupForm;
+                                break;
+                            case 'twofa':
+                                form = twofaForm;
+                                break;
+                            case 'forgot-password':
+                                form = forgotPasswordForm;
+                                break;
+                            case 'reset-code':
+                                form = resetCodeForm;
+                                break;
+                            case 'new-password':
+                                form = newPasswordForm;
+                                break;
+                        }
+                        
+                        form.classList.add('active-form', 'fade-in');
+                        
+                        // Remove fade-in class after animation completes
+                        setTimeout(() => {
+                            form.classList.remove('fade-in');
+                        }, 300);
+                        
+                    }, 300);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

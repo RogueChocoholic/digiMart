@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products Management - Multi-Vendor E-commerce</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .dropdown-content {
+      display: none;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .sidebar-item.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+
+    .sidebar-item.active i {
+      color: white;
+    }
+
+    @media (max-width: 1023px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gray-50" onload="essentialLoading();">
+  <!-- Mobile Sidebar Toggle -->
+  <button id="sidebarToggle"
+    class="fixed top-4 left-4 z-50 rounded-md bg-indigo-600 p-2 text-white shadow-md lg:hidden">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+  </aside>
+
+  <!-- Main Content -->
+  <div class="lg:pl-64">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6" id="navbar">
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6 lg:p-8">
+      <!-- Breadcrumb Navigation -->
+      <div class="mb-6">
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="index.html"
+                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                <i class="fa-solid fa-home mr-2"></i>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <i class="fa-solid fa-chevron-right text-gray-400 mx-1 text-xs"></i>
+                <a href="#" class="ml-1 text-sm font-medium text-indigo-600">Products</a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Products Header -->
+      <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 class="text-2xl font-bold">Products</h1>
+          <p class="text-gray-500">Manage your product inventory and listings</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+            <i class="fa-solid fa-plus mr-1"></i> Add New Product
+          </button>
+          <button class="rounded-md border bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="fa-solid fa-file-import mr-1"></i> Import
+          </button>
+          <button class="rounded-md border bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="fa-solid fa-file-export mr-1"></i> Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters and View Options -->
+      <div
+        class="mb-6 flex flex-col gap-4 rounded-lg border bg-white p-4 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-wrap gap-3">
+          <select class="rounded-md border border-gray-300 px-3 py-2 text-sm">
+            <option value="all">All Categories</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="home-decor">Home Decor</option>
+            <option value="pottery">Pottery</option>
+            <option value="other">Other</option>
+          </select>
+          <select class="rounded-md border border-gray-300 px-3 py-2 text-sm">
+            <option value="all">All Status</option>
+            <option value="in-stock">In Stock</option>
+            <option value="low-stock">Low Stock</option>
+            <option value="out-of-stock">Out of Stock</option>
+          </select>
+          <select class="rounded-md border border-gray-300 px-3 py-2 text-sm">
+            <option value="newest">Newest</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="bestselling">Best Selling</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="gridViewBtn" class="view-button active rounded-md border px-2 py-1 bg-indigo-50 text-indigo-600">
+            <i class="fa-solid fa-grip"></i>
+          </button>
+          <button id="listViewBtn" class="view-button rounded-md border px-2 py-1 hover:bg-gray-50">
+            <i class="fa-solid fa-list"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Products Grid View -->
+      <div id="gridView" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <!-- Product cards will be inserted here by JavaScript -->
+      </div>
+
+      <!-- Products List View (Hidden by default) -->
+      <div id="listView" class="space-y-4 hidden">
+        <!-- Product list items will be inserted here by JavaScript -->
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-8 flex items-center justify-between">
+        <div class="text-sm text-gray-700">
+          Showing <span class="font-medium">1</span> to <span class="font-medium">12</span> of <span
+            class="font-medium">124</span> products
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50 disabled:opacity-50"
+            disabled>Previous</button>
+          <button class="rounded-md bg-indigo-50 px-3 py-1 text-sm text-indigo-600 hover:bg-indigo-100">1</button>
+          <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">2</button>
+          <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">3</button>
+          <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">4</button>
+          <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">5</button>
+          <button class="rounded-md border px-3 py-1 text-sm hover:bg-gray-50">Next</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // View switching (grid/list)
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const listViewBtn = document.getElementById('listViewBtn');
+    const gridViewContainer = document.getElementById('gridView');
+    const listViewContainer = document.getElementById('listView');
+
+    gridViewBtn.addEventListener('click', () => {
+      gridViewBtn.classList.add('active', 'bg-indigo-50', 'text-indigo-600');
+      listViewBtn.classList.remove('active', 'bg-indigo-50', 'text-indigo-600');
+      gridViewContainer.classList.remove('hidden');
+      listViewContainer.classList.add('hidden');
+    });
+
+    listViewBtn.addEventListener('click', () => {
+      listViewBtn.classList.add('active', 'bg-indigo-50', 'text-indigo-600');
+      gridViewBtn.classList.remove('active', 'bg-indigo-50', 'text-indigo-600');
+      listViewContainer.classList.remove('hidden');
+      gridViewContainer.classList.add('hidden');
+    });
+
+    // Sample product data
+    const products = Array.from({ length: 12 }, (_, i) => ({
+      id: i + 1,
+      name: `Handcrafted Item ${i + 1}`,
+      price: (19.99 + i * 5).toFixed(2),
+      image: `https://placehold.co/300x300?text=Product+${i + 1}`,
+      sku: `CRAFT-${1000 + i}`,
+      stock: i % 3 === 0 ? 'In Stock' : i % 3 === 1 ? 'Low Stock' : 'Out of Stock',
+      category: i % 4 === 0 ? 'Jewelry' : i % 4 === 1 ? 'Home Decor' : i % 4 === 2 ? 'Pottery' : 'Other',
+      sales: Math.floor(Math.random() * 100)
+    }));
+
+    // Populate products in grid view
+    const gridView = document.getElementById('gridView');
+    products.forEach(product => {
+      const stockClass = product.stock === 'In Stock'
+        ? 'bg-green-100 text-green-800'
+        : product.stock === 'Low Stock'
+          ? 'bg-amber-100 text-amber-800'
+          : 'bg-red-100 text-red-800';
+
+      const card = document.createElement('div');
+      card.className = 'rounded-lg border bg-white overflow-hidden shadow-sm';
+      card.innerHTML = `
+        <div class="aspect-square relative">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-gray-500">${product.category}</span>
+            <span class="text-xs text-gray-500">SKU: ${product.sku}</span>
+          </div>
+          <h3 class="font-semibold">${product.name}</h3>
+          <div class="flex items-center justify-between mt-2">
+            <span class="font-bold text-indigo-600">$${product.price}</span>
+            <span class="px-2 py-1 rounded-full text-xs font-medium ${stockClass}">${product.stock}</span>
+          </div>
+          <div class="mt-4 flex gap-2">
+            <button class="flex-1 rounded-md bg-indigo-50 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-100">
+              Edit
+            </button>
+            <button class="flex-1 rounded-md bg-gray-50 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100">
+              View
+            </button>
+          </div>
+        </div>
+      `;
+      gridView.appendChild(card);
+    });
+
+    // Populate products in list view
+    const listView = document.getElementById('listView');
+    products.forEach(product => {
+      const stockClass = product.stock === 'In Stock'
+        ? 'bg-green-100 text-green-800'
+        : product.stock === 'Low Stock'
+          ? 'bg-amber-100 text-amber-800'
+          : 'bg-red-100 text-red-800';
+
+      const item = document.createElement('div');
+      item.className = 'rounded-lg border bg-white p-4 shadow-sm';
+      item.innerHTML = `
+        <div class="flex items-center gap-4">
+          <div class="h-16 w-16 relative shrink-0">
+            <img src="${product.image}" alt="${product.name}" class="rounded-md object-cover w-full h-full">
+          </div>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold">${product.name}</h3>
+            <div class="flex flex-wrap gap-x-4 text-sm text-gray-500">
+              <span>SKU: ${product.sku}</span>
+              <span>Category: ${product.category}</span>
+              <span>Sales: ${product.sales}</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="font-bold text-indigo-600">$${product.price}</div>
+            <span class="px-2 py-1 rounded-full text-xs font-medium ${stockClass}">${product.stock}</span>
+          </div>
+          <div class="flex gap-2">
+            <button class="rounded-md p-2 hover:bg-gray-100" title="Edit">
+              <i class="fa-solid fa-pen-to-square text-gray-500"></i>
+            </button>
+            <button class="rounded-md p-2 hover:bg-gray-100" title="View">
+              <i class="fa-solid fa-eye text-gray-500"></i>
+            </button>
+            <button class="rounded-md p-2 hover:bg-gray-100" title="Delete">
+              <i class="fa-solid fa-trash text-gray-500"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      listView.appendChild(item);
+    });
+  </script>
+  <script src="./js/script.js"></script>
+
+</body>
+
+</html>

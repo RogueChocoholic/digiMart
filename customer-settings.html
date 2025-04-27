@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | DigiMart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .setting-card {
+            transition: all 0.3s ease;
+        }
+        
+        .setting-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .tab-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4f46e5;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .avatar-upload {
+            position: relative;
+            max-width: 120px;
+            margin: 0 auto;
+        }
+        
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            z-index: 1;
+        }
+        
+        .avatar-upload .avatar-edit input {
+            display: none;
+        }
+        
+        .avatar-upload .avatar-edit label {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin-bottom: 0;
+            border-radius: 50%;
+            background: #4f46e5;
+            border: 1px solid transparent;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-weight: normal;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .avatar-upload .avatar-edit label:hover {
+            background: #4338ca;
+        }
+        
+        .avatar-upload .avatar-edit label i {
+            color: white;
+            font-size: 14px;
+        }
+        
+        .avatar-upload .avatar-preview {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            border-radius: 50%;
+            border: 3px solid #e5e7eb;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+        
+        .avatar-upload .avatar-preview > div {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas fa-shopping-bag text-indigo-600 text-2xl mr-3"></i>
+                <span class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">DigiMart</span>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-search text-lg"></i>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-heart text-lg"></i>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 relative">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </a>
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 focus:outline-none">
+                        <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">JD</div>
+                        <span class="text-gray-700">John</span>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">My Account</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">My Orders</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Wishlist</a>
+                        <div class="border-t border-gray-100"></div>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar -->
+            <aside class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">My Account</h3>
+                    <nav class="space-y-2">
+                        <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-indigo-50 hover:text-indigo-600">
+                            <i class="fas fa-user mr-2"></i> Profile
+                        </a>
+                        <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-indigo-50 hover:text-indigo-600">
+                            <i class="fas fa-box-open mr-2"></i> My Orders
+                        </a>
+                        <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-indigo-50 hover:text-indigo-600">
+                            <i class="fas fa-heart mr-2"></i> Wishlist
+                        </a>
+                        <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-indigo-50 hover:text-indigo-600">
+                            <i class="fas fa-map-marker-alt mr-2"></i> Addresses
+                        </a>
+                        <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-indigo-50 hover:text-indigo-600">
+                            <i class="fas fa-credit-card mr-2"></i> Payment Methods
+                        </a>
+                        <a href="#" class="block px-3 py-2 rounded-md bg-indigo-50 text-indigo-600">
+                            <i class="fas fa-cog mr-2"></i> Settings
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+            
+            <!-- Main Content Area -->
+            <div class="flex-1">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <!-- Settings Tabs -->
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex overflow-x-auto">
+                            <button class="whitespace-nowrap py-4 px-6 border-b-2 border-indigo-500 font-medium text-sm text-indigo-600">
+                                <i class="fas fa-user-cog mr-2"></i> Account
+                            </button>
+                            <button class="whitespace-nowrap py-4 px-6 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                <i class="fas fa-bell mr-2"></i> Notifications
+                            </button>
+                            <button class="whitespace-nowrap py-4 px-6 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                <i class="fas fa-lock mr-2"></i> Security
+                            </button>
+                            <button class="whitespace-nowrap py-4 px-6 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                <i class="fas fa-palette mr-2"></i> Appearance
+                            </button>
+                            <button class="whitespace-nowrap py-4 px-6 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                <i class="fas fa-language mr-2"></i> Language
+                            </button>
+                        </nav>
+                    </div>
+                    
+                    <!-- Account Settings Content -->
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Account Settings</h2>
+                        
+                        <!-- Profile Section -->
+                        <div class="setting-card bg-white rounded-lg border border-gray-200 p-6 mb-6">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Profile Information</h3>
+                                    <p class="text-sm text-gray-500">Update your account's profile information and email address.</p>
+                                </div>
+                                <button class="mt-4 md:mt-0 px-4 py-2 bg-indigo-600 rounded-md text-sm font-medium text-white hover:bg-indigo-700 transition-colors">
+                                    Edit Profile
+                                </button>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <!-- Avatar Upload -->
+                                <div class="avatar-upload">
+                                    <div class="avatar-edit">
+                                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                        <label for="imageUpload"><i class="fas fa-camera"></i></label>
+                                    </div>
+                                    <div class="avatar-preview">
+                                        <div style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Profile Info -->
+                                <div class="flex-1">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                            <p class="text-sm text-gray-800 bg-gray-50 px-3 py-2 rounded-md">John</p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                            <p class="text-sm text-gray-800 bg-gray-50 px-3 py-2 rounded-md">Doe</p>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                            <p class="text-sm text-gray-800 bg-gray-50 px-3 py-2 rounded-md">john.doe@example.com</p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                            <p class="text-sm text-gray-800 bg-gray-50 px-3 py-2 rounded-md">+1 (555) 123-4567</p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                            <p class="text-sm text-gray-800 bg-gray-50 px-3 py-2 rounded-md">January 15, 1990</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Privacy Section -->
+                        <div class="setting-card bg-white rounded-lg border border-gray-200 p-6 mb-6">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Privacy Settings</h3>
+                                    <p class="text-sm text-gray-500">Control what information you share with others.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Show my profile to other users</h4>
+                                        <p class="text-xs text-gray-500">When enabled, other DigiMart users can view your public profile.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Include in search results</h4>
+                                        <p class="text-xs text-gray-500">Allow your profile to appear in search results.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Show purchase history</h4>
+                                        <p class="text-xs text-gray-500">Display your purchased items on your public profile.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Show wishlist</h4>
+                                        <p class="text-xs text-gray-500">Display your wishlist items on your public profile.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Communication Preferences -->
+                        <div class="setting-card bg-white rounded-lg border border-gray-200 p-6 mb-6">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Communication Preferences</h3>
+                                    <p class="text-sm text-gray-500">Manage how we communicate with you.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Email notifications</h4>
+                                        <p class="text-xs text-gray-500">Receive updates about your account via email.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">SMS notifications</h4>
+                                        <p class="text-xs text-gray-500">Receive important updates via text message.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Promotional emails</h4>
+                                        <p class="text-xs text-gray-500">Receive special offers and promotions.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Product recommendations</h4>
+                                        <p class="text-xs text-gray-500">Get personalized product suggestions.</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Account Actions -->
+                        <div class="setting-card bg-white rounded-lg border border-gray-200 p-6">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Account Actions</h3>
+                                    <p class="text-sm text-gray-500">Manage your account status.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-100 pb-4">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Download account data</h4>
+                                        <p class="text-xs text-gray-500">Request a copy of all your personal data we store.</p>
+                                    </div>
+                                    <button class="mt-2 md:mt-0 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        Request Data
+                                    </button>
+                                </div>
+                                
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-100 pb-4">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Deactivate account</h4>
+                                        <p class="text-xs text-gray-500">Temporarily disable your account. You can reactivate it later.</p>
+                                    </div>
+                                    <button class="mt-2 md:mt-0 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        Deactivate
+                                    </button>
+                                </div>
+                                
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-800">Delete account</h4>
+                                        <p class="text-xs text-gray-500">Permanently delete your account and all associated data.</p>
+                                    </div>
+                                    <button class="mt-2 md:mt-0 px-4 py-2 border border-red-300 rounded-md text-sm font-medium text-red-600 hover:bg-red-50">
+                                        Delete Account
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">DigiMart</h3>
+                    <p class="text-sm text-gray-600">Your one-stop marketplace for all things digital and physical.</p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-indigo-600">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-indigo-600">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-indigo-600">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-indigo-600">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">All Categories</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">New Arrivals</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Featured</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Deals & Offers</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Contact Us</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">FAQs</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Shipping Policy</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Returns & Refunds</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Track Order</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">About</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">About Us</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Careers</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Privacy Policy</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Terms of Service</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-indigo-600">Become a Seller</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 mt-8 pt-8">
+                <p class="text-sm text-gray-500 text-center">© 2023 DigiMart. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Avatar upload preview
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        document.querySelector('.avatar-preview div').style.backgroundImage = 'url(' + e.target.result + ')';
+                    }
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
+            document.getElementById("imageUpload").addEventListener('change', function() {
+                readURL(this);
+            });
+            
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('nav button');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('border-indigo-500', 'text-indigo-600'));
+                    tabs.forEach(t => t.classList.add('border-transparent', 'text-gray-500'));
+                    
+                    this.classList.remove('border-transparent', 'text-gray-500');
+                    this.classList.add('border-indigo-500', 'text-indigo-600');
+                    
+                    // In a real app, you would load different content based on the tab
+                    alert('Loading ' + this.textContent.trim() + ' settings...');
+                });
+            });
+            
+            // Toggle switches
+            const switches = document.querySelectorAll('.switch input');
+            switches.forEach(switchEl => {
+                switchEl.addEventListener('change', function() {
+                    const settingName = this.closest('.flex').querySelector('h4').textContent;
+                    console.log(settingName + ' is now ' + (this.checked ? 'enabled' : 'disabled'));
+                });
+            });
+            
+            // Account action buttons
+            document.querySelector('[class*="Request Data"]').addEventListener('click', function() {
+                alert('Your data export request has been submitted. You will receive an email with download instructions within 24 hours.');
+            });
+            
+            document.querySelector('[class*="Deactivate"]').addEventListener('click', function() {
+                if(confirm('Are you sure you want to deactivate your account? You can reactivate it by logging in again.')) {
+                    alert('Account deactivation request received. We\'re sorry to see you go!');
+                }
+            });
+            
+            document.querySelector('[class*="Delete Account"]').addEventListener('click', function() {
+                if(confirm('WARNING: This will permanently delete your account and all associated data. This action cannot be undone. Are you sure?')) {
+                    alert('Account deletion request received. All your data will be permanently deleted within 7 days.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
