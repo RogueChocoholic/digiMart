@@ -42,51 +42,40 @@
         }
     </style>
 </head>
-<body class="bg-indigo-50">
+<body class="bg-indigo-50" onload="essentialLoading();">
     <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-store text-indigo-600 text-2xl"></i>
-                <h1 class="text-xl font-bold text-indigo-600">DigiMart</h1>
-            </div>
-            
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Categories</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Vendors</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Sell</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Support</a>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <button class="p-2 text-gray-600 hover:text-indigo-600">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
-                    <i class="fas fa-heart"></i>
-                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                </button>
-                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
-                </button>
-                <button class="hidden md:block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-                    Sign In
-                </button>
-                <button class="md:hidden p-2 text-gray-600">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
+    <header class="bg-white shadow-sm" id="navbar">
+       
     </header>
 
-    <!-- Breadcrumbs -->
-    <div class="container mx-auto px-4 py-3 text-sm text-gray-600">
-        <a href="#" class="hover:text-indigo-600">Home</a> > 
-        <a href="#" class="hover:text-indigo-600">Vendors</a> > 
-        <span class="text-gray-800">DigitalTech</span>
+     <!-- Breadcrumbs -->
+     <div class="bg-white py-3 border-b">
+        <div class="container mx-auto px-4">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="./index.html"
+                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <a href="./vendors.html" class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+                            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Vendors</span>
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+                            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">DigitalTech</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
     </div>
-
     <!-- Vendor Header -->
     <div class="vendor-header text-white py-8">
         <div class="container mx-auto px-4">
@@ -781,5 +770,6 @@
             });
         });
     </script>
+    <script src="./js/scritpt.js"></script>
 </body>
 </html>

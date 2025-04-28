@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,64 +30,56 @@
         }
     </script>
     <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+        }
+
         .vendor-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
+
         .category-chip {
             transition: all 0.3s ease;
         }
+
         .category-chip:hover {
             background-color: #6366f1;
             color: white;
         }
+
         .vendor-banner {
             background: linear-gradient(135deg, #6366f1 0%, #a5b4fc 100%);
         }
     </style>
 </head>
-<body class="bg-indigo-50">
+
+<body class="bg-indigo-50" onload="essentialLoading();">
     <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-store text-indigo-600 text-2xl"></i>
-                <h1 class="text-xl font-bold text-indigo-600">DigiMart</h1>
-            </div>
-            
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Categories</a>
-                <a href="#" class="text-indigo-600 font-medium">Vendors</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Sell</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Support</a>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <button class="p-2 text-gray-600 hover:text-indigo-600">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
-                    <i class="fas fa-heart"></i>
-                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                </button>
-                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
-                </button>
-                <button class="hidden md:block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-                    Sign In
-                </button>
-                <button class="md:hidden p-2 text-gray-600">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
+    <header class="bg-white shadow-sm" id="navbar">
     </header>
 
     <!-- Breadcrumbs -->
-    <div class="container mx-auto px-4 py-3 text-sm text-gray-600">
-        <a href="#" class="hover:text-indigo-600">Home</a> > 
-        <span class="text-gray-800">Vendors</span>
+    <div class="bg-white py-3 border-b">
+        <div class="container mx-auto px-4">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="./index.html"
+                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+                            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Vendors</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
     </div>
 
     <!-- Vendor Banner -->
@@ -98,7 +91,8 @@
                     Discover talented creators and businesses offering premium digital products on DigiMart.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">WordPress Experts</div>
+                    <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">WordPress Experts
+                    </div>
                     <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">UI/UX Designers</div>
                     <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium">Developers</div>
                 </div>
@@ -112,12 +106,14 @@
         <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div class="relative flex-1">
-                    <input type="text" placeholder="Search vendors..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="text" placeholder="Search vendors..."
+                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                     <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
-                        <select class="appearance-none bg-white pl-3 pr-8 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <select
+                            class="appearance-none bg-white pl-3 pr-8 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                             <option>Sort by: Popular</option>
                             <option>Sort by: Newest</option>
                             <option>Sort by: Rating</option>
@@ -130,12 +126,13 @@
                     </button>
                 </div>
             </div>
-            
+
             <!-- Categories -->
             <div class="mt-6 pt-6 border-t border-gray-200">
                 <h3 class="text-sm font-medium text-gray-500 mb-3">FILTER BY CATEGORY</h3>
                 <div class="flex flex-wrap gap-2">
-                    <button class="category-chip bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-sm font-medium">
+                    <button
+                        class="category-chip bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-sm font-medium">
                         All Vendors
                     </button>
                     <button class="category-chip bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium">
@@ -159,22 +156,24 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Vendors Grid -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-gray-800">Featured Vendors</h2>
                 <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">View All</a>
             </div>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <!-- Vendor 1 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=DigitalTech" alt="DigitalTech" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=DigitalTech" alt="DigitalTech"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=DT" alt="DigitalTech Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=DT" alt="DigitalTech Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -196,20 +195,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 58 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 2 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=DesignHub" alt="DesignHub" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=DesignHub" alt="DesignHub"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=DH" alt="DesignHub Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=DH" alt="DesignHub Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -231,20 +232,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 126 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 3 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=CodeMasters" alt="CodeMasters" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=CodeMasters" alt="CodeMasters"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=CM" alt="CodeMasters Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=CM" alt="CodeMasters Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -266,20 +269,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 42 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 4 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=PhotoVFX" alt="PhotoVFX" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=PhotoVFX" alt="PhotoVFX"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=PV" alt="PhotoVFX Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=PV" alt="PhotoVFX Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -301,20 +306,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 87 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 5 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=WebMaster+Tools" alt="WebMaster Tools" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=WebMaster+Tools" alt="WebMaster Tools"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=WT" alt="WebMaster Tools Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=WT" alt="WebMaster Tools Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -336,20 +343,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 35 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 6 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=AudioCraft" alt="AudioCraft" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=AudioCraft" alt="AudioCraft"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=AC" alt="AudioCraft Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=AC" alt="AudioCraft Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -371,20 +380,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 64 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 7 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=VideoPro" alt="VideoPro" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=VideoPro" alt="VideoPro"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=VP" alt="VideoPro Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=VP" alt="VideoPro Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -406,20 +417,22 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 53 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Vendor 8 -->
                 <div class="vendor-card bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x300?text=3D+Artisans" alt="3D Artisans" class="w-full h-40 object-cover">
+                        <img src="https://via.placeholder.com/600x300?text=3D+Artisans" alt="3D Artisans"
+                            class="w-full h-40 object-cover">
                         <div class="absolute -bottom-8 left-4">
                             <div class="h-16 w-16 rounded-full border-4 border-white bg-white overflow-hidden">
-                                <img src="https://via.placeholder.com/100x100?text=3A" alt="3D Artisans Logo" class="w-full h-full object-cover">
+                                <img src="https://via.placeholder.com/100x100?text=3A" alt="3D Artisans Logo"
+                                    class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -441,14 +454,14 @@
                             <div class="text-gray-500">
                                 <i class="fas fa-box-open mr-1"></i> 112 products
                             </div>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            <a href="./vendor-page.html" class="text-indigo-600 hover:text-indigo-800 font-medium">
                                 View Store <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Pagination -->
             <div class="mt-8 flex justify-center">
                 <nav class="flex items-center space-x-1">
@@ -465,12 +478,13 @@
                 </nav>
             </div>
         </div>
-        
+
         <!-- Become a Vendor CTA -->
-        <div class="bg-indigo-600 rounded-lg p-8 text-center text-white mb-8">
+        <div class="gradient-bg rounded-lg p-8 text-center text-white mb-8">
             <h2 class="text-2xl font-bold mb-3">Become a DigiMart Vendor</h2>
             <p class="max-w-2xl mx-auto mb-6 opacity-90">
-                Join our community of talented creators and start selling your digital products to millions of customers worldwide.
+                Join our community of talented creators and start selling your digital products to millions of customers
+                worldwide.
             </p>
             <button class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100">
                 Apply Now <i class="fas fa-arrow-right ml-2"></i>
@@ -504,7 +518,7 @@
                         </a>
                     </div>
                 </div>
-                
+
                 <div>
                     <h3 class="font-bold text-lg mb-4">Categories</h3>
                     <ul class="space-y-2 text-gray-400">
@@ -516,7 +530,7 @@
                         <li><a href="#" class="hover:text-white">Graphics</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h3 class="font-bold text-lg mb-4">Quick Links</h3>
                     <ul class="space-y-2 text-gray-400">
@@ -528,14 +542,15 @@
                         <li><a href="#" class="hover:text-white">Become a Seller</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h3 class="font-bold text-lg mb-4">Newsletter</h3>
                     <p class="text-gray-400 mb-4">
                         Subscribe to get updates on new products and discounts.
                     </p>
                     <div class="flex">
-                        <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
                         <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700">
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -546,7 +561,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm">
                     &copy; 2023 DigiMart. All rights reserved.
@@ -563,33 +578,35 @@
     <script>
         // Category filter chips
         document.querySelectorAll('.category-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
+            chip.addEventListener('click', function () {
                 // Remove active state from all chips
                 document.querySelectorAll('.category-chip').forEach(c => {
                     c.classList.remove('bg-indigo-100', 'text-indigo-700');
                     c.classList.add('bg-gray-100', 'text-gray-700');
                 });
-                
+
                 // Add active state to clicked chip
                 this.classList.remove('bg-gray-100', 'text-gray-700');
                 this.classList.add('bg-indigo-100', 'text-indigo-700');
-                
+
                 // In a real app, you would filter vendors here
             });
         });
-        
+
         // Vendor card hover effect
         document.querySelectorAll('.vendor-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
+            card.addEventListener('mouseenter', function () {
                 this.style.transform = 'translateY(-5px)';
                 this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
             });
-            
-            card.addEventListener('mouseleave', function() {
+
+            card.addEventListener('mouseleave', function () {
                 this.style.transform = '';
                 this.style.boxShadow = '';
             });
         });
     </script>
+    <script src="./js/scritpt.js"></script>
 </body>
+
 </html>

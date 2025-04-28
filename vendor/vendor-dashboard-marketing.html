@@ -1,0 +1,575 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing - Multi-Vendor E-commerce</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-active {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .ad-type-card {
+            transition: all 0.3s ease;
+        }
+
+        .ad-type-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ad-type-selected {
+            border: 2px solid #4f46e5;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        }
+
+        .dropdown-content {
+            display: none;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .sidebar-item.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .sidebar-item.active i {
+            color: white;
+        }
+
+        @media (max-width: 1023px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                            950: '#1e1b4b',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-gray-50" onload="essentialLoading();">
+    <!-- Mobile Sidebar Toggle -->
+    <button id="sidebarToggle"
+        class="fixed top-4 left-4 z-50 rounded-md bg-indigo-600 p-2 text-white shadow-md lg:hidden">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <div class="lg:pl-64">
+        <!-- Navbar -->
+        <header class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6" id="navbar">
+
+        </header>
+
+
+        <!-- Main Content Area -->
+        <main class="container mx-auto p-4 md:p-6 lg:p-8">
+            <!-- Breadcrumb Navigation -->
+            <div class="mb-6">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                        <li class="inline-flex items-center">
+                            <a href="index.html"
+                                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                                <i class="fa-solid fa-home mr-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-chevron-right text-gray-400 mx-1 text-xs"></i>
+                                <a href="#" class="ml-1 text-sm font-medium text-indigo-600">Marketing</a>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+
+            <!-- Marketing Dashboard -->
+            <div class="grid grid-cols-1 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Marketing Campaign Overview</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <p class="text-sm text-indigo-700 font-medium">Active Campaigns</p>
+                            <p class="text-2xl font-bold text-indigo-800">3</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-sm text-green-700 font-medium">Total Clicks</p>
+                            <p class="text-2xl font-bold text-green-800">1,245</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <p class="text-sm text-purple-700 font-medium">Conversion Rate</p>
+                            <p class="text-2xl font-bold text-purple-800">3.2%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad Types Selection -->
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Create New Ad Campaign</h3>
+                <p class="text-gray-600 mb-6">Select an ad type to begin creating your marketing campaign</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Premium Ad Type -->
+                    <div class="ad-type-card bg-white border rounded-lg p-6 cursor-pointer" data-ad-type="premium">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="bg-indigo-100 p-3 rounded-full">
+                                <i class="fas fa-crown text-indigo-600 text-xl"></i>
+                            </div>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">High
+                                Priority</span>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Premium Ad</h4>
+                        <p class="text-gray-600 mb-4">Featured placement across all platforms with maximum
+                            visibility</p>
+                        <div class="flex items-baseline">
+                            <span class="text-2xl font-bold text-gray-900">$99</span>
+                            <span class="text-gray-500 ml-1">/week</span>
+                        </div>
+                        <ul class="mt-4 space-y-2 text-sm">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Top position in search results</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Featured on homepage</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Email newsletter inclusion</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Standard Ad Type -->
+                    <div class="ad-type-card bg-white border rounded-lg p-6 cursor-pointer" data-ad-type="standard">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <i class="fas fa-ad text-blue-600 text-xl"></i>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Medium
+                                Priority</span>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Standard Ad</h4>
+                        <p class="text-gray-600 mb-4">Balanced visibility across the platform at an affordable price
+                        </p>
+                        <div class="flex items-baseline">
+                            <span class="text-2xl font-bold text-gray-900">$49</span>
+                            <span class="text-gray-500 ml-1">/week</span>
+                        </div>
+                        <ul class="mt-4 space-y-2 text-sm">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Enhanced search visibility</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Category page placement</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Basic analytics reporting</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Basic Ad Type -->
+                    <div class="ad-type-card bg-white border rounded-lg p-6 cursor-pointer" data-ad-type="basic">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="bg-gray-100 p-3 rounded-full">
+                                <i class="fas fa-bullseye text-gray-600 text-xl"></i>
+                            </div>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">Standard
+                                Priority</span>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">Basic Ad</h4>
+                        <p class="text-gray-600 mb-4">Entry-level advertising with targeted placement</p>
+                        <div class="flex items-baseline">
+                            <span class="text-2xl font-bold text-gray-900">$19</span>
+                            <span class="text-gray-500 ml-1">/week</span>
+                        </div>
+                        <ul class="mt-4 space-y-2 text-sm">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Standard search results</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Related products section</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Basic performance metrics</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ad Configuration Form -->
+                <div id="adConfigForm" class="hidden">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Configure Your <span id="adTypeLabel">Ad</span>
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Campaign Name</label>
+                                <input type="text"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    placeholder="Summer Sale 2023">
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Campaign
+                                    Duration</label>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-gray-500 mb-1">Start Date</label>
+                                        <input type="date"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-500 mb-1">End Date</label>
+                                        <input type="date"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Target Audience</label>
+                                <select
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <option>All Visitors</option>
+                                    <option>New Customers</option>
+                                    <option>Returning Customers</option>
+                                    <option>Cart Abandoners</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Budget</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">$</span>
+                                    </div>
+                                    <input type="number" id="budgetInput"
+                                        class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Content Type</label>
+                                <div class="flex space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="contentType" value="product"
+                                            class="form-radio text-indigo-600" checked>
+                                        <span class="ml-2">Select Product</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="contentType" value="custom"
+                                            class="form-radio text-indigo-600">
+                                        <span class="ml-2">Custom Image</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Product Selection (shown by default) -->
+                            <div id="productSelection" class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Select Product</label>
+                                <select
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <option>Wireless Headphones</option>
+                                    <option>Smart Watch</option>
+                                    <option>Bluetooth Speaker</option>
+                                    <option>Laptop Sleeve</option>
+                                    <option>Phone Charger</option>
+                                </select>
+                            </div>
+
+                            <!-- Custom Image Upload (hidden by default) -->
+                            <div id="customImageUpload" class="mb-4 hidden">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Upload Custom
+                                    Image</label>
+                                <div
+                                    class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                    <div class="space-y-1 text-center">
+                                        <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
+                                        <div class="flex text-sm text-gray-600">
+                                            <label for="file-upload"
+                                                class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                                <span>Upload a file</span>
+                                                <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                            </label>
+                                            <p class="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Ad Headline</label>
+                                <input type="text"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    placeholder="Grab this limited time offer!">
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Ad Description</label>
+                                <textarea
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    rows="3" placeholder="Write a compelling description for your ad..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button id="cancelAdBtn"
+                            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Cancel
+                        </button>
+                        <button
+                            class="px-4 py-2 bg-indigo-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Create Campaign
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Campaigns -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Active Campaigns</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Campaign</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Impressions</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Clicks</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    CTR</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-headphones text-gray-500"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Summer Sale</div>
+                                            <div class="text-sm text-gray-500">Jun 1 - Jul 15</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Premium</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12,456</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">843</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6.77%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                    <a href="#" class="text-red-600 hover:text-red-900">Pause</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-watch text-gray-500"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">New Arrivals</div>
+                                            <div class="text-sm text-gray-500">May 15 - Jun 30</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Standard</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8,932</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">312</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3.49%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                    <a href="#" class="text-red-600 hover:text-red-900">Pause</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-speaker text-gray-500"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Flash Sale</div>
+                                            <div class="text-sm text-gray-500">Jun 10 - Jun 12</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Basic</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3,245</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">90</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2.77%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                    <a href="#" class="text-red-600 hover:text-red-900">Pause</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="contactSupport"></div>
+
+    <script>
+        // Ad Type Selection
+        const adTypeCards = document.querySelectorAll('.ad-type-card');
+        const adConfigForm = document.getElementById('adConfigForm');
+        const adTypeLabel = document.getElementById('adTypeLabel');
+        const cancelAdBtn = document.getElementById('cancelAdBtn');
+        const budgetInput = document.getElementById('budgetInput');
+
+        // Content Type Selection
+        const contentTypeRadios = document.querySelectorAll('input[name="contentType"]');
+        const productSelection = document.getElementById('productSelection');
+        const customImageUpload = document.getElementById('customImageUpload');
+
+        // Handle ad type selection
+        adTypeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove selected class from all cards
+                adTypeCards.forEach(c => c.classList.remove('ad-type-selected'));
+
+                // Add selected class to clicked card
+                card.classList.add('ad-type-selected');
+
+                // Show the configuration form
+                adConfigForm.classList.remove('hidden');
+
+                // Set the ad type label
+                const adType = card.getAttribute('data-ad-type');
+                adTypeLabel.textContent = adType.charAt(0).toUpperCase() + adType.slice(1) + ' Ad';
+
+                // Set default budget based on ad type
+                if (adType === 'premium') {
+                    budgetInput.value = '99';
+                } else if (adType === 'standard') {
+                    budgetInput.value = '49';
+                } else {
+                    budgetInput.value = '19';
+                }
+
+                // Scroll to form
+                adConfigForm.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Handle cancel button
+        cancelAdBtn.addEventListener('click', () => {
+            adConfigForm.classList.add('hidden');
+            adTypeCards.forEach(c => c.classList.remove('ad-type-selected'));
+        });
+
+        // Handle content type selection
+        contentTypeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'product') {
+                    productSelection.classList.remove('hidden');
+                    customImageUpload.classList.add('hidden');
+                } else {
+                    productSelection.classList.add('hidden');
+                    customImageUpload.classList.remove('hidden');
+                }
+            });
+        });
+    </script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

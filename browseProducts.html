@@ -33,6 +33,7 @@
 
         .price-slider {
             -webkit-appearance: none;
+            appearance: none;
             height: 6px;
             background: #e5e7eb;
             border-radius: 3px;
@@ -75,59 +76,10 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50" onload="essentialLoading();">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-store text-indigo-600 text-2xl"></i>
-                <h1 class="text-xl font-bold text-indigo-600">DigiMart</h1>
-            </div>
+    <header class="bg-white shadow-sm sticky top-0 z-50" id="navbar">
 
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Categories</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Vendors</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Sell</a>
-                <a href="#" class="text-gray-600 hover:text-indigo-600">Support</a>
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <button class="p-2 text-gray-600 hover:text-indigo-600">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
-                    <i class="fas fa-heart"></i>
-                    <span
-                        class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                </button>
-                <button class="p-2 text-gray-600 hover:text-indigo-600 relative">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span
-                        class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
-                </button>
-                <div class="hidden md:block relative group">
-                    <button class="flex items-center space-x-1">
-                        <div
-                            class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <span class="text-gray-700">John</span>
-                        <i class="fas fa-chevron-down text-gray-500 text-xs"></i>
-                    </button>
-                    <div
-                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Orders</a>
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Wishlist</a>
-                        <div class="border-t border-gray-200"></div>
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</a>
-                    </div>
-                </div>
-                <button class="md:hidden p-2 text-gray-600">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
     </header>
 
     <!-- Breadcrumbs -->
@@ -136,7 +88,7 @@
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <a href="#"
+                        <a href="./index.html"
                             class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
                             <i class="fas fa-home mr-2"></i>
                             Home
@@ -844,6 +796,7 @@
             });
         });
     </script>
+    <script src="./js/scritpt.js"></script>
 </body>
 
 </html>

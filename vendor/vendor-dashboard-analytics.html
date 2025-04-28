@@ -1,0 +1,718 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | DigiMart</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                            950: '#1e1b4b',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .dropdown-content {
+            display: none;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .sidebar-item.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .sidebar-item.active i {
+            color: white;
+        }
+
+        @media (max-width: 1023px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-50" onload="essentialLoading();">
+    <!-- Mobile Sidebar Toggle -->
+    <button id="sidebarToggle"
+        class="fixed top-4 left-4 z-50 rounded-md bg-indigo-600 p-2 text-white shadow-md lg:hidden">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    </aside>
+    <!-- Main Content -->
+    <div class="lg:pl-64">
+        <!-- Navbar -->
+        <header class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6" id="navbar">
+
+        </header>
+
+
+        <!-- Main Content Area -->
+        <main class="container mx-auto p-4 md:p-6 lg:p-8">
+            <!-- Breadcrumb Navigation -->
+            <div class="mb-6">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                        <li class="inline-flex items-center">
+                            <a href="index.html"
+                                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                                <i class="fa-solid fa-home mr-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-chevron-right text-gray-400 mx-1 text-xs"></i>
+                                <a href="#" class="ml-1 text-sm font-medium text-indigo-600">Analytics</a>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+
+
+            <!-- Date Range Selector -->
+            <div class="grid grid-cols-1 gap-6 mb-6">
+                <div class="flex flex-wrap items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800">Analytics Overview</h3>
+                    <div class="flex items-center space-x-2 mt-2 sm:mt-0">
+                        <select
+                            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>Last 90 days</option>
+                            <option>This year</option>
+                            <option>Custom range</option>
+                        </select>
+                        <button
+                            class="px-3 py-2 bg-indigo-600 text-white rounded-md text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                            <i class="fas fa-users text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Total Visitors</p>
+                            <p class="text-2xl font-semibold text-gray-900">24,521</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center">
+                            <span class="text-green-500 text-sm font-medium flex items-center">
+                                <i class="fas fa-arrow-up mr-1"></i> 12.5%
+                            </span>
+                            <span class="text-gray-500 text-sm ml-2">vs last period</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Conversion Rate</p>
+                            <p class="text-2xl font-semibold text-gray-900">3.45%</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center">
+                            <span class="text-green-500 text-sm font-medium flex items-center">
+                                <i class="fas fa-arrow-up mr-1"></i> 2.1%
+                            </span>
+                            <span class="text-gray-500 text-sm ml-2">vs last period</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-dollar-sign text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Avg. Order Value</p>
+                            <p class="text-2xl font-semibold text-gray-900">$78.60</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center">
+                            <span class="text-red-500 text-sm font-medium flex items-center">
+                                <i class="fas fa-arrow-down mr-1"></i> 0.8%
+                            </span>
+                            <span class="text-gray-500 text-sm ml-2">vs last period</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-redo text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Return Rate</p>
+                            <p class="text-2xl font-semibold text-gray-900">5.12%</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center">
+                            <span class="text-green-500 text-sm font-medium flex items-center">
+                                <i class="fas fa-arrow-down mr-1"></i> 1.2%
+                            </span>
+                            <span class="text-gray-500 text-sm ml-2">vs last period</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales & Traffic Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Sales Overview</h3>
+                        <div class="flex space-x-2">
+                            <button
+                                class="px-2 py-1 text-xs font-medium rounded bg-indigo-100 text-indigo-800">Daily</button>
+                            <button
+                                class="px-2 py-1 text-xs font-medium rounded bg-gray-100 text-gray-800">Weekly</button>
+                            <button
+                                class="px-2 py-1 text-xs font-medium rounded bg-gray-100 text-gray-800">Monthly</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Traffic Sources</h3>
+                        <div>
+                            <select class="px-2 py-1 text-xs font-medium rounded border border-gray-300">
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="trafficChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Performance & Customer Demographics -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Top Products</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Product</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Sales</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Revenue</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Conversion</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Wireless Headphones
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">245</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$12,250</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-900 mr-2">4.8%</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 48%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Smart Watch</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">189</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$9,450</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-900 mr-2">3.9%</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 39%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Bluetooth Speaker
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">156</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$7,800</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-900 mr-2">3.2%</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 32%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Laptop Sleeve</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">132</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$3,960</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-900 mr-2">2.7%</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 27%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Customer Demographics</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Age Distribution</h4>
+                            <div class="chart-container h-40">
+                                <canvas id="ageChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Gender Distribution</h4>
+                            <div class="chart-container h-40">
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Device Usage</h4>
+                            <div class="chart-container h-40">
+                                <canvas id="deviceChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Geographic Distribution</h4>
+                            <div class="chart-container h-40">
+                                <canvas id="geoChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Behavior -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">User Behavior</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-500 mb-2">Page Views</h4>
+                        <div class="overflow-y-auto max-h-64">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Page</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Homepage</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12,345</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Product
+                                            Listing</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8,765</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Product Detail
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6,543</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Shopping Cart
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3,456</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Checkout</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2,345</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-500 mb-2">Bounce Rate by Page</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Homepage</span>
+                                    <span class="text-sm font-medium text-gray-700">32%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 32%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Product Listing</span>
+                                    <span class="text-sm font-medium text-gray-700">28%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 28%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Product Detail</span>
+                                    <span class="text-sm font-medium text-gray-700">24%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 24%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Shopping Cart</span>
+                                    <span class="text-sm font-medium text-gray-700">45%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Checkout</span>
+                                    <span class="text-sm font-medium text-gray-700">38%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 38%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-500 mb-2">Session Duration</h4>
+                        <div class="chart-container">
+                            <canvas id="sessionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="contactSupport"></div>
+    <script>
+        // Initialize charts when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sales Chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            const salesChart = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'This Week',
+                        data: [1200, 1900, 1500, 2500, 2200, 3000, 2800],
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Last Week',
+                        data: [1000, 1700, 1400, 2000, 1800, 2500, 2300],
+                        borderColor: '#9ca3af',
+                        backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Traffic Sources Chart
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Direct', 'Organic Search', 'Paid Search', 'Social Media', 'Referral'],
+                    datasets: [{
+                        data: [30, 25, 20, 15, 10],
+                        backgroundColor: [
+                            '#4f46e5',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444',
+                            '#6366f1'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Age Distribution Chart
+            const ageCtx = document.getElementById('ageChart').getContext('2d');
+            const ageChart = new Chart(ageCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                    datasets: [{
+                        label: 'Age Distribution',
+                        data: [15, 30, 25, 18, 12],
+                        backgroundColor: '#4f46e5',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Gender Distribution Chart
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            const genderChart = new Chart(genderCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Male', 'Female', 'Other'],
+                    datasets: [{
+                        data: [45, 52, 3],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#ec4899',
+                            '#6366f1'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Device Usage Chart
+            const deviceCtx = document.getElementById('deviceChart').getContext('2d');
+            const deviceChart = new Chart(deviceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Mobile', 'Desktop', 'Tablet'],
+                    datasets: [{
+                        data: [58, 32, 10],
+                        backgroundColor: [
+                            '#10b981',
+                            '#6366f1',
+                            '#f59e0b'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Geographic Distribution Chart
+            const geoCtx = document.getElementById('geoChart').getContext('2d');
+            const geoChart = new Chart(geoCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['USA', 'UK', 'Canada', 'Australia', 'Germany'],
+                    datasets: [{
+                        label: 'Customers',
+                        data: [45, 20, 15, 10, 10],
+                        backgroundColor: '#6366f1',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Session Duration Chart
+            const sessionCtx = document.getElementById('sessionChart').getContext('2d');
+            const sessionChart = new Chart(sessionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Avg. Session (minutes)',
+                        data: [4.2, 3.8, 5.1, 4.5, 3.9, 6.2, 5.8],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
