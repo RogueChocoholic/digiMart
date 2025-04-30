@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - DigiMart Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .sidebar-item.active {
+      background-color: rgba(99, 102, 241, 0.1);
+      border-left: 3px solid #6366f1;
+    }
+    
+    .sidebar-item:hover:not(.active) {
+      background-color: rgba(99, 102, 241, 0.05);
+    }
+    
+    .notification-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ef4444;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      min-width: 280px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      z-index: 50;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    /* Mobile sidebar animation */
+    .mobile-sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .mobile-sidebar.open {
+      transform: translateX(0);
+    }
+    
+    /* Overlay for mobile sidebar */
+    .sidebar-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+    }
+    
+    .sidebar-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    /* Settings tab active state */
+    .settings-tab.active {
+      color: #4f46e5;
+      border-bottom: 2px solid #4f46e5;
+    }
+    
+    .settings-tab:hover:not(.active) {
+      color: #6366f1;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Mobile Sidebar Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay md:hidden" onclick="toggleSidebar()"></div>
+
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <div id="mobileSidebar" class="mobile-sidebar fixed md:relative md:translate-x-0 z-50 md:z-0 h-full md:flex md:flex-shrink-0">
+      <div class="flex flex-col w-64 border-r border-gray-200 bg-white h-full">
+        <div class="flex items-center h-16 px-4 border-b border-gray-200">
+          <div class="flex items-center">
+            <span class="text-2xl font-bold text-primary-600">digi<span class="text-primary-500">mart</span></span>
+            <span class="ml-2 text-xs font-semibold text-gray-500 uppercase">Admin</span>
+          </div>
+        </div>
+        <div class="flex flex-col flex-grow overflow-y-auto">
+          <nav class="flex-1 px-2 py-4 space-y-1">
+            <a href="index.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+              Dashboard
+            </a>
+            <a href="users.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-users w-5 h-5 mr-3"></i>
+              Users Management
+            </a>
+            <a href="vendors.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-store w-5 h-5 mr-3"></i>
+              Vendors
+            </a>
+            <a href="products.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-shopping-cart w-5 h-5 mr-3"></i>
+              Products
+            </a>
+            <a href="orders.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-shopping-bag w-5 h-5 mr-3"></i>
+              Orders
+              <span class="ml-auto bg-primary-100 text-primary-800 py-0.5 px-2 rounded-full text-xs">24</span>
+            </a>
+            <a href="analytics.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-chart-line w-5 h-5 mr-3"></i>
+              Analytics
+            </a>
+            <a href="transactions.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-money-bill-wave w-5 h-5 mr-3"></i>
+              Transactions
+            </a>
+            <a href="withdrawal-requests.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-hand-holding-usd w-5 h-5 mr-3"></i>
+              Withdrawal Requests
+              <span class="ml-auto bg-red-100 text-red-800 py-0.5 px-2 rounded-full text-xs">12</span>
+            </a>
+            <a href="discounts.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-percentage w-5 h-5 mr-3"></i>
+              Discounts
+            </a>
+            <a href="reviews.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
+              <i class="fas fa-star w-5 h-5 mr-3"></i>
+              Reviews
+            </a>
+            <a href="settings.html" class="flex items-center px-3 py-3 text-sm font-medium text-primary-700 rounded-md sidebar-item active">
+              <i class="fas fa-cog w-5 h-5 mr-3"></i>
+              Settings
+            </a>
+          </nav>
+        </div>
+        <div class="p-4 border-t border-gray-200">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin User">
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-700">Admin User</p>
+              <p class="text-xs font-medium text-gray-500">admin@digimart.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex flex-col flex-1 overflow-hidden">
+      <!-- Top Navigation -->
+      <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200 bg-white">
+        <button class="text-gray-500 focus:outline-none md:hidden" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+          <div class="max-w-lg w-full lg:max-w-xs">
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-search text-gray-400"></i>
+              </div>
+              <input id="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm" placeholder="Search..." type="search">
+            </div>
+          </div>
+        </div>
+        <div class="ml-4 flex items-center md:ml-6 space-x-4">
+          <div class="dropdown relative">
+            <button class="relative p-1 text-gray-500 rounded-full hover:text-gray-700 focus:outline-none">
+              <i class="fas fa-bell text-xl"></i>
+              <span class="notification-dot"></span>
+            </button>
+            <div class="dropdown-content mt-2 rounded-md bg-white shadow-lg py-1 right-0">
+              <div class="px-4 py-2 border-b border-gray-200">
+                <p class="text-sm font-medium text-gray-700">Notifications</p>
+              </div>
+              <div class="max-h-60 overflow-y-auto">
+                <a href="#" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <div class="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                        <i class="fas fa-user-plus text-primary-600"></i>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">New vendor registration</p>
+                      <p class="text-xs text-gray-500">10 minutes ago</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="#" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                        <i class="fas fa-shopping-bag text-green-600"></i>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">New order #12345</p>
+                      <p class="text-xs text-gray-500">30 minutes ago</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="#" class="block px-4 py-3 hover:bg-gray-50">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-red-600"></i>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">System alert</p>
+                      <p class="text-xs text-gray-500">1 hour ago</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <a href="#" class="block text-center text-sm font-medium text-primary-600 py-2 hover:bg-gray-50">
+                View all notifications
+              </a>
+            </div>
+          </div>
+          <div class="dropdown relative">
+            <button class="flex items-center max-w-xs text-sm rounded-full focus:outline-none">
+              <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin User">
+              <span class="ml-2 text-gray-700 hidden md:inline">Admin User</span>
+              <i class="fas fa-chevron-down ml-1 text-gray-500 text-xs hidden md:inline"></i>
+            </button>
+            <div class="dropdown-content mt-2 rounded-md bg-white shadow-lg py-1 right-0">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+              <div class="border-t border-gray-100"></div>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Content Area -->
+      <div class="flex-1 overflow-auto p-4 bg-gray-50">
+        <!-- Page Header -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Settings</h1>
+            <p class="mt-1 text-sm text-gray-500">Configure platform settings and preferences</p>
+          </div>
+          <div class="mt-4 md:mt-0">
+            <button class="bg-primary-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-primary-700 flex items-center">
+              <i class="fas fa-save mr-2"></i>
+              Save Changes
+            </button>
+          </div>
+        </div>
+        
+        <!-- Settings Tabs -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+          <div class="border-b border-gray-200">
+            <nav class="flex -mb-px overflow-x-auto">
+              <button onclick="showTab('general')" class="settings-tab active whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm">
+                General
+              </button>
+              <button onclick="showTab('appearance')" class="settings-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-500">
+                Appearance
+              </button>
+              <button onclick="showTab('payment')" class="settings-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-500">
+                Payment Methods
+              </button>
+              <button onclick="showTab('shipping')" class="settings-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-500">
+                Shipping
+              </button>
+              <button onclick="showTab('email')" class="settings-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-500">
+                Email
+              </button>
+              <button onclick="showTab('vendor')" class="settings-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-500">
+                Vendor Settings
+              </button>
+              <button onclick="showTab('api')" class="settings-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm text-gray-500">
+                API & Integrations
+              </button>
+            </nav>
+          </div>
+          
+          <!-- Settings Content -->
+          <div class="p-6">
+            <!-- General Settings Tab -->
+            <div id="general-tab" class="settings-content">
+              <div class="space-y-6">
+                <!-- Site Information -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">Site Information</h3>
+                  <p class="mt-1 text-sm text-gray-500">Basic information about your marketplace</p>
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="site-name" class="block text-sm font-medium text-gray-700">Site Name</label>
+                      <input type="text" name="site-name" id="site-name" value="DigiMart" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="site-tagline" class="block text-sm font-medium text-gray-700">Tagline</label>
+                      <input type="text" name="site-tagline" id="site-tagline" value="Your Digital Marketplace" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div class="sm:col-span-2">
+                      <label for="site-description" class="block text-sm font-medium text-gray-700">Site Description</label>
+                      <textarea id="site-description" name="site-description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">DigiMart is a multi-vendor e-commerce platform where vendors can sell their products and customers can shop from multiple vendors in one place.</textarea>
+                    </div>
+                    <div>
+                      <label for="admin-email" class="block text-sm font-medium text-gray-700">Admin Email</label>
+                      <input type="email" name="admin-email" id="admin-email" value="admin@digimart.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="support-email" class="block text-sm font-medium text-gray-700">Support Email</label>
+                      <input type="email" name="support-email" id="support-email" value="support@digimart.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Logo & Favicon -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Logo & Favicon</h3>
+                  <p class="mt-1 text-sm text-gray-500">Upload your site logo and favicon</p>
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Site Logo</label>
+                      <div class="mt-1 flex items-center">
+                        <div class="flex-shrink-0 h-12 w-12 bg-gray-100 rounded-md overflow-hidden">
+                          <img src="https://ui-avatars.com/api/?name=D&background=6366f1&color=fff&size=128" alt="Current Logo" class="h-full w-full">
+                        </div>
+                        <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                          Change
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Favicon</label>
+                      <div class="mt-1 flex items-center">
+                        <div class="flex-shrink-0 h-12 w-12 bg-gray-100 rounded-md overflow-hidden">
+                          <img src="https://ui-avatars.com/api/?name=D&background=6366f1&color=fff&size=128" alt="Current Favicon" class="h-full w-full">
+                        </div>
+                        <button type="button" class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                          Change
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Regional Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Regional Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure regional settings for your marketplace</p>
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="default-country" class="block text-sm font-medium text-gray-700">Default Country</label>
+                      <select id="default-country" name="default-country" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="US" selected>United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="default-currency" class="block text-sm font-medium text-gray-700">Default Currency</label>
+                      <select id="default-currency" name="default-currency" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="USD" selected>USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="CAD">CAD ($)</option>
+                        <option value="AUD">AUD ($)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="timezone" class="block text-sm font-medium text-gray-700">Timezone</label>
+                      <select id="timezone" name="timezone" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="UTC-8" selected>Pacific Time (UTC-8)</option>
+                        <option value="UTC-7">Mountain Time (UTC-7)</option>
+                        <option value="UTC-6">Central Time (UTC-6)</option>
+                        <option value="UTC-5">Eastern Time (UTC-5)</option>
+                        <option value="UTC+0">UTC</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="date-format" class="block text-sm font-medium text-gray-700">Date Format</label>
+                      <select id="date-format" name="date-format" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="MM/DD/YYYY" selected>MM/DD/YYYY</option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Social Media</h3>
+                  <p class="mt-1 text-sm text-gray-500">Connect your marketplace to social media platforms</p>
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="facebook" class="block text-sm font-medium text-gray-700">Facebook</label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                          https://
+                        </span>
+                        <input type="text" name="facebook" id="facebook" value="facebook.com/digimart" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="twitter" class="block text-sm font-medium text-gray-700">Twitter</label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                          https://
+                        </span>
+                        <input type="text" name="twitter" id="twitter" value="twitter.com/digimart" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="instagram" class="block text-sm font-medium text-gray-700">Instagram</label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                          https://
+                        </span>
+                        <input type="text" name="instagram" id="instagram" value="instagram.com/digimart" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="linkedin" class="block text-sm font-medium text-gray-700">LinkedIn</label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                          https://
+                        </span>
+                        <input type="text" name="linkedin" id="linkedin" value="linkedin.com/company/digimart" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-  value="linkedin.com/company/digimart" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Appearance Settings Tab (Hidden by default) -->
+            <div id="appearance-tab" class="settings-content hidden">
+              <div class="space-y-6">
+                <!-- Theme Settings -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">Theme Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Customize the look and feel of your marketplace</p>
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="primary-color" class="block text-sm font-medium text-gray-700">Primary Color</label>
+                      <div class="mt-1 flex items-center">
+                        <input type="color" id="primary-color" name="primary-color" value="#4f46e5" class="h-8 w-8 rounded-md border border-gray-300 cursor-pointer">
+                        <input type="text" value="#4f46e5" class="ml-2 block w-24 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="secondary-color" class="block text-sm font-medium text-gray-700">Secondary Color</label>
+                      <div class="mt-1 flex items-center">
+                        <input type="color" id="secondary-color" name="secondary-color" value="#6366f1" class="h-8 w-8 rounded-md border border-gray-300 cursor-pointer">
+                        <input type="text" value="#6366f1" class="ml-2 block w-24 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="font-family" class="block text-sm font-medium text-gray-700">Font Family</label>
+                      <select id="font-family" name="font-family" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="Inter" selected>Inter</option>
+                        <option value="Roboto">Roboto</option>
+                        <option value="Open Sans">Open Sans</option>
+                        <option value="Lato">Lato</option>
+                        <option value="Poppins">Poppins</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="button-style" class="block text-sm font-medium text-gray-700">Button Style</label>
+                      <select id="button-style" name="button-style" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="rounded" selected>Rounded</option>
+                        <option value="pill">Pill</option>
+                        <option value="square">Square</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Homepage Layout -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Homepage Layout</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure the layout of your marketplace homepage</p>
+                  <div class="mt-4 space-y-4">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="show-hero" name="show-hero" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="show-hero" class="font-medium text-gray-700">Show Hero Section</label>
+                        <p class="text-gray-500">Display a hero banner at the top of the homepage</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="show-featured" name="show-featured" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="show-featured" class="font-medium text-gray-700">Show Featured Products</label>
+                        <p class="text-gray-500">Display featured products section on the homepage</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="show-categories" name="show-categories" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="show-categories" class="font-medium text-gray-700">Show Categories</label>
+                        <p class="text-gray-500">Display product categories on the homepage</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="show-vendors" name="show-vendors" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="show-vendors" class="font-medium text-gray-700">Show Featured Vendors</label>
+                        <p class="text-gray-500">Display featured vendors section on the homepage</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Footer Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Footer Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure the footer of your marketplace</p>
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div class="sm:col-span-2">
+                      <label for="footer-text" class="block text-sm font-medium text-gray-700">Footer Text</label>
+                      <textarea id="footer-text" name="footer-text" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">© 2023 DigiMart. All rights reserved.</textarea>
+                    </div>
+                    <div>
+                      <label for="footer-columns" class="block text-sm font-medium text-gray-700">Footer Columns</label>
+                      <select id="footer-columns" name="footer-columns" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="3" selected>3 Columns</option>
+                        <option value="4">4 Columns</option>
+                        <option value="5">5 Columns</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="footer-style" class="block text-sm font-medium text-gray-700">Footer Style</label>
+                      <select id="footer-style" name="footer-style" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="light" selected>Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="colored">Colored</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Payment Methods Tab (Hidden by default) -->
+            <div id="payment-tab" class="settings-content hidden">
+              <div class="space-y-6">
+                <!-- Payment Gateway Settings -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">Payment Gateway Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure payment gateways for your marketplace</p>
+                  
+                  <!-- Stripe Settings -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" class="h-8">
+                        </div>
+                        <div class="ml-4">
+                          <h4 class="text-md font-medium text-gray-900">Stripe</h4>
+                          <p class="text-sm text-gray-500">Accept credit card payments</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center">
+                        <div class="mr-4">
+                          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Active
+                          </span>
+                        </div>
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                      <div>
+                        <label for="stripe-public-key" class="block text-sm font-medium text-gray-700">Public Key</label>
+                        <input type="text" name="stripe-public-key" id="stripe-public-key" value="pk_test_51H..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                      <div>
+                        <label for="stripe-secret-key" class="block text-sm font-medium text-gray-700">Secret Key</label>
+                        <input type="password" name="stripe-secret-key" id="stripe-secret-key" value="sk_test_51H..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                      <div>
+                        <label for="stripe-webhook-secret" class="block text-sm font-medium text-gray-700">Webhook Secret</label>
+                        <input type="password" name="stripe-webhook-secret" id="stripe-webhook-secret" value="whsec_..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                      <div>
+                        <label for="stripe-mode" class="block text-sm font-medium text-gray-700">Mode</label>
+                        <select id="stripe-mode" name="stripe-mode" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                          <option value="test" selected>Test Mode</option>
+                          <option value="live">Live Mode</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- PayPal Settings -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="h-8">
+                        </div>
+                        <div class="ml-4">
+                          <h4 class="text-md font-medium text-gray-900">PayPal</h4>
+                          <p class="text-sm text-gray-500">Accept PayPal payments</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center">
+                        <div class="mr-4">
+                          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Active
+                          </span>
+                        </div>
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                      <div>
+                        <label for="paypal-client-id" class="block text-sm font-medium text-gray-700">Client ID</label>
+                        <input type="text" name="paypal-client-id" id="paypal-client-id" value="AeJIH..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                      <div>
+                        <label for="paypal-secret" class="block text-sm font-medium text-gray-700">Secret</label>
+                        <input type="password" name="paypal-secret" id="paypal-secret" value="EGZh..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                      <div>
+                        <label for="paypal-mode" class="block text-sm font-medium text-gray-700">Mode</label>
+                        <select id="paypal-mode" name="paypal-mode" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                          <option value="sandbox" selected>Sandbox</option>
+                          <option value="live">Live</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Add New Payment Method Button -->
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Payment Method
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Commission Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Commission Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure commission rates for vendor sales</p>
+                  
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="commission-type" class="block text-sm font-medium text-gray-700">Commission Type</label>
+                      <select id="commission-type" name="commission-type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="percentage" selected>Percentage</option>
+                        <option value="fixed">Fixed Amount</option>
+                        <option value="mixed">Mixed (Fixed + Percentage)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="commission-rate" class="block text-sm font-medium text-gray-700">Commission Rate (%)</label>
+                      <input type="number" name="commission-rate" id="commission-rate" value="10" min="0" max="100" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="fixed-fee" class="block text-sm font-medium text-gray-700">Fixed Fee</label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input type="number" name="fixed-fee" id="fixed-fee" value="2.00" min="0" step="0.01" class="focus:ring-primary-500 focus:border-primary-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="min-withdrawal" class="block text-sm font-medium text-gray-700">Minimum Withdrawal Amount</label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input type="number" name="min-withdrawal" id="min-withdrawal" value="50.00" min="0" step="0.01" class="focus:ring-primary-500 focus:border-primary-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-4">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="auto-approve-withdrawal" name="auto-approve-withdrawal" type="checkbox" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="auto-approve-withdrawal" class="font-medium text-gray-700">Auto-approve Withdrawal Requests</label>
+                        <p class="text-gray-500">Automatically approve vendor withdrawal requests</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Tax Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Tax Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure tax settings for your marketplace</p>
+                  
+                  <div class="mt-4">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="enable-tax" name="enable-tax" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="enable-tax" class="font-medium text-gray-700">Enable Tax Calculation</label>
+                        <p class="text-gray-500">Calculate and collect taxes on orders</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="tax-calculation" class="block text-sm font-medium text-gray-700">Tax Calculation</label>
+                      <select id="tax-calculation" name="tax-calculation" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="automatic" selected>Automatic (Based on location)</option>
+                        <option value="manual">Manual (Fixed rates)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="default-tax-rate" class="block text-sm font-medium text-gray-700">Default Tax Rate (%)</label>
+                      <input type="number" name="default-tax-rate" id="default-tax-rate" value="7.5" min="0" max="100" step="0.01" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="tax-provider" class="block text-sm font-medium text-gray-700">Tax Provider</label>
+                      <select id="tax-provider" name="tax-provider" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="none" selected>None (Use default rates)</option>
+                        <option value="taxjar">TaxJar</option>
+                        <option value="avalara">Avalara</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Shipping Tab (Hidden by default) -->
+            <div id="shipping-tab" class="settings-content hidden">
+              <div class="space-y-6">
+                <!-- General Shipping Settings -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">General Shipping Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure general shipping settings for your marketplace</p>
+                  
+                  <div class="mt-4">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="enable-shipping" name="enable-shipping" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="enable-shipping" class="font-medium text-gray-700">Enable Shipping</label>
+                        <p class="text-gray-500">Enable shipping calculation for physical products</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="shipping-calculation" class="block text-sm font-medium text-gray-700">Shipping Calculation</label>
+                      <select id="shipping-calculation" name="shipping-calculation" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="vendor" selected>Vendor-based (Each vendor sets their own rates)</option>
+                        <option value="marketplace">Marketplace-based (Platform sets rates)</option>
+                        <option value="mixed">Mixed (Platform and vendor rates)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="shipping-origin" class="block text-sm font-medium text-gray-700">Default Shipping Origin</label>
+                      <select id="shipping-origin" name="shipping-origin" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="US" selected>United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Shipping Methods -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Shipping Methods</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure available shipping methods for your marketplace</p>
+                  
+                  <!-- Flat Rate Shipping -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h4 class="text-md font-medium text-gray-900">Flat Rate Shipping</h4>
+                        <p class="text-sm text-gray-500">Charge a fixed rate for shipping</p>
+                      </div>
+                      <div class="flex items-center">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                      <div>
+                        <label for="flat-rate-cost" class="block text-sm font-medium text-gray-700">Flat Rate Cost</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                          </div>
+                          <input type="number" name="flat-rate-cost" id="flat-rate-cost" value="5.99" min="0" step="0.01" class="focus:ring-primary-500 focus:border-primary-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                      </div>
+                      <div>
+                        <label for="free-shipping-threshold" class="block text-sm font-medium text-gray-700">Free Shipping Threshold</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                          </div>
+                          <input type="number" name="free-shipping-threshold" id="free-shipping-threshold" value="50.00" min="0" step="0.01" class="focus:ring-primary-500 focus:border-primary-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Free Shipping -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h4 class="text-md font-medium text-gray-900">Free Shipping</h4>
+                        <p class="text-sm text-gray-500">Offer free shipping to customers</p>
+                      </div>
+                      <div class="flex items-center">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                      <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                          <input id="free-shipping-min-amount" name="free-shipping-min-amount" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                        </div>
+                        <div class="ml-3 text-sm">
+                          <label for="free-shipping-min-amount" class="font-medium text-gray-700">Require Minimum Order Amount</label>
+                          <p class="text-gray-500">Only offer free shipping for orders above a certain amount</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Local Pickup -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h4 class="text-md font-medium text-gray-900">Local Pickup</h4>
+                        <p class="text-sm text-gray-500">Allow customers to pick up orders locally</p>
+                      </div>
+                      <div class="flex items-center">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Add New Shipping Method Button -->
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Shipping Method
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Shipping Zones -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Shipping Zones</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure shipping zones and rates based on location</p>
+                  
+                  <div class="mt-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Zone Name</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Regions</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Shipping Methods</th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Domestic</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">United States</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Flat Rate, Free Shipping</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">International</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Rest of the World</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Flat Rate</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Shipping Zone
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Email Tab (Hidden by default) -->
+            <div id="email-tab" class="settings-content hidden">
+              <div class="space-y-6">
+                <!-- Email Provider Settings -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">Email Provider Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure your email provider for sending marketplace emails</p>
+                  
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="email-provider" class="block text-sm font-medium text-gray-700">Email Provider</label>
+                      <select id="email-provider" name="email-provider" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="smtp" selected>SMTP</option>
+                        <option value="sendgrid">SendGrid</option>
+                        <option value="mailchimp">Mailchimp</option>
+                        <option value="amazon-ses">Amazon SES</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="from-email" class="block text-sm font-medium text-gray-700">From Email</label>
+                      <input type="email" name="from-email" id="from-email" value="noreply@digimart.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="from-name" class="block text-sm font-medium text-gray-700">From Name</label>
+                      <input type="text" name="from-name" id="from-name" value="DigiMart" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="reply-to" class="block text-sm font-medium text-gray-700">Reply-To Email</label>
+                      <input type="email" name="reply-to" id="reply-to" value="support@digimart.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- SMTP Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">SMTP Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure SMTP settings for sending emails</p>
+                  
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="smtp-host" class="block text-sm font-medium text-gray-700">SMTP Host</label>
+                      <input type="text" name="smtp-host" id="smtp-host" value="smtp.example.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="smtp-port" class="block text-sm font-medium text-gray-700">SMTP Port</label>
+                      <input type="number" name="smtp-port" id="smtp-port" value="587" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="smtp-username" class="block text-sm font-medium text-gray-700">SMTP Username</label>
+                      <input type="text" name="smtp-username" id="smtp-username" value="user@example.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="smtp-password" class="block text-sm font-medium text-gray-700">SMTP Password</label>
+                      <input type="password" name="smtp-password" id="smtp-password" value="••••••••" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="smtp-encryption" class="block text-sm font-medium text-gray-700">Encryption</label>
+                      <select id="smtp-encryption" name="smtp-encryption" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="tls" selected>TLS</option>
+                        <option value="ssl">SSL</option>
+                        <option value="none">None</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-4">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-paper-plane mr-2"></i>
+                      Send Test Email
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Email Templates -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Email Templates</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure email templates for various marketplace notifications</p>
+                  
+                  <div class="mt-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Template Name</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Subject</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">New Order</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Your order #{{order_id}} has been received</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Order Shipped</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Your order #{{order_id}} has been shipped</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">New Account</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Welcome to DigiMart!</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Password Reset</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Reset your DigiMart password</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Vendor Application</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Your vendor application status</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Vendor Settings Tab (Hidden by default) -->
+            <div id="vendor-tab" class="settings-content hidden">
+              <div class="space-y-6">
+                <!-- General Vendor Settings -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">General Vendor Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure general settings for vendors on your marketplace</p>
+                  
+                  <div class="mt-4 space-y-4">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="enable-vendor-registration" name="enable-vendor-registration" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="enable-vendor-registration" class="font-medium text-gray-700">Enable Vendor Registration</label>
+                        <p class="text-gray-500">Allow new vendors to register on your marketplace</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="auto-approve-vendors" name="auto-approve-vendors" type="checkbox" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="auto-approve-vendors" class="font-medium text-gray-700">Auto-approve Vendors</label>
+                        <p class="text-gray-500">Automatically approve new vendor registrations</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="auto-approve-products" name="auto-approve-products" type="checkbox" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="auto-approve-products" class="font-medium text-gray-700">Auto-approve Products</label>
+                        <p class="text-gray-500">Automatically approve new products submitted by vendors</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="vendor-store-url" class="block text-sm font-medium text-gray-700">Vendor Store URL Format</label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                          https://digimart.com/store/
+                        </span>
+                        <input type="text" name="vendor-store-url" id="vendor-store-url" value="{{store_name}}" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="max-products" class="block text-sm font-medium text-gray-700">Maximum Products per Vendor</label>
+                      <input type="number" name="max-products" id="max-products" value="1000" min="1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      <p class="mt-1 text-xs text-gray-500">Leave empty for unlimited</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Vendor Application Form -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Vendor Application Form</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure the vendor application form fields</p>
+                  
+                  <div class="mt-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Field Name</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Required</th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Store Name</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Text</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Yes</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Store Description</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Textarea</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Yes</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Phone Number</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Phone</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Yes</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Store Address</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Address</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Yes</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Tax ID</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Text</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">No</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Form Field
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Vendor Commission Tiers -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Vendor Commission Tiers</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure commission tiers for vendors based on sales volume</p>
+                  
+                  <div class="mt-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Tier Name</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Sales Volume</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Commission Rate</th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Standard</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$0 - $1,000</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">10%</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Silver</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$1,001 - $5,000</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">8%</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Gold</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$5,001 - $10,000</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">6%</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Platinum</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$10,001+</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">5%</td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Commission Tier
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Vendor Payout Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Vendor Payout Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure payout settings for vendors</p>
+                  
+                  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div>
+                      <label for="payout-schedule" class="block text-sm font-medium text-gray-700">Payout Schedule</label>
+                      <select id="payout-schedule" name="payout-schedule" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="weekly" selected>Weekly</option>
+                        <option value="biweekly">Bi-weekly</option>
+                        <option value="monthly">Monthly</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="min-payout" class="block text-sm font-medium text-gray-700">Minimum Payout Amount</label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input type="number" name="min-payout" id="min-payout" value="50.00" min="0" step="0.01" class="focus:ring-primary-500 focus:border-primary-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                      </div>
+                    </div>
+                    <div>
+                      <label for="payout-methods" class="block text-sm font-medium text-gray-700">Available Payout Methods</label>
+                      <div class="mt-2 space-y-2">
+                        <div class="flex items-center">
+                          <input id="payout-paypal" name="payout-methods" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                          <label for="payout-paypal" class="ml-3 text-sm text-gray-700">PayPal</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="payout-bank" name="payout-methods" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                          <label for="payout-bank" class="ml-3 text-sm text-gray-700">Bank Transfer</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="payout-stripe" name="payout-methods" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                          <label for="payout-stripe" class="ml-3 text-sm text-gray-700">Stripe Connect</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- API & Integrations Tab (Hidden by default) -->
+            <div id="api-tab" class="settings-content hidden">
+              <div class="space-y-6">
+                <!-- API Settings -->
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">API Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure API settings for your marketplace</p>
+                  
+                  <div class="mt-4">
+                    <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="enable-api" name="enable-api" type="checkbox" checked class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded">
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="enable-api" class="font-medium text-gray-700">Enable API</label>
+                        <p class="text-gray-500">Allow external applications to access your marketplace data via API</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    <div class="sm:col-span-2">
+                      <label for="api-key" class="block text-sm font-medium text-gray-700">API Key</label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <input type="text" name="api-key" id="api-key" value="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" readonly class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md border border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                        <button type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                          Regenerate
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label for="api-rate-limit" class="block text-sm font-medium text-gray-700">Rate Limit (requests per minute)</label>
+                      <input type="number" name="api-rate-limit" id="api-rate-limit" value="60" min="1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                    <div>
+                      <label for="api-version" class="block text-sm font-medium text-gray-700">API Version</label>
+                      <select id="api-version" name="api-version" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                        <option value="v1" selected>v1 (Current)</option>
+                        <option value="v2-beta">v2 (Beta)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Webhook Settings -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Webhook Settings</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure webhooks to notify external applications of events</p>
+                  
+                  <div class="mt-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Endpoint URL</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Events</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Actions</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">https://example.com/webhooks/digimart</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">order.created, order.updated</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">https://analytics.example.org/api/events</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">product.created, product.updated, product.deleted</td>
+                          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Active
+                            </span>
+                          </td>
+                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <a href="#" class="text-primary-600 hover:text-primary-900">Edit</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Webhook
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Third-Party Integrations -->
+                <div class="pt-6 border-t border-gray-200">
+                  <h3 class="text-lg font-medium text-gray-900">Third-Party Integrations</h3>
+                  <p class="mt-1 text-sm text-gray-500">Configure integrations with third-party services</p>
+                  
+                  <!-- Google Analytics -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                          <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" class="h-6">
+                        </div>
+                        <div class="ml-4">
+                          <h4 class="text-md font-medium text-gray-900">Google Analytics</h4>
+                          <p class="text-sm text-gray-500">Track website traffic and user behavior</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                      <label for="ga-tracking-id" class="block text-sm font-medium text-gray-700">Tracking ID</label>
+                      <input type="text" name="ga-tracking-id" id="ga-tracking-id" value="UA-123456789-1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                  </div>
+                  
+                  <!-- Facebook Pixel -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/800px-2021_Facebook_icon.svg.png" alt="Facebook" class="h-6 w-6">
+                        </div>
+                        <div class="ml-4">
+                          <h4 class="text-md font-medium text-gray-900">Facebook Pixel</h4>
+                          <p class="text-sm text-gray-500">Track conversions and optimize Facebook ads</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                      <label for="fb-pixel-id" class="block text-sm font-medium text-gray-700">Pixel ID</label>
+                      <input type="text" name="fb-pixel-id" id="fb-pixel-id" value="987654321098765" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                    </div>
+                  </div>
+                  
+                  <!-- Mailchimp -->
+                  <div class="mt-6 border border-gray-200 rounded-md p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                          <img src="https://cdn-images.mailchimp.com/monkey_rewards/grow-business-banner-2x.png" alt="Mailchimp" class="h-6">
+                        </div>
+                        <div class="ml-4">
+                          <h4 class="text-md font-medium text-gray-900">Mailchimp</h4>
+                          <p class="text-sm text-gray-500">Email marketing automation</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input type="checkbox" class="sr-only peer">
+                          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                      <div>
+                        <label for="mailchimp-api-key" class="block text-sm font-medium text-gray-700">API Key</label>
+                        <input type="password" name="mailchimp-api-key" id="mailchimp-api-key" placeholder="Enter API key" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                      <div>
+                        <label for="mailchimp-list-id" class="block text-sm font-medium text-gray-700">List ID</label>
+                        <input type="text" name="mailchimp-list-id" id="mailchimp-list-id" placeholder="Enter list ID" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Add New Integration Button -->
+                  <div class="mt-6">
+                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                      <i class="fas fa-plus mr-2"></i>
+                      Add Integration
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle sidebar function
+    function toggleSidebar() {
+      const sidebar = document.getElementById('mobileSidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    }
+    
+    // Settings tabs functionality
+    function showTab(tabName) {
+      // Hide all content
+      const contents = document.querySelectorAll('.settings-content');
+      contents.forEach(content => {
+        content.classList.add('hidden');
+      });
+      
+      // Show selected content
+      const selectedContent = document.getElementById(tabName + '-tab');
+      if (selectedContent) {
+        selectedContent.classList.remove('hidden');
+      }
+      
+      // Update tab styles
+      const tabs = document.querySelectorAll('.settings-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+        tab.classList.add('text-gray-500');
+      });
+      
+      // Set active tab
+      const activeTab = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+      if (activeTab) {
+        activeTab.classList.add('active');
+        activeTab.classList.remove('text-gray-500');
+      }
+    }
+  </script>
+</body>
+</html>
