@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,20 +32,20 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
+
     body {
       font-family: 'Inter', sans-serif;
     }
-    
+
     .sidebar-item.active {
       background-color: rgba(99, 102, 241, 0.1);
       border-left: 3px solid #6366f1;
     }
-    
+
     .sidebar-item:hover:not(.active) {
       background-color: rgba(99, 102, 241, 0.05);
     }
-    
+
     .notification-dot {
       position: absolute;
       top: -2px;
@@ -54,7 +55,7 @@
       border-radius: 50%;
       background-color: #ef4444;
     }
-    
+
     .dropdown-content {
       display: none;
       position: absolute;
@@ -63,21 +64,21 @@
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       z-index: 50;
     }
-    
+
     .dropdown:hover .dropdown-content {
       display: block;
     }
-    
+
     /* Mobile sidebar animation */
     .mobile-sidebar {
       transform: translateX(-100%);
       transition: transform 0.3s ease-in-out;
     }
-    
+
     .mobile-sidebar.open {
       transform: translateX(0);
     }
-    
+
     /* Overlay for mobile sidebar */
     .sidebar-overlay {
       background-color: rgba(0, 0, 0, 0.5);
@@ -88,91 +89,22 @@
       pointer-events: none;
       transition: opacity 0.3s ease-in-out;
     }
-    
+
     .sidebar-overlay.open {
       opacity: 1;
       pointer-events: auto;
     }
   </style>
 </head>
+
 <body class="bg-gray-50">
   <!-- Mobile Sidebar Overlay -->
   <div id="sidebarOverlay" class="sidebar-overlay md:hidden" onclick="toggleSidebar()"></div>
 
   <div class="flex h-screen overflow-hidden">
-    <!-- Sidebar -->
-    <div id="mobileSidebar" class="mobile-sidebar fixed md:relative md:translate-x-0 z-50 md:z-0 h-full md:flex md:flex-shrink-0">
-      <div class="flex flex-col w-64 border-r border-gray-200 bg-white h-full">
-        <div class="flex items-center h-16 px-4 border-b border-gray-200">
-          <div class="flex items-center">
-            <span class="text-2xl font-bold text-primary-600">digi<span class="text-primary-500">mart</span></span>
-            <span class="ml-2 text-xs font-semibold text-gray-500 uppercase">Admin</span>
-          </div>
-        </div>
-        <div class="flex flex-col flex-grow overflow-y-auto">
-          <nav class="flex-1 px-2 py-4 space-y-1">
-            <a href="index.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
-              Dashboard
-            </a>
-            <a href="users.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-users w-5 h-5 mr-3"></i>
-              Users Management
-            </a>
-            <a href="vendors.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-store w-5 h-5 mr-3"></i>
-              Vendors
-            </a>
-            <a href="products.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-shopping-cart w-5 h-5 mr-3"></i>
-              Products
-            </a>
-            <a href="orders.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-shopping-bag w-5 h-5 mr-3"></i>
-              Orders
-              <span class="ml-auto bg-primary-100 text-primary-800 py-0.5 px-2 rounded-full text-xs">24</span>
-            </a>
-            <a href="analytics.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-chart-line w-5 h-5 mr-3"></i>
-              Analytics
-            </a>
-            <a href="transactions.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-money-bill-wave w-5 h-5 mr-3"></i>
-              Transactions
-            </a>
-            <a href="withdrawal-requests.html" class="flex items-center px-3 py-3 text-sm font-medium text-primary-700 rounded-md sidebar-item active">
-              <i class="fas fa-hand-holding-usd w-5 h-5 mr-3"></i>
-              Withdrawal Requests
-              <span class="ml-auto bg-red-100 text-red-800 py-0.5 px-2 rounded-full text-xs">12</span>
-            </a>
-            <a href="discounts.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-percentage w-5 h-5 mr-3"></i>
-              Discounts
-            </a>
-            <a href="reviews.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-star w-5 h-5 mr-3"></i>
-              Reviews
-            </a>
-            <a href="settings.html" class="flex items-center px-3 py-3 text-sm font-medium text-gray-600 rounded-md sidebar-item">
-              <i class="fas fa-cog w-5 h-5 mr-3"></i>
-              Settings
-            </a>
-          </nav>
-        </div>
-        <div class="p-4 border-t border-gray-200">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin User">
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-700">Admin User</p>
-              <p class="text-xs font-medium text-gray-500">admin@digimart.com</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+
     <!-- Main Content -->
     <div class="flex flex-col flex-1 overflow-hidden">
       <!-- Top Navigation -->
@@ -186,7 +118,9 @@
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i class="fas fa-search text-gray-400"></i>
               </div>
-              <input id="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm" placeholder="Search" type="search">
+              <input id="search"
+                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                placeholder="Search" type="search">
             </div>
           </div>
         </div>
@@ -248,7 +182,8 @@
           </div>
           <div class="dropdown relative">
             <button class="flex items-center max-w-xs text-sm rounded-full focus:outline-none">
-              <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin User">
+              <img class="h-8 w-8 rounded-full"
+                src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin User">
               <span class="ml-2 text-gray-700 hidden md:inline">Admin User</span>
               <i class="fas fa-chevron-down ml-1 text-gray-500 text-xs hidden md:inline"></i>
             </button>
@@ -261,29 +196,52 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Main Content Area -->
-      <div class="flex-1 overflow-auto bg-gray-50 main-content lg:px-20 lg:py-10">
+        <div class="flex-1 overflow-auto p-4 bg-gray-50 main-content lg:px-10 lg:py-8">
+        <!-- Breadcrumb -->
+        <div class="mb-6">
+          <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+              <li class="inline-flex items-center">
+                <a href="./admin-dashboard.html"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                  <i class="fa-solid fa-home mr-2"></i>
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <div class="flex items-center">
+                  <i class="fa-solid fa-chevron-right text-gray-400 mx-1 text-xs"></i>
+                  <a href="#" class="ml-1 text-sm font-medium text-indigo-600">Withdrawal Requests</a>
+                </div>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
         <!-- Page Header -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+        <div class="flex justify-between items-center mb-6">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">Vendor Withdrawal Requests</h1>
-            <p class="mt-1 text-sm text-gray-500">Review and manage vendor withdrawal requests</p>
+            <h1 class="text-2xl font-semibold text-gray-900">Withdrawal Requests</h1>
+            <p class="mt-1 text-sm text-gray-500">Manage vendor withdrawal requests</p>
           </div>
-          <div class="mt-4 md:mt-0 flex space-x-3">
-            <button class="bg-white text-gray-600 px-4 py-2 rounded-md text-sm font-medium shadow-sm border border-gray-300 hover:bg-gray-50 flex items-center">
+          <div class="flex space-x-3">
+            <button
+              class="bg-white text-primary-600 px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-primary-50 flex items-center">
+              <i class="fas fa-download mr-2"></i>
+              Export Requests
+            </button>
+            <button
+              class="bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-primary-800 flex items-center">
               <i class="fas fa-filter mr-2"></i>
               Filter
             </button>
-            <button class="bg-white text-gray-600 px-4 py-2 rounded-md text-sm font-medium shadow-sm border border-gray-300 hover:bg-gray-50 flex items-center">
-              <i class="fas fa-download mr-2"></i>
-              Export
-            </button>
           </div>
         </div>
-        
+
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <!-- Pending Requests -->
           <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <div class="flex justify-between items-start">
@@ -302,7 +260,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Approved Today -->
           <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <div class="flex justify-between items-start">
@@ -321,7 +279,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Total Amount -->
           <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <div class="flex justify-between items-start">
@@ -341,7 +299,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Withdrawal Requests Table -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6">
           <div class="p-4 border-b border-gray-200 bg-white">
@@ -349,7 +307,8 @@
               <h2 class="text-lg font-semibold text-gray-900">Pending Withdrawal Requests</h2>
               <div class="mt-3 md:mt-0 flex items-center">
                 <div class="relative">
-                  <select class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                  <select
+                    class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option>All Requests</option>
                     <option>Pending</option>
                     <option>Approved</option>
@@ -366,25 +325,32 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Vendor
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Request ID
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Amount
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Payment Method
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col"
+                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -394,7 +360,9 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
-                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Artisan+Crafts&background=6366f1&color=fff" alt="Artisan Crafts">
+                        <img class="h-10 w-10 rounded-full"
+                          src="https://ui-avatars.com/api/?name=Artisan+Crafts&background=6366f1&color=fff"
+                          alt="Artisan Crafts">
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">Artisan Crafts</div>
@@ -417,12 +385,14 @@
                     <div class="text-xs text-gray-500">10:24 AM</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                       Pending
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button class="text-primary-600 hover:text-primary-900 mr-3" onclick="openWithdrawalModal('WD-7245')">
+                    <button class="text-primary-600 hover:text-primary-900 mr-3"
+                      onclick="openWithdrawalModal('WD-7245')">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button class="text-green-600 hover:text-green-900 mr-3" onclick="approveWithdrawal('WD-7245')">
@@ -437,7 +407,9 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
-                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Digital+Studio&background=4f46e5&color=fff" alt="Digital Studio">
+                        <img class="h-10 w-10 rounded-full"
+                          src="https://ui-avatars.com/api/?name=Digital+Studio&background=4f46e5&color=fff"
+                          alt="Digital Studio">
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">Digital Studio</div>
@@ -460,12 +432,14 @@
                     <div class="text-xs text-gray-500">3:45 PM</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                       Pending
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button class="text-primary-600 hover:text-primary-900 mr-3" onclick="openWithdrawalModal('WD-7244')">
+                    <button class="text-primary-600 hover:text-primary-900 mr-3"
+                      onclick="openWithdrawalModal('WD-7244')">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button class="text-green-600 hover:text-green-900 mr-3" onclick="approveWithdrawal('WD-7244')">
@@ -480,7 +454,9 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
-                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Tech+Solutions&background=3730a3&color=fff" alt="Tech Solutions">
+                        <img class="h-10 w-10 rounded-full"
+                          src="https://ui-avatars.com/api/?name=Tech+Solutions&background=3730a3&color=fff"
+                          alt="Tech Solutions">
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">Tech Solutions</div>
@@ -503,12 +479,14 @@
                     <div class="text-xs text-gray-500">11:20 AM</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                       Pending
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button class="text-primary-600 hover:text-primary-900 mr-3" onclick="openWithdrawalModal('WD-7243')">
+                    <button class="text-primary-600 hover:text-primary-900 mr-3"
+                      onclick="openWithdrawalModal('WD-7243')">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button class="text-green-600 hover:text-green-900 mr-3" onclick="approveWithdrawal('WD-7243')">
@@ -523,7 +501,9 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
-                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Creative+Minds&background=312e81&color=fff" alt="Creative Minds">
+                        <img class="h-10 w-10 rounded-full"
+                          src="https://ui-avatars.com/api/?name=Creative+Minds&background=312e81&color=fff"
+                          alt="Creative Minds">
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">Creative Minds</div>
@@ -546,12 +526,14 @@
                     <div class="text-xs text-gray-500">9:15 AM</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                       Pending
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button class="text-primary-600 hover:text-primary-900 mr-3" onclick="openWithdrawalModal('WD-7242')">
+                    <button class="text-primary-600 hover:text-primary-900 mr-3"
+                      onclick="openWithdrawalModal('WD-7242')">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button class="text-green-600 hover:text-green-900 mr-3" onclick="approveWithdrawal('WD-7242')">
@@ -566,7 +548,9 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-10 w-10">
-                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Code+Masters&background=1e1b4b&color=fff" alt="Code Masters">
+                        <img class="h-10 w-10 rounded-full"
+                          src="https://ui-avatars.com/api/?name=Code+Masters&background=1e1b4b&color=fff"
+                          alt="Code Masters">
                       </div>
                       <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900">Code Masters</div>
@@ -589,12 +573,14 @@
                     <div class="text-xs text-gray-500">4:30 PM</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                       Pending
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button class="text-primary-600 hover:text-primary-900 mr-3" onclick="openWithdrawalModal('WD-7241')">
+                    <button class="text-primary-600 hover:text-primary-900 mr-3"
+                      onclick="openWithdrawalModal('WD-7241')">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button class="text-green-600 hover:text-green-900 mr-3" onclick="approveWithdrawal('WD-7241')">
@@ -611,10 +597,12 @@
           <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
             <div class="flex items-center justify-between">
               <div class="flex-1 flex justify-between sm:hidden">
-                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <a href="#"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                   Previous
                 </a>
-                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <a href="#"
+                  class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                   Next
                 </a>
               </div>
@@ -632,20 +620,25 @@
                 </div>
                 <div>
                   <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <a href="#"
+                      class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                       <span class="sr-only">Previous</span>
                       <i class="fas fa-chevron-left text-xs"></i>
                     </a>
-                    <a href="#" aria-current="page" class="z-10 bg-primary-50 border-primary-500 text-primary-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                    <a href="#" aria-current="page"
+                      class="z-10 bg-primary-50 border-primary-500 text-primary-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                       1
                     </a>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                    <a href="#"
+                      class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                       2
                     </a>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                    <a href="#"
+                      class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                       3
                     </a>
-                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <a href="#"
+                      class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                       <span class="sr-only">Next</span>
                       <i class="fas fa-chevron-right text-xs"></i>
                     </a>
@@ -655,7 +648,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Recent Activity -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div class="p-4 border-b border-gray-200">
@@ -669,13 +662,16 @@
                     <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
                     <div class="relative flex space-x-3">
                       <div>
-                        <span class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center ring-8 ring-white">
+                        <span
+                          class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center ring-8 ring-white">
                           <i class="fas fa-check text-green-600"></i>
                         </span>
                       </div>
                       <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p class="text-sm text-gray-500">Approved withdrawal request <span class="font-medium text-gray-900">#WD-7240</span> for <span class="font-medium text-gray-900">$1,850.00</span></p>
+                          <p class="text-sm text-gray-500">Approved withdrawal request <span
+                              class="font-medium text-gray-900">#WD-7240</span> for <span
+                              class="font-medium text-gray-900">$1,850.00</span></p>
                         </div>
                         <div class="text-right text-sm whitespace-nowrap text-gray-500">
                           <time datetime="2025-04-28T13:00:00">1 hour ago</time>
@@ -689,13 +685,16 @@
                     <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
                     <div class="relative flex space-x-3">
                       <div>
-                        <span class="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center ring-8 ring-white">
+                        <span
+                          class="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center ring-8 ring-white">
                           <i class="fas fa-times text-red-600"></i>
                         </span>
                       </div>
                       <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p class="text-sm text-gray-500">Rejected withdrawal request <span class="font-medium text-gray-900">#WD-7239</span> for <span class="font-medium text-gray-900">$500.00</span></p>
+                          <p class="text-sm text-gray-500">Rejected withdrawal request <span
+                              class="font-medium text-gray-900">#WD-7239</span> for <span
+                              class="font-medium text-gray-900">$500.00</span></p>
                         </div>
                         <div class="text-right text-sm whitespace-nowrap text-gray-500">
                           <time datetime="2025-04-28T10:30:00">3 hours ago</time>
@@ -709,13 +708,16 @@
                     <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
                     <div class="relative flex space-x-3">
                       <div>
-                        <span class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center ring-8 ring-white">
+                        <span
+                          class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center ring-8 ring-white">
                           <i class="fas fa-hand-holding-usd text-primary-600"></i>
                         </span>
                       </div>
                       <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p class="text-sm text-gray-500">New withdrawal request <span class="font-medium text-gray-900">#WD-7245</span> from <span class="font-medium text-gray-900">Artisan Crafts</span></p>
+                          <p class="text-sm text-gray-500">New withdrawal request <span
+                              class="font-medium text-gray-900">#WD-7245</span> from <span
+                              class="font-medium text-gray-900">Artisan Crafts</span></p>
                         </div>
                         <div class="text-right text-sm whitespace-nowrap text-gray-500">
                           <time datetime="2025-04-28T10:15:00">5 hours ago</time>
@@ -728,13 +730,16 @@
                   <div class="relative pb-8">
                     <div class="relative flex space-x-3">
                       <div>
-                        <span class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center ring-8 ring-white">
+                        <span
+                          class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center ring-8 ring-white">
                           <i class="fas fa-check text-green-600"></i>
                         </span>
                       </div>
                       <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p class="text-sm text-gray-500">Approved withdrawal request <span class="font-medium text-gray-900">#WD-7238</span> for <span class="font-medium text-gray-900">$3,200.00</span></p>
+                          <p class="text-sm text-gray-500">Approved withdrawal request <span
+                              class="font-medium text-gray-900">#WD-7238</span> for <span
+                              class="font-medium text-gray-900">$3,200.00</span></p>
                         </div>
                         <div class="text-right text-sm whitespace-nowrap text-gray-500">
                           <time datetime="2025-04-27T16:00:00">1 day ago</time>
@@ -750,7 +755,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Withdrawal Details Modal -->
   <div id="withdrawalModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -758,7 +763,8 @@
         <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
       </div>
       <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div
+        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
@@ -769,7 +775,8 @@
                 <div class="bg-gray-50 p-4 rounded-md mb-4">
                   <div class="flex items-center mb-4">
                     <div class="flex-shrink-0 h-12 w-12">
-                      <img class="h-12 w-12 rounded-full" id="modalVendorImage" src="https://ui-avatars.com/api/?name=Vendor&background=6366f1&color=fff" alt="Vendor">
+                      <img class="h-12 w-12 rounded-full" id="modalVendorImage"
+                        src="https://ui-avatars.com/api/?name=Vendor&background=6366f1&color=fff" alt="Vendor">
                     </div>
                     <div class="ml-4">
                       <h4 class="text-lg font-medium text-gray-900" id="modalVendorName">Vendor Name</h4>
@@ -792,7 +799,9 @@
                     <div>
                       <p class="text-sm text-gray-500">Status</p>
                       <p class="text-sm font-medium">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800" id="modalStatus">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                          id="modalStatus">
                           Pending
                         </span>
                       </p>
@@ -824,48 +833,49 @@
                 </div>
                 <div>
                   <h4 class="text-sm font-medium text-gray-900 mb-2">Notes</h4>
-                  <textarea class="w-full px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500" rows="3" placeholder="Add a note (optional)"></textarea>
+                  <textarea
+                    class="w-full px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                    rows="3" placeholder="Add a note (optional)"></textarea>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="approveWithdrawalFromModal()">
+          <button type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+            onclick="approveWithdrawalFromModal()">
             Approve
           </button>
-          <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="rejectWithdrawalFromModal()">
+          <button type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onclick="rejectWithdrawalFromModal()">
             Reject
           </button>
-          <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeWithdrawalModal()">
+          <button type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onclick="closeWithdrawalModal()">
             Close
           </button>
         </div>
       </div>
     </div>
   </div>
-  
+
   <script>
-    // Toggle sidebar function
-    function toggleSidebar() {
-      const sidebar = document.getElementById('mobileSidebar');
-      const overlay = document.getElementById('sidebarOverlay');
-      
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('open');
-    }
-    
+
+
     // Withdrawal modal functions
     let currentWithdrawalId = null;
-    
+
     function openWithdrawalModal(withdrawalId) {
       currentWithdrawalId = withdrawalId;
-      
+
       // In a real application, you would fetch the withdrawal details from the server
       // For this demo, we'll just set some placeholder data based on the ID
-      
+
       document.getElementById('modalTitle').textContent = `Withdrawal Request ${withdrawalId}`;
-      
+
       // Set vendor details based on the withdrawal ID
       if (withdrawalId === 'WD-7245') {
         document.getElementById('modalVendorName').textContent = 'Artisan Crafts';
@@ -902,38 +912,38 @@
         document.getElementById('modalBankName').textContent = 'Example Bank';
         document.getElementById('modalAccountHolder').textContent = 'John Doe';
       }
-      
+
       document.getElementById('withdrawalModal').classList.remove('hidden');
     }
-    
+
     function closeWithdrawalModal() {
       document.getElementById('withdrawalModal').classList.add('hidden');
       currentWithdrawalId = null;
     }
-    
+
     function approveWithdrawal(withdrawalId) {
       // In a real application, you would send an API request to approve the withdrawal
       alert(`Withdrawal ${withdrawalId} approved successfully!`);
-      
+
       // Update the UI to reflect the change
       // This would typically be done after receiving a successful response from the server
     }
-    
+
     function rejectWithdrawal(withdrawalId) {
       // In a real application, you would send an API request to reject the withdrawal
       alert(`Withdrawal ${withdrawalId} rejected!`);
-      
+
       // Update the UI to reflect the change
       // This would typically be done after receiving a successful response from the server
     }
-    
+
     function approveWithdrawalFromModal() {
       if (currentWithdrawalId) {
         approveWithdrawal(currentWithdrawalId);
         closeWithdrawalModal();
       }
     }
-    
+
     function rejectWithdrawalFromModal() {
       if (currentWithdrawalId) {
         rejectWithdrawal(currentWithdrawalId);
@@ -941,5 +951,7 @@
       }
     }
   </script>
+  <script src="./js/script.js"></script>
 </body>
+
 </html>
